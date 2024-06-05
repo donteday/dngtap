@@ -1,0 +1,77 @@
+.botpanel_container {
+    width: 100%;
+    height: calc(5vh+40vw);
+    background-color: rgb(31, 31, 31);
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-end;
+
+    /* border: 2px solid rgb(249, 0, 0); */
+}
+
+.botpanel-btn_container {
+    width: 100%;
+    height: 5vh;
+    background-color: rgb(85, 85, 85);
+    border: 2px solid rgb(205, 205, 205);
+}
+
+.charinfo_container {
+    width: 80vw;
+    height: 20vw;
+    /* background-color: rgb(85, 85, 85);
+    border: 2px solid rgb(205, 205, 205); */
+    display: flex;
+    flex-direction: column;
+    color: white;
+    text-shadow: 2px 1px 2px #000;
+    /* justify-content: space-between; */
+
+}
+
+.charhp_container {
+    width: 100%;
+    height: 40%;
+    background-color: brown;
+    background: linear-gradient(0deg, rgb(89, 0, 0) 0%, rgb(159, 0, 0) 50%);
+    border: 2px solid rgb(0, 0, 0);
+}
+
+.charmp_container {
+    width: 100%;
+    height: 40%;
+    background-color: rgb(52, 42, 165);
+    background: linear-gradient(0deg, rgb(19, 0, 89) 0%, rgb(29, 1, 184) 50%);
+    border: 2px solid rgb(0, 0, 0);
+}
+
+
+.charlvl_container {
+    width: 100%;
+    height: 20%;
+    background-color: rgb(28, 28, 28);
+    border: 2px solid rgb(0, 0, 0);
+    border-radius: 5px;
+}
+
+.charlvl {
+    background: linear-gradient(0deg, rgb(24, 24, 21) 0%, rgb(184, 169, 0) 30%);
+    height: 100%;
+}
+
+.charlvl_text {
+    position: relative;
+    left: 0;
+    right: 0;
+    bottom: 20px;
+}
+
+.charskill_container {
+    width: 20vw;
+    height: 20vw;
+    background-color: rgb(85, 85, 85);
+    background: linear-gradient(0deg, rgba(0, 0, 0, 1) 30%, rgba(64, 64, 64, 1) 100%);
+    border: 2px solid rgb(0, 0, 0);
+    border-radius: 5px;
+
+}
