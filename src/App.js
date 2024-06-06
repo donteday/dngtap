@@ -86,14 +86,17 @@ function App() {
             </div>
             <div className="mobHpBar-text">{mobCurrentHP}</div>
           </div>
+          {/* {textDropisActive ? <DropText drop={monsters[0].droplist[0]} /> : null} */}
 
-          {textDropisActive ? <DropText drop={monsters[0].droplist[0]} /> : null}
-
+          <div>123</div>
 
 
           <div className='mob' ref={mobRef} onClick={() => setIsAttack(true)}>
+
             <div ref={mobAttackRef}></div>
+            
           </div>
+          
         </div>
 
       </div>
