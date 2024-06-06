@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-const localStore = localStorage.playerDataTapWarrior1;
+// const localStore = localStorage.playerDataTapWarrior1;
 
 // const moneyStart = localStore ? JSON.parse(localStore).money : 0;
 const maxHp = 75;

@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 // import { useDispatch, useSelector } from 'react-redux'
 // import { incrementMoney, addExp, startGame } from './redux/store/store'
-import { addExp, addItem, updateInventory } from './redux/store/store'
+import { addExp, updateInventory } from './redux/store/store'
 
 
 import './App.css';
-import Farm from './components/Farm/Farm';
+// import Farm from './components/Farm/Farm';
 import Header from './components/Header/Header';
 import BotPanel from './components/Botpanel/Botpanel';
 
@@ -119,6 +119,7 @@ function App() {
       if (Math.random() * 100 < drop[i].chance) {
         if (drop[i].stacking) {
           let flag = 0;
+          // eslint-disable-next-line no-loop-func
           x.map((e, id) => {
             if (e.type === drop[i].type) {
               let eCopy = { ...e };
@@ -129,7 +130,7 @@ function App() {
             }
             return null;
           })
-          if (flag != 1) {
+          if (flag !== 1) {
             dropText(drop[i], 2);
             x = [...x, drop[i]];
           }
@@ -163,6 +164,7 @@ function App() {
     }
     return () => clearInterval(timer);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAttack, mobCurrentHP, mobMaxHP]);
 
 

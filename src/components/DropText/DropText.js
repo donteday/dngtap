@@ -10,6 +10,7 @@ const DropText = ({ drop }) => {
 
     useEffect(() => {
         if (drop.id !== undefined) droprRef.current.style.backgroundImage = `url(${imgUrl})`;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [imgUrl])
 
     return (<div className="droptext_container">

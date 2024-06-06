@@ -1,6 +1,6 @@
 import './Botpanel.css';
-import { useDispatch, useSelector } from 'react-redux'
-import { addExp } from '../../redux/store/store'
+import { useSelector } from 'react-redux'
+// import { addExp } from '../../redux/store/store'
 
 
 

@@ -1,5 +1,5 @@
 import './InventoryPoint.css';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 
 const InventoryPoint = ({item}) => {
@@ -7,6 +7,7 @@ const InventoryPoint = ({item}) => {
     const url = require(`../../../img/items/${item.id}.png`);
     useEffect(() => {
         if (item.id !== undefined) charRef.current.style.backgroundImage = `url(${url})`;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [url])
     return (
         <div className="inventory_item_container">
