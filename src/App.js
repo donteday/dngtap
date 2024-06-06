@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 // import { useDispatch, useSelector } from 'react-redux'
 // import { incrementMoney, addExp, startGame } from './redux/store/store'
-import { addExp, addItem } from './redux/store/store'
+import { addExp, addItem, updateInventory } from './redux/store/store'
 
 
 import './App.css';
@@ -18,6 +18,7 @@ import DropText from './components/DropText/DropText';
 function App() {
   const dispatch = useDispatch();
   const lvl = useSelector(state => state.counter.lvl);
+  const inventory = useSelector(state => state.counter.inventory);
 
   let mobMaxHP = 40;
   const [mobCurrentHP, setMobHp] = useState(mobMaxHP);
@@ -27,29 +28,121 @@ function App() {
   const mobRef = useRef();
   const mobAttackRef = useRef();
 
+  // const [dropTextArray, setDropTextArray] = useState([]);
+  let dropTextArray = [];
+  const [messages, setMessages] = useState([]);
+  const [currentMessage, setCurrentMessage] = useState('');
+
+
+  useEffect(() => {
+    if (messages.length === 0) {
+      console.log(123);
+      setTextDropIsActive(false);
+      return;
+    }
+    let messageIndex = 1;
+    console.log(messages[0]);
+    setCurrentMessage(messages[0]);
+    setTextDropIsActive(true);
+    const intervalId = setInterval(() => {
+
+      if (messageIndex < messages.length) {
+        setCurrentMessage(messages[messageIndex]);
+        setTextDropIsActive(true);
+        messageIndex++;
+      } else {
+        clearInterval(intervalId); // Очистка интервала, когда все сообщения были показаны
+        setTextDropIsActive(false);
+        setMessages([]);
+        setCurrentMessage('');
+      }
+    }, 900);
+    return () => clearInterval(intervalId);
+  }, [messages]);
+
   let monsters = [
     {
       name: 'Гремлин',
       droplist: [
         {
+          name: 'Серебро',
           id: 0,
-          chance: 100,
-          name: "Серебро",
-          quantity: Math.round(Math.random() * 10),
+          type: 'gold',
           stacking: true,
-        }
-      ],
+          quantity: 100,
+          chance: 100,
+          gain: null,
+          writable: true
+        },
+        {
+          name: 'Железная Алебарда',
+          id: 1,
+          type: 'weapon',
+          stacking: false,
+          quantity: 1,
+          chance: 225,
+          gain: 0,
+        },
+        {
+          name: 'Свиток усиления оружия',
+          id: 2,
+          type: 'gain',
+          stacking: true,
+          quantity: 1,
+          chance: 125,
+          gain: null,
+          writable: true
+        },
+      ]
     }
   ];
 
+  function dropText(item, id) {
+    dropTextArray = [...dropTextArray, item];
+
+  }
+
 
   function attack() {
-    setMobHp(mobCurrentHP - 16 - lvl * lvl);
+    setMobHp(mobCurrentHP - 15 - lvl);
     mobAttackRef.current.style.top = `${Math.random() * 150 - 30}px`;
   }
 
   function isActiveInventory() {
     setIsActive(false);
+  }
+
+  function addToInventory() {
+    let x = [...inventory];
+    let drop = monsters[0].droplist;
+    for (let i = 0; i < monsters[0].droplist.length; i++) {
+      if (Math.random() * 100 < drop[i].chance) {
+        if (drop[i].stacking) {
+          let flag = 0;
+          x.map((e, id) => {
+            if (e.type === drop[i].type) {
+              let eCopy = { ...e };
+              eCopy.quantity += drop[i].quantity;
+              x[id] = eCopy;
+              flag = 1;
+              dropText(drop[i], 1);
+            }
+            return null;
+          })
+          if (flag != 1) {
+            dropText(drop[i], 2);
+            x = [...x, drop[i]];
+          }
+        }
+        else {
+          dropText(drop[i], 3);
+          x = [...x, drop[i]];
+        };
+      }
+    }
+    setMessages(dropTextArray);
+    dispatch(updateInventory(x));
+    // return setInventory(x);
   }
 
   useEffect(() => {
@@ -65,9 +158,8 @@ function App() {
       mobAttackRef.current.classList.remove("mob__attack");
       setMobHp(mobMaxHP);
       dispatch(addExp(40));
-      dispatch(addItem());
-      setTextDropIsActive(true);
-      setTimeout(() => setTextDropIsActive(false), 600);
+      // dispatch(addItem());
+      addToInventory();
     }
     return () => clearInterval(timer);
 
@@ -86,17 +178,15 @@ function App() {
             </div>
             <div className="mobHpBar-text">{mobCurrentHP}</div>
           </div>
-          {/* {textDropisActive ? <DropText drop={monsters[0].droplist[0]} /> : null} */}
+          {textDropisActive ? <DropText drop={currentMessage} /> : ''}
 
-          <div>123</div>
-
-
+          {/* <div>{currentMessage.name}</div> */}
           <div className='mob' ref={mobRef} onClick={() => setIsAttack(true)}>
 
             <div ref={mobAttackRef}></div>
-            
+
           </div>
-          
+
         </div>
 
       </div>

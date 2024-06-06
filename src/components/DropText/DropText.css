@@ -2,7 +2,7 @@
     position: absolute;
     bottom: 40px;
     display: flex;
-    animation: .9s ease-in-out textAnimated;
+    animation: .9s ease-out textAnimated infinite;
 
 }
 
@@ -16,6 +16,9 @@
 @keyframes textAnimated {
     0% {
         bottom: 40px;
+    }
+    60% {
+        opacity: 1;
     }
 
     100% {

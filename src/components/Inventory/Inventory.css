@@ -49,8 +49,8 @@
     background-color: black;
     color: white;
     background: rgb(49,46,35);
-background: linear-gradient(0deg, rgba(49,46,35,1) 5%, rgba(1,1,0,1) 150%);
-    border: 2px solid #3a3a3a;
+    background: linear-gradient(0deg, rgba(49,46,35,1) 5%, rgba(1,1,0,1) 150%);
+    border: 2px groove #3a3a3a;
     border-radius: 2px;
 }
 
@@ -58,6 +58,5 @@ background: linear-gradient(0deg, rgba(49,46,35,1) 5%, rgba(1,1,0,1) 150%);
     width: 100%;
     display: flex;
     flex-wrap: wrap;
-
 
 }

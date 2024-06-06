@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from 'react';
 
 const InventoryPoint = ({item}) => {
     const charRef = useRef();
-    const url = require('../../../img/items/0.png');
+    const url = require(`../../../img/items/${item.id}.png`);
     useEffect(() => {
         if (item.id !== undefined) charRef.current.style.backgroundImage = `url(${url})`;
     }, [url])
@@ -12,8 +12,7 @@ const InventoryPoint = ({item}) => {
         <div className="inventory_item_container">
             <div className='inventory_item' ref={charRef}>
                {item.quantity}
-            </div>
-            
+            </div>            
         </div>
     );
 }

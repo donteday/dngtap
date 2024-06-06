@@ -13,13 +13,8 @@ export const counterSlice = createSlice({
     currentExp : 0,
     maxExp : 10, 
     hp : maxHp,
-    inventory : [{
-      id : 0,
-      name: "gold",
-      quantity : 10,
-      stacking : true,
-    }
-      ,1,2,3,4,1,2,3,4,2,3,4,1,2,3,4,2,3,4,1,2,3,4,2,3,4,1,2,3,4]
+    inventory : [],
+    writable: true
   },
   reducers: {
     startGame: (state) => {
@@ -48,10 +43,13 @@ export const counterSlice = createSlice({
     addItem: (state, action) => {
       state.inventory[0].quantity =  state.inventory[0].quantity + Math.round(Math.random() * 10);
     },
+    updateInventory: (state, action) => {
+      state.inventory = action.payload;
+    },
   }
 })
 // state.improve[action.payload.index].amount
 
-export const { addItem, addExp} = counterSlice.actions
+export const { addItem, addExp, updateInventory} = counterSlice.actions
 
 export default counterSlice.reducer
