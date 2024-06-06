@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 // import { useDispatch, useSelector } from 'react-redux'
 // import { incrementMoney, addExp, startGame } from './redux/store/store'
-import { addExp, addItem } from './redux/store/store'
+import { addExp, addItem, updateInventory } from './redux/store/store'
 
 
 import './App.css';
@@ -18,6 +18,7 @@ import DropText from './components/DropText/DropText';
 function App() {
   const dispatch = useDispatch();
   const lvl = useSelector(state => state.counter.lvl);
+  const inventory = useSelector(state => state.counter.inventory);
 
   let mobMaxHP = 40;
   const [mobCurrentHP, setMobHp] = useState(mobMaxHP);
@@ -27,20 +28,89 @@ function App() {
   const mobRef = useRef();
   const mobAttackRef = useRef();
 
+  // const [dropTextArray, setDropTextArray] = useState([]);
+  let dropTextArray = [];
+  console.log(dropTextArray);
+  let itemText = {
+    name: 'Серебро',
+    id: 0,
+    type: 'gold',
+    stacking: true,
+    quantity: 100,
+    chance: 100,
+    gain: null,
+    writable: true
+  };
+
   let monsters = [
     {
       name: 'Гремлин',
       droplist: [
         {
+          name: 'Серебро',
           id: 0,
-          chance: 100,
-          name: "Серебро",
-          quantity: Math.round(Math.random() * 10),
+          type: 'gold',
           stacking: true,
-        }
-      ],
+          quantity: 100,
+          chance: 100,
+          gain: null,
+          writable: true
+        },
+        {
+          name: 'Алеба',
+          id: 1,
+          type: 'weapon',
+          stacking: false,
+          quantity: 1,
+          chance: 100,
+          gain: 0,
+        },
+        {
+          name: 'Усилка',
+          id: 2,
+          type: 'gain',
+          stacking: true,
+          quantity: 1,
+          chance: 0,
+          gain: null,
+          writable: true
+        },
+      ]
     }
   ];
+  let number = 0;
+
+  function rec(arr) {
+    if (!arr.length) return;
+    else {
+
+      setTimeout(() => {
+        itemText = arr[0];
+        setTextDropIsActive(true);
+        setTimeout(() => setTextDropIsActive(false), 600 * number);
+      }, 600 * (number - 1));
+
+      return arr.splice(0, 1);
+    }
+  }
+
+  function dropText(item, id) {
+    dropTextArray.push(item.name);
+    number += 1;
+    setTimeout(() => {
+      itemText = dropTextArray[number-1];
+      setTextDropIsActive(true);
+      setTimeout(() => setTextDropIsActive(false), 600 * number);
+    }, 600 * (number - 1));
+    // rec(dropTextArray);
+    // setTextDropIsActive(true);
+    // setTimeout(() => setTextDropIsActive(false), 600);
+
+
+    // for (let i = 0; i < dropTextArray.length; i++) {
+    //   console.log(i, dropTextArray[i]);
+    // }
+  }
 
 
   function attack() {
@@ -50,6 +120,38 @@ function App() {
 
   function isActiveInventory() {
     setIsActive(false);
+  }
+
+  function addToInventory() {
+    let x = [...inventory];
+    let drop = monsters[0].droplist;
+    for (let i = 0; i < monsters[0].droplist.length; i++) {
+      if (Math.random() * 100 < drop[i].chance) {
+        if (drop[i].stacking) {
+          let flag = 0;
+          x.map((e, id) => {
+            if (e.type === drop[i].type) {
+              let eCopy = { ...e };
+              eCopy.quantity += drop[i].quantity;
+              x[id] = eCopy;
+              flag = 1;
+              dropText(drop[i], 1);
+            }
+            return null;
+          })
+          if (flag != 1) {
+            dropText(drop[i], 2);
+            x = [...x, drop[i]];
+          }
+        }
+        else {
+          dropText(drop[i], 3);
+          x = [...x, drop[i]];
+        };
+      }
+    }
+    dispatch(updateInventory(x));
+    // return setInventory(x);
   }
 
   useEffect(() => {
@@ -65,9 +167,8 @@ function App() {
       mobAttackRef.current.classList.remove("mob__attack");
       setMobHp(mobMaxHP);
       dispatch(addExp(40));
-      dispatch(addItem());
-      setTextDropIsActive(true);
-      setTimeout(() => setTextDropIsActive(false), 600);
+      // dispatch(addItem());
+      addToInventory();
     }
     return () => clearInterval(timer);
 
@@ -86,8 +187,7 @@ function App() {
             </div>
             <div className="mobHpBar-text">{mobCurrentHP}</div>
           </div>
-
-          {textDropisActive ? <DropText drop={monsters[0].droplist[0]} /> : null}
+          {textDropisActive ? <DropText drop={itemText} /> : null}
 
 
 

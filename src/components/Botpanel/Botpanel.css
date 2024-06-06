@@ -69,9 +69,9 @@
 .charskill_container {
     width: 20vw;
     height: 20vw;
-    background-color: rgb(85, 85, 85);
-    background: linear-gradient(0deg, rgba(0, 0, 0, 1) 30%, rgba(64, 64, 64, 1) 100%);
-    border: 2px solid rgb(0, 0, 0);
+    background: rgb(49,46,35);
+    background: linear-gradient(0deg, rgba(49,46,35,1) 5%, rgba(1,1,0,1) 150%);
+    border: 5px groove #3a3a3a;
     border-radius: 5px;
 
 }
