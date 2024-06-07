@@ -76,7 +76,7 @@ function App() {
           type: 'weapon',
           stacking: false,
           quantity: 1,
-          chance: 225,
+          chance: 20,
           gain: 0,
         },
         {
@@ -85,7 +85,7 @@ function App() {
           type: 'gain',
           stacking: true,
           quantity: 1,
-          chance: 125,
+          chance: 80,
           gain: null,
           writable: true
         },

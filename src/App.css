@@ -9,6 +9,7 @@
     0 2px 2px #000,
     -2px 0 2px #000,
     0 -2px 2px #000;
+  user-select: none;
 }
 
 .App {

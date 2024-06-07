@@ -3,8 +3,6 @@ import React, { useEffect, useRef} from 'react';
 
 
 const DropText = ({ drop }) => {
-    
-    console.log(drop);
     const imgUrl = require(`../../img/items/${drop.id}.png`);
     const droprRef = useRef();
 

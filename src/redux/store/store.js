@@ -46,10 +46,17 @@ export const counterSlice = createSlice({
     updateInventory: (state, action) => {
       state.inventory = action.payload;
     },
+    updateItemInventory: (state, action) => {
+      state.inventory[action.payload.id] = action.payload.item;
+      if (action.payload.item.quantity <= 0) {
+        console.log('payaload', action.payload.item.id);
+        state.inventory.splice(action.payload.id,1);
+      };
+    },
   }
 })
 // state.improve[action.payload.index].amount
 
-export const { addItem, addExp, updateInventory} = counterSlice.actions
+export const { addItem, addExp, updateInventory, updateItemInventory} = counterSlice.actions
 
 export default counterSlice.reducer
