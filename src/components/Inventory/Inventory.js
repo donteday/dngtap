@@ -1,7 +1,7 @@
 import './Inventory.css';
 import InventoryPoint from './InventoryPoint/InventoryPoint';
 import { useSelector, useDispatch } from 'react-redux'
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState } from 'react';
 
 import { updateInventory, updateItemInventory } from '../../redux/store/store'
 
