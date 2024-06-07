@@ -1,11 +1,59 @@
 import './Inventory.css';
 import InventoryPoint from './InventoryPoint/InventoryPoint';
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import React, { useEffect, useRef, useState } from 'react';
+
+import { updateInventory } from '../../redux/store/store'
 
 
 const Inventory = ({isActive}) => {
-    // let inventory = [1,2,3,4,1,2,3,4,2,3,4,1,2,3,4,2,3,4,1,2,3,4,2,3,4,1,2,3,4];
+    let inventoryCell = [1,2,3,4,1,2,3,4,2,3,4,11,2,3,4,1,2,3,4,2,3,4,11,2,3,4,1,2,3,4,2,3,4,1,1,1];
     const inventory = useSelector(state => state.counter.inventory);
+
+    const dispatch = useDispatch();
+
+    const [isGain, setisGain] = useState(false);
+    const [scrollId, setScrollId] = useState(null);
+
+    function goItem(e) {
+
+        if (inventory[e.target.id].type === 'gain') {
+            e.target.style.border = '2px solid red';
+            setScrollId(e.target.id);
+
+            setisGain(true);
+
+            console.log(isGain);
+
+        }
+    }
+
+    function gainUp(e) {
+        console.log(isGain);
+        if (isGain) {
+            if (inventory[e.target.id].gain !== null) {
+                if (inventory[e.target.id].gain < 3 || Math.random() * 100 < 50 - inventory[e.target.id].gain * 2) {
+                    let inventoryCopy = {...inventory[e.target.id]}
+                    inventoryCopy.gain += 1;
+                    // inventory[e.target.id] = {...inventoryCopy};
+                    // inventory[scrollId].quantity > 1 ? inventory[scrollId].quantity -= 1 : inventory.splice(scrollId, 1);
+                }
+                else {
+                    inventory.splice(e.target.id, 1);
+                    inventory[scrollId].quantity > 1 ? inventory[scrollId].quantity -= 1 : inventory.splice(scrollId, 1);
+                }
+                // refsById[scrollId].current.style.border = 'none';
+                setScrollId(null);
+            }
+
+            console.log(inventory);
+            dispatch(updateInventory(inventory));
+
+        }
+        console.log(isGain);
+
+        setisGain(false);
+    }
 
     return ( 
         <div className="inventory_container">
@@ -38,7 +86,8 @@ const Inventory = ({isActive}) => {
             </div>
             <div className="inventory_bottom_container">
                 
-                  {  inventory.map((item, index) => <InventoryPoint item={item} key={index}/>)}
+                  {  inventoryCell.map((e, index) => index < inventory.length ? <div onDoubleClick={(e) => goItem(e)} onClick={(e) => gainUp(e)}><InventoryPoint id={index} item={inventory[index]} key={index}  /> </div>: <div className="inventory_item_container"></div>)}
+                  {/* {  inventory.map((item, index) => <InventoryPoint item={item} key={index}/>)} */}
 
                 
             </div>
