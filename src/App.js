@@ -28,9 +28,31 @@ function App() {
   const mobRef = useRef();
   const mobAttackRef = useRef();
 
-  // const [dropTextArray, setDropTextArray] = useState([]);
-  let dropTextArray = [];
-  console.log(dropTextArray);
+  let droptext =[];
+
+  const [messages, setMessages] = useState([]); // Здесь ваш начальный массив сообщений
+  const [currentMessage, setCurrentMessage] = useState('');
+
+  useEffect(() => {
+    // setCurrentMessage(messages[0].name);
+    let messageIndex = 1;
+    console.log(messages);
+    const intervalId = setInterval(() => {
+      console.log(messages.length);
+      if (messageIndex < messages.length) {
+        setCurrentMessage(messages[messageIndex].name);
+        messageIndex++;
+      } else {
+        setMessages([]);
+        setCurrentMessage('');
+
+        clearInterval(intervalId); // Очистка интервала, когда все сообщения были показаны
+      }
+    }, 1000);
+
+    return () => clearInterval(intervalId);
+  }, [messages]);
+
   let itemText = {
     name: 'Серебро',
     id: 0,
@@ -95,13 +117,28 @@ function App() {
   }
 
   function dropText(item, id) {
-    dropTextArray.push(item.name);
-    number += 1;
-    setTimeout(() => {
-      itemText = dropTextArray[number-1];
-      setTextDropIsActive(true);
-      setTimeout(() => setTextDropIsActive(false), 600 * number);
-    }, 600 * (number - 1));
+    // setAlerts([item]);
+    // console.log(alerts);
+    droptext = [...droptext, item];
+
+    // myArray = [...myArray, item];
+    // for (let i = 0; i < myArray.length; i++) {
+    //   setTimeout(() => {
+    //     itemText = myArray[i];
+    //     setTextDropIsActive(true);
+    //     setTimeout(() => setTextDropIsActive(false), 600);
+    //   }, 600*i);
+
+    // }
+    // console.log(myArray);
+    // dropTextArray.push(item.name);
+
+    // number += 1;
+    // setTimeout(() => {
+    //   itemText = dropTextArray[number-1];
+    //   setTextDropIsActive(true);
+    //   setTimeout(() => setTextDropIsActive(false), 600 * number);
+    // }, 600 * (number - 1));
     // rec(dropTextArray);
     // setTextDropIsActive(true);
     // setTimeout(() => setTextDropIsActive(false), 600);
@@ -151,6 +188,7 @@ function App() {
       }
     }
     dispatch(updateInventory(x));
+    setMessages([...messages, ...droptext]);
     // return setInventory(x);
   }
 
@@ -167,7 +205,6 @@ function App() {
       mobAttackRef.current.classList.remove("mob__attack");
       setMobHp(mobMaxHP);
       dispatch(addExp(40));
-      // dispatch(addItem());
       addToInventory();
     }
     return () => clearInterval(timer);
@@ -187,7 +224,8 @@ function App() {
             </div>
             <div className="mobHpBar-text">{mobCurrentHP}</div>
           </div>
-          {textDropisActive ? <DropText drop={itemText} /> : null}
+          <div>{currentMessage}</div>
+          {/* {textDropisActive ? <DropText drop={itemText} /> : null} */}
 
 
 
