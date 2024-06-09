@@ -23,7 +23,7 @@ function App() {
   let mobMaxHP = 40;
   const [mobCurrentHP, setMobHp] = useState(mobMaxHP);
   const [isAttack, setIsAttack] = useState(false);
-  const [isActive, setIsActive] = useState(false);
+  const [isActive, setIsActive] = useState(true);
   const [textDropisActive, setTextDropIsActive] = useState(false);
   const mobRef = useRef();
   const mobAttackRef = useRef();
@@ -129,7 +129,7 @@ function App() {
           gainType: 'weapon',
           blessed: false,
           stacking: true,
-          quantity: 2,
+          quantity: 1,
           chance: 50,
           gain: null,
           writable: true,
@@ -143,7 +143,7 @@ function App() {
           gainType: 'armor',
           blessed: false,
           stacking: true,
-          quantity: 2,
+          quantity: 1,
           chance: 50,
           gain: null,
           writable: true,
@@ -156,7 +156,6 @@ function App() {
   function dropText(item, id) {
     dropTextArray = [...dropTextArray, item];
   }
-
 
   function attack() {
     setMobHp(mobCurrentHP - 15 - lvl);

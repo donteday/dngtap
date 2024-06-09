@@ -4,34 +4,54 @@ import { useSelector, useDispatch } from 'react-redux'
 import React, { useState } from 'react';
 
 import { updateInventory, updateItemInventory } from '../../redux/store/store'
+import ArmoryPoint from './ArmoryPoint/ArmoryPoint';
 
 
 const Inventory = ({ isActive }) => {
-    let inventoryCell = [1, 2, 3, 4, 1, 2, 3, 4, 2, 3, 4, 11, 2, 3, 4, 1, 2, 3, 4, 2, 3, 4, 11, 2, 3, 4, 1, 2, 3, 4, 2, 3, 4, 1, 1, 1];
+    let inventoryCell = [];
     let inventory = useSelector(state => state.counter.inventory);
+    // let armory = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+    for (let i = 0; i < 18; i++) {
+        inventoryCell.push(1);
+    }
 
     const dispatch = useDispatch();
 
     const [isGain, setisGain] = useState(false);
     const [gainType, setGainType] = useState('');
     const [scrollId, setScrollId] = useState(null);
-
+    const [armory, setArmory] = useState([undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined]);
     function goItem(e) {
         if (!inventory[e.target.id]) return;
-        if (inventory[e.target.id].type === 'gain') {
-            // e.target.style.filter = 'drop-shadow(0 0 2vw rgb(251, 255, 0)'
-            setGainType(inventory[e.target.id].gainType);
-            setScrollId(e.target.id);
-            setisGain(true);
+
+        switch (inventory[e.target.id].type) {
+            case 'gain':
+                setGainType(inventory[e.target.id].gainType);
+                setScrollId(e.target.id);
+                setisGain(true);
+                break;
+            case 'weapon':
+                console.log('eto orujie');
+                let inventoryItemCopy = { ...inventory[e.target.id] };
+                let armoryCopy = [...armory];
+                let inventoryCopy = [...inventory];
+
+                if (armoryCopy[3] === undefined) {
+                    armoryCopy[3] = inventoryItemCopy;
+                    setArmory([...armoryCopy]);
+                    inventoryCopy.splice(e.target.id, 1);
+                    dispatch(updateInventory(inventoryCopy));
+                }
+                break;
+
+            default:
+                break;
         }
     }
 
     function gainUp(e) {
         if (!inventory[e.target.id]) return;
 
-        console.log('таргет', e.target.id);
-
-        console.log('Свиток',scrollId);
         if (isGain) {
             let inventoryItemCopy = { ...inventory[e.target.id] };
             let scrollCopy = { ...inventory[scrollId] };
@@ -58,8 +78,8 @@ const Inventory = ({ isActive }) => {
                     }
                 }
                 // refsById[scrollId].current.style.border = 'none';
-                setScrollId(null);
-                
+                // setScrollId(null);
+
             }
             setScrollId(null);
             setisGain(false);
@@ -69,7 +89,7 @@ const Inventory = ({ isActive }) => {
 
     return (
         <div className="inventory_container">
-            <button onClick={() => isActive(false)}>close</button>
+            <button className="inventory_close" onClick={() => isActive(false)}>X</button>
 
             <div className="inventory_top_container">
                 <div className="char_specifications_container">
@@ -82,27 +102,16 @@ const Inventory = ({ isActive }) => {
                     <p className="char_specifications_text">Защита: 11</p>
                 </div>
                 <div className="inventory_armor">
-                    <div className="inventory_armor_point">1</div>
-                    <div className="inventory_armor_point">2</div>
-                    <div className="inventory_armor_point">3</div>
-                    <div className="inventory_armor_point">4</div>
-                    <div className="inventory_armor_point">5</div>
-                    <div className="inventory_armor_point">6</div>
-                    <div className="inventory_armor_point">7</div>
-                    <div className="inventory_armor_point">8</div>
-                    <div className="inventory_armor_point">9</div>
-                    <div className="inventory_armor_point">10</div>
-                    <div className="inventory_armor_point">11</div>
-                    <div className="inventory_armor_point">12</div>
+                    {armory.map((e, index) => <ArmoryPoint armorItem={e} />)}
                 </div>
             </div>
             <div className="inventory_bottom_container">
 
                 {inventoryCell.map((e, index) => index < inventory.length ?
-                <div onDoubleClick={(e) => goItem(e)} onClick={(e) => gainUp(e)}
-                
-                ><InventoryPoint id={index} item={inventory[index]} key={index} selected={scrollId}/> </div>
-                : <div className="inventory_item_container"></div>)}
+                    <div onDoubleClick={(e) => goItem(e)} onClick={(e) => gainUp(e)}
+
+                    ><InventoryPoint id={index} item={inventory[index]} key={index} selected={scrollId} /> </div>
+                    : <div className="inventory_item_container"></div>)}
                 {/* {  inventory.map((item, index) => <InventoryPoint item={item} key={index}/>)} */}
 
 

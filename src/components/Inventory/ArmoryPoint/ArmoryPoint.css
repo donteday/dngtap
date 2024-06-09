@@ -1,0 +1,19 @@
+.inventory_armor_point {
+    width: 15vw;
+    height: 15vw;
+    background-color: black;
+    color: white;
+    background: rgb(49,46,35);
+    background: linear-gradient(0deg, rgba(49,46,35,1) 5%, rgba(1,1,0,1) 150%);
+    border: 3px groove #3a3a3a;
+    border-radius: 2px;
+}
+
+.inventory_armor_item {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    display: flex;
+    
+
+}
