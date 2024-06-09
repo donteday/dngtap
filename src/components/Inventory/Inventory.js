@@ -13,12 +13,14 @@ const Inventory = ({ isActive }) => {
     const dispatch = useDispatch();
 
     const [isGain, setisGain] = useState(false);
+    const [gainType, setGainType] = useState('');
     const [scrollId, setScrollId] = useState(null);
 
     function goItem(e) {
         if (!inventory[e.target.id]) return;
         if (inventory[e.target.id].type === 'gain') {
-            // e.target.style.border = '2px solid red';
+            // e.target.style.filter = 'drop-shadow(0 0 2vw rgb(251, 255, 0)'
+            setGainType(inventory[e.target.id].gainType);
             setScrollId(e.target.id);
             setisGain(true);
         }
@@ -26,11 +28,14 @@ const Inventory = ({ isActive }) => {
 
     function gainUp(e) {
         if (!inventory[e.target.id]) return;
+
+        console.log('таргет', e.target.id);
+
+        console.log('Свиток',scrollId);
         if (isGain) {
             let inventoryItemCopy = { ...inventory[e.target.id] };
-            let scrollCopy = { ...inventory[scrollId] }
-            // console.log(inventory[e.target.id].gain !== undefined);
-            if (inventory[e.target.id].gain !== undefined && inventory[e.target.id].gain !== null) {
+            let scrollCopy = { ...inventory[scrollId] };
+            if (inventory[e.target.id].gain !== undefined && inventory[e.target.id].gain !== null && inventory[e.target.id].type === gainType) {
                 if (inventory[e.target.id].gain < 3 || Math.random() * 100 < 50 - inventory[e.target.id].gain * 2) {
                     inventoryItemCopy.gain += 1;
                     dispatch(updateItemInventory({ id: e.target.id, item: inventoryItemCopy }));
@@ -39,25 +44,26 @@ const Inventory = ({ isActive }) => {
                         console.log(scrollId);
                         dispatch(updateItemInventory({ id: scrollId, item: scrollCopy }));
                     }
-
                 }
                 else {
                     let inventoryCopy = [...inventory];
                     inventoryCopy.splice(e.target.id, 1);
                     dispatch(updateInventory(inventoryCopy));
-
                     if (scrollCopy.quantity > 0) {
                         scrollCopy.quantity -= 1;
                         e.target.id > scrollId ?
-                        dispatch(updateItemInventory({ id: scrollId, item: scrollCopy }))
-                        : dispatch(updateItemInventory({ id: scrollId - 1, item: scrollCopy }));
+                            dispatch(updateItemInventory({ id: scrollId, item: scrollCopy }))
+                            : dispatch(updateItemInventory({ id: scrollId - 1, item: scrollCopy }));
 
                     }
                 }
                 // refsById[scrollId].current.style.border = 'none';
                 setScrollId(null);
+                
             }
+            setScrollId(null);
             setisGain(false);
+            setGainType('');
         }
     }
 
@@ -92,7 +98,11 @@ const Inventory = ({ isActive }) => {
             </div>
             <div className="inventory_bottom_container">
 
-                {inventoryCell.map((e, index) => index < inventory.length ? <div onDoubleClick={(e) => goItem(e)} onClick={(e) => gainUp(e)}><InventoryPoint id={index} item={inventory[index]} key={index} /> </div> : <div className="inventory_item_container"></div>)}
+                {inventoryCell.map((e, index) => index < inventory.length ?
+                <div onDoubleClick={(e) => goItem(e)} onClick={(e) => gainUp(e)}
+                
+                ><InventoryPoint id={index} item={inventory[index]} key={index} selected={scrollId}/> </div>
+                : <div className="inventory_item_container"></div>)}
                 {/* {  inventory.map((item, index) => <InventoryPoint item={item} key={index}/>)} */}
 
 

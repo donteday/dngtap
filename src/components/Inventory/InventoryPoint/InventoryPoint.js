@@ -5,8 +5,7 @@ import React, { useEffect, useRef} from 'react';
 
 
 
-const InventoryPoint = ({ item, id }) => {
-
+const InventoryPoint = ({ item, id, selected }) => {
 
     const charRef = useRef();
     const url = require(`../../../img/items/${item.id}.png`);
@@ -18,11 +17,11 @@ const InventoryPoint = ({ item, id }) => {
 
 
     return (
-        <div className="inventory_item_container" id={id} >
+        <div className="inventory_item_container" id={id}
+        style = {{ border:  selected == id ? '3px ridge rgb(251, 255, 0)' : '3px groove #3a3a3a'}}>
             <div className='inventory_item' id={id} ref={charRef} >
                 {item.gain !== null ? <div>+{item.gain}</div> : <div></div>}
                 <div>{item.quantity}</div>
-
             </div>
         </div>
     );

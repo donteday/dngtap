@@ -67,7 +67,7 @@ function App() {
           type: 'gold',
           stacking: true,
           blessed: false,
-          quantity: 100,
+          quantity: Math.round(Math.random() *100),
           chance: 100,
           gain: null,
           writable: true,
@@ -81,46 +81,46 @@ function App() {
           stacking: false,
           blessed: false,
           quantity: 1,
-          chance: 220,
+          chance: 5,
           gain: 0,
           isPutOn : true
         },
-        // {
-        //   name: 'Стальной шлем',
-        //   id: 200,
-        //   type: 'armor',
-        //   subtype: 'head',
-        //   stacking: false,
-        //   blessed: false,
-        //   quantity: 1,
-        //   chance: 20,
-        //   gain: 0,
-        //   isPutOn : true
-        // },
-        // {
-        //   name: 'Стальные сапоги',
-        //   id: 201,
-        //   type: 'armor',
-        //   subtype: 'legs',
-        //   stacking: false,
-        //   blessed: false,
-        //   quantity: 1,
-        //   chance: 20,
-        //   gain: 0,
-        //   isPutOn : true
-        // },
-        // {
-        //   name: 'Стальные перчатки',
-        //   id: 202,
-        //   type: 'armor',
-        //   subtype: 'hands',
-        //   stacking: false,
-        //   blessed: false,
-        //   quantity: 1,
-        //   chance: 20,
-        //   gain: 0,
-        //   isPutOn : true
-        // },
+        {
+          name: 'Стальной шлем',
+          id: 200,
+          type: 'armor',
+          subtype: 'head',
+          stacking: false,
+          blessed: false,
+          quantity: 1,
+          chance: 10,
+          gain: 0,
+          isPutOn : true
+        },
+        {
+          name: 'Стальные сапоги',
+          id: 201,
+          type: 'armor',
+          subtype: 'legs',
+          stacking: false,
+          blessed: false,
+          quantity: 1,
+          chance: 15,
+          gain: 0,
+          isPutOn : true
+        },
+        {
+          name: 'Стальные перчатки',
+          id: 202,
+          type: 'armor',
+          subtype: 'hands',
+          stacking: false,
+          blessed: false,
+          quantity: 1,
+          chance: 20,
+          gain: 0,
+          isPutOn : true
+        },
         {
           name: 'Свиток усиления оружия',
           id: 2,
@@ -129,8 +129,8 @@ function App() {
           gainType: 'weapon',
           blessed: false,
           stacking: true,
-          quantity: 11,
-          chance: 80,
+          quantity: 2,
+          chance: 50,
           gain: null,
           writable: true,
           isPutOn : false
@@ -143,8 +143,8 @@ function App() {
           gainType: 'armor',
           blessed: false,
           stacking: true,
-          quantity: 11,
-          chance: 80,
+          quantity: 2,
+          chance: 50,
           gain: null,
           writable: true,
           isPutOn : false
@@ -176,7 +176,7 @@ function App() {
           let flag = 0;
           // eslint-disable-next-line no-loop-func
           x.map((e, id) => {
-            if (e.type === drop[i].type) {
+            if (e.id === drop[i].id) {
               let eCopy = { ...e };
               eCopy.quantity += drop[i].quantity;
               x[id] = eCopy;

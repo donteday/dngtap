@@ -47,11 +47,11 @@ export const counterSlice = createSlice({
       state.inventory = action.payload;
     },
     updateItemInventory: (state, action) => {
-      state.inventory[action.payload.id] = action.payload.item;
       if (action.payload.item.quantity <= 0) {
         console.log('payaload', action.payload.item.id);
         state.inventory.splice(action.payload.id,1);
-      };
+      } else state.inventory[action.payload.id] = action.payload.item;
+
     },
   }
 })
