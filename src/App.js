@@ -63,31 +63,91 @@ function App() {
         {
           name: 'Серебро',
           id: 0,
+          subtype: 'gold',
           type: 'gold',
           stacking: true,
+          blessed: false,
           quantity: 100,
           chance: 100,
           gain: null,
-          writable: true
+          writable: true,
+          isPutOn : false
         },
         {
           name: 'Железная Алебарда',
           id: 1,
           type: 'weapon',
+          subtype: 'halberd',
           stacking: false,
+          blessed: false,
           quantity: 1,
           chance: 220,
           gain: 0,
+          isPutOn : true
         },
+        // {
+        //   name: 'Стальной шлем',
+        //   id: 200,
+        //   type: 'armor',
+        //   subtype: 'head',
+        //   stacking: false,
+        //   blessed: false,
+        //   quantity: 1,
+        //   chance: 20,
+        //   gain: 0,
+        //   isPutOn : true
+        // },
+        // {
+        //   name: 'Стальные сапоги',
+        //   id: 201,
+        //   type: 'armor',
+        //   subtype: 'legs',
+        //   stacking: false,
+        //   blessed: false,
+        //   quantity: 1,
+        //   chance: 20,
+        //   gain: 0,
+        //   isPutOn : true
+        // },
+        // {
+        //   name: 'Стальные перчатки',
+        //   id: 202,
+        //   type: 'armor',
+        //   subtype: 'hands',
+        //   stacking: false,
+        //   blessed: false,
+        //   quantity: 1,
+        //   chance: 20,
+        //   gain: 0,
+        //   isPutOn : true
+        // },
         {
           name: 'Свиток усиления оружия',
           id: 2,
           type: 'gain',
+          subtype: 'ordinary',
+          gainType: 'weapon',
+          blessed: false,
           stacking: true,
           quantity: 11,
           chance: 80,
           gain: null,
-          writable: true
+          writable: true,
+          isPutOn : false
+        },
+        {
+          name: 'Свиток усиления доспехов',
+          id: 3,
+          type: 'gain',
+          subtype: 'ordinary',
+          gainType: 'armor',
+          blessed: false,
+          stacking: true,
+          quantity: 11,
+          chance: 80,
+          gain: null,
+          writable: true,
+          isPutOn : false
         },
       ]
     }

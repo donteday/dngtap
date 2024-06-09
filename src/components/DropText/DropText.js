@@ -3,13 +3,12 @@ import React, { useEffect, useRef} from 'react';
 
 
 const DropText = ({ drop }) => {
-    const imgUrl = require(`../../img/items/${drop.id}.png`);
+    console.log(drop.id);
+    let imgUrl = require(`../../img/items/${drop.id}.png`);
     const droprRef = useRef();
-
     useEffect(() => {
         if (drop.id !== undefined) droprRef.current.style.backgroundImage = `url(${imgUrl})`;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [imgUrl])
+    }, [imgUrl, drop.id])
 
     return (<div className="droptext_container">
         <div className="droptext_img" ref={droprRef}></div>
