@@ -18,6 +18,7 @@ const InventoryPoint = ({ item, id, selected }) => {
 
     return (
         <div className="inventory_item_container" id={id}
+        // eslint-disable-next-line eqeqeq
         style = {{ border:  selected == id ? '3px ridge rgb(251, 255, 0)' : '3px groove #3a3a3a'}}>
             <div className='inventory_item' id={id} ref={charRef} >
                 {item.gain !== null ? <div>+{item.gain}</div> : <div></div>}
