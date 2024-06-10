@@ -9,6 +9,7 @@
     0 2px 2px #000,
     -2px 0 2px #000,
     0 -2px 2px #000;
+  user-select: none;
 }
 
 .App {
@@ -96,6 +97,18 @@
   /* background-color: #474747; */
   background-image: url('./img/animation/attack.png');
   animation: attack_animation 1s steps(6) infinite;
+}
+
+.inventory_open_btn {
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+  padding: 5px;
+  background: rgb(49,46,35);
+  background: linear-gradient(0deg, rgba(49,46,35,1) 5%, rgba(1,1,0,1) 150%);
+  /* width: 30px;
+  height: 30px; */
+  border-radius: 10%;
 }
 
 @keyframes attack_animation {

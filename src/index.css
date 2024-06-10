@@ -7,6 +7,21 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+body::after {
+  position: absolute;
+  background-image: url('./img/filter/noise.png');
+  background-repeat: repeat;
+  background-size: 100px;
+  right: 0;
+  top: -50px;
+  content: '';
+  width: 100vw;
+  height: 100vh;
+  z-index: 2;
+  opacity: 15%;
+  pointer-events: none;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;

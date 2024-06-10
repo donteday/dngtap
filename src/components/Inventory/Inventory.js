@@ -1,74 +1,102 @@
 import './Inventory.css';
 import InventoryPoint from './InventoryPoint/InventoryPoint';
 import { useSelector, useDispatch } from 'react-redux'
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState } from 'react';
 
-import { updateInventory } from '../../redux/store/store'
+import { updateInventory, updateItemInventory, setArmory } from '../../redux/store/store'
+import ArmoryPoint from './ArmoryPoint/ArmoryPoint';
 
 
 const Inventory = ({ isActive }) => {
-    let inventoryCell = [1, 2, 3, 4, 1, 2, 3, 4, 2, 3, 4, 11, 2, 3, 4, 1, 2, 3, 4, 2, 3, 4, 11, 2, 3, 4, 1, 2, 3, 4, 2, 3, 4, 1, 1, 1];
-    const inventory = useSelector(state => state.counter.inventory);
+
+    let inventoryCell = [];
+    let inventory = useSelector(state => state.counter.inventory);
+    let armory = useSelector(state => state.counter.armory);
+    // let armory = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+    for (let i = 0; i < 18; i++) {
+        inventoryCell.push(1);
+    }
+
 
     const dispatch = useDispatch();
 
     const [isGain, setisGain] = useState(false);
+    const [gainType, setGainType] = useState('');
     const [scrollId, setScrollId] = useState(null);
 
-    let timer = 0;
-    let delay = 200;
-    let prevent = false;
-
+    // const [armory, setArmory] = useState([undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined]);
     function goItem(e) {
-        clearTimeout(timer);
-        prevent = true;
-        console.log('Двойной клик');
+        if (!inventory[e.target.id]) return;
 
-        if (inventory[e.target.id].type === 'gain') {
-            e.target.style.border = '2px solid red';
-            setScrollId(e.target.id);
-            return setisGain(true);            
+        switch (inventory[e.target.id].type) {
+            case 'gain':
+                setGainType(inventory[e.target.id].gainType);
+                setScrollId(e.target.id);
+                setisGain(true);
+                break;
+            case 'weapon':
+                console.log('eto orujie');
+                let inventoryItemCopy = { ...inventory[e.target.id] };
+                let armoryCopy = [...armory];
+                let inventoryCopy = [...inventory];
+
+                if (armoryCopy[3] === undefined) {
+                    dispatch(setArmory({id:3,item:inventoryItemCopy}))
+                    inventoryCopy.splice(e.target.id, 1);
+                    dispatch(updateInventory(inventoryCopy));
+                }
+                break;
+
+            default:
+                break;
+
         }
         console.log(isGain);
     }
 
     function gainUp(e) {
-        console.log('одиночный');
 
-        timer = setTimeout(function () {
-            if (!prevent) {
-                // обрабатываем одиночный кли
+        if (!inventory[e.target.id]) return;
 
-                if (isGain) {
-                    if (inventory[e.target.id].gain !== null) {
-                        if (inventory[e.target.id].gain < 3 || Math.random() * 100 < 50 - inventory[e.target.id].gain * 2) {
-                            let inventoryCopy = { ...inventory[e.target.id] }
-                            inventoryCopy.gain += 1;
-                            // inventory[e.target.id] = {...inventoryCopy};
-                            // inventory[scrollId].quantity > 1 ? inventory[scrollId].quantity -= 1 : inventory.splice(scrollId, 1);
-                        }
-                        else {
-                            inventory.splice(e.target.id, 1);
-                            inventory[scrollId].quantity > 1 ? inventory[scrollId].quantity -= 1 : inventory.splice(scrollId, 1);
-                        }
-                        // refsById[scrollId].current.style.border = 'none';
-                        setScrollId(null);
+        if (isGain) {
+            let inventoryItemCopy = { ...inventory[e.target.id] };
+            let scrollCopy = { ...inventory[scrollId] };
+            if (inventory[e.target.id].gain !== undefined && inventory[e.target.id].gain !== null && inventory[e.target.id].type === gainType) {
+                if (inventory[e.target.id].gain < 3 || Math.random() * 100 < 50 - inventory[e.target.id].gain * 2) {
+                    inventoryItemCopy.gain += 1;
+                    dispatch(updateItemInventory({ id: e.target.id, item: inventoryItemCopy }));
+                    if (scrollCopy.quantity > 0) {
+                        scrollCopy.quantity -= 1;
+                        console.log(scrollId);
+                        dispatch(updateItemInventory({ id: scrollId, item: scrollCopy }));
                     }
-
-                    console.log(inventory);
-                    dispatch(updateInventory(inventory));
-
                 }
-                setisGain(false);
-            }
-            prevent = false;
-        }, delay);
+                else {
+                    let inventoryCopy = [...inventory];
+                    inventoryCopy.splice(e.target.id, 1);
+                    dispatch(updateInventory(inventoryCopy));
+                    if (scrollCopy.quantity > 0) {
+                        scrollCopy.quantity -= 1;
+                        e.target.id > scrollId ?
+                            dispatch(updateItemInventory({ id: scrollId, item: scrollCopy }))
+                            : dispatch(updateItemInventory({ id: scrollId - 1, item: scrollCopy }));
 
+                    }
+                }
+                // refsById[scrollId].current.style.border = 'none';
+                // setScrollId(null);
+
+            }
+            setScrollId(null);
+            setisGain(false);
+            setGainType('');
+        }
     }
 
     return (
         <div className="inventory_container">
-            <button onClick={() => isActive(false)}>close</button>
+
+            <button className="inventory_close" onClick={() => isActive(false)}>X</button>
 
             <div className="inventory_top_container">
                 <div className="char_specifications_container">
@@ -81,23 +109,18 @@ const Inventory = ({ isActive }) => {
                     <p className="char_specifications_text">Защита: 11</p>
                 </div>
                 <div className="inventory_armor">
-                    <div className="inventory_armor_point">1</div>
-                    <div className="inventory_armor_point">2</div>
-                    <div className="inventory_armor_point">3</div>
-                    <div className="inventory_armor_point">4</div>
-                    <div className="inventory_armor_point">5</div>
-                    <div className="inventory_armor_point">6</div>
-                    <div className="inventory_armor_point">7</div>
-                    <div className="inventory_armor_point">8</div>
-                    <div className="inventory_armor_point">9</div>
-                    <div className="inventory_armor_point">10</div>
-                    <div className="inventory_armor_point">11</div>
-                    <div className="inventory_armor_point">12</div>
+                    {armory.map((e, index) => <ArmoryPoint armorItem={e} index={index}/>)}
                 </div>
             </div>
             <div className="inventory_bottom_container">
 
-                {inventoryCell.map((e, index) => index < inventory.length ? <div onDoubleClick={(e) => goItem(e)} onClick={(e) => gainUp(e)}><InventoryPoint id={index} item={inventory[index]} key={index} /> </div> : <div className="inventory_item_container"></div>)}
+
+                {inventoryCell.map((e, index) => index < inventory.length ?
+                    <div onDoubleClick={(e) => goItem(e)} onClick={(e) => gainUp(e)}
+
+                    ><InventoryPoint id={index} item={inventory[index]} key={index} selected={scrollId} /> </div>
+                    : <div className="inventory_item_container"></div>)}
+
                 {/* {  inventory.map((item, index) => <InventoryPoint item={item} key={index}/>)} */}
 
 

@@ -9,11 +9,54 @@ const maxHp = 75;
 export const counterSlice = createSlice({
   name: 'game',
   initialState: {
-    lvl : 1,
-    currentExp : 0,
-    maxExp : 10, 
-    hp : maxHp,
-    inventory : [],
+    lvl: 1,
+    currentExp: 0,
+    maxExp: 10,
+    hp: maxHp,
+    inventory: [
+      {
+        name: 'Железная Алебарда',
+        id: 1,
+        type: 'weapon',
+        subtype: 'halberd',
+        baseDmg: 7,
+        stacking: false,
+        blessed: false,
+        quantity: 1,
+        chance: 5,
+        gain: 0,
+        isPutOn: true
+      }, 
+      {
+        name: 'Свиток усиления оружия',
+        id: 2,
+        type: 'gain',
+        subtype: 'ordinary',
+        gainType: 'weapon',
+        blessed: false,
+        stacking: true,
+        quantity: 4,
+        chance: 50,
+        gain: null,
+        writable: true,
+        isPutOn: false
+      },
+      {
+        name: 'Свиток усиления доспехов',
+        id: 3,
+        type: 'gain',
+        subtype: 'ordinary',
+        gainType: 'armor',
+        blessed: false,
+        stacking: true,
+        quantity: 1,
+        chance: 50,
+        gain: null,
+        writable: true,
+        isPutOn: false
+      },
+    ],
+    armory: [undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined],
     writable: true
   },
   reducers: {
@@ -41,15 +84,25 @@ export const counterSlice = createSlice({
       }
     },
     addItem: (state, action) => {
-      state.inventory[0].quantity =  state.inventory[0].quantity + Math.round(Math.random() * 10);
+      state.inventory[0].quantity = state.inventory[0].quantity + Math.round(Math.random() * 10);
     },
     updateInventory: (state, action) => {
       state.inventory = action.payload;
+    },
+    setArmory: (state, action) => {
+      state.armory[action.payload.id] = action.payload.item;
+    },
+    updateItemInventory: (state, action) => {
+      if (action.payload.item.quantity <= 0) {
+        console.log('payaload', action.payload.item.id);
+        state.inventory.splice(action.payload.id, 1);
+      } else state.inventory[action.payload.id] = action.payload.item;
+
     },
   }
 })
 // state.improve[action.payload.index].amount
 
-export const { addItem, addExp, updateInventory} = counterSlice.actions
+export const { addItem, addExp, updateInventory, updateItemInventory, setArmory } = counterSlice.actions
 
 export default counterSlice.reducer

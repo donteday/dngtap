@@ -2,10 +2,8 @@ import React, { useEffect, useRef, useState } from 'react';
 // import { useDispatch, useSelector } from 'react-redux'
 // import { incrementMoney, addExp, startGame } from './redux/store/store'
 import { addExp, updateInventory } from './redux/store/store'
-
-
 import './App.css';
-// import Farm from './components/Farm/Farm';
+
 import Header from './components/Header/Header';
 import BotPanel from './components/Botpanel/Botpanel';
 
@@ -13,17 +11,18 @@ import { useDispatch, useSelector } from 'react-redux'
 import Inventory from './components/Inventory/Inventory';
 import DropText from './components/DropText/DropText';
 
+import { mobList } from '../src/data/data'
 
 
 function App() {
   const dispatch = useDispatch();
   const lvl = useSelector(state => state.counter.lvl);
   const inventory = useSelector(state => state.counter.inventory);
+  const armory = useSelector(state => state.counter.armory);
 
-  let mobMaxHP = 40;
-  const [mobCurrentHP, setMobHp] = useState(mobMaxHP);
+  const [mobCurrentHP, setMobHp] = useState(mobList[0].maxHP);
   const [isAttack, setIsAttack] = useState(false);
-  const [isActive, setIsActive] = useState(false);
+  const [isActive, setIsActive] = useState(true);
   const [textDropisActive, setTextDropIsActive] = useState(false);
   const mobRef = useRef();
   const mobAttackRef = useRef();
@@ -56,50 +55,14 @@ function App() {
     return () => clearInterval(intervalId);
   }, [messages]);
 
-  let monsters = [
-    {
-      name: 'Гремлин',
-      droplist: [
-        {
-          name: 'Серебро',
-          id: 0,
-          type: 'gold',
-          stacking: true,
-          quantity: 100,
-          chance: 100,
-          gain: null,
-          writable: true
-        },
-        {
-          name: 'Железная Алебарда',
-          id: 1,
-          type: 'weapon',
-          stacking: false,
-          quantity: 1,
-          chance: 225,
-          gain: 0,
-        },
-        {
-          name: 'Свиток усиления оружия',
-          id: 2,
-          type: 'gain',
-          stacking: true,
-          quantity: 1,
-          chance: 125,
-          gain: null,
-          writable: true
-        },
-      ]
-    }
-  ];
 
   function dropText(item, id) {
     dropTextArray = [...dropTextArray, item];
   }
 
-
   function attack() {
-    setMobHp(mobCurrentHP - 15 - lvl);
+    let weaponDmg = armory[3]?.baseDmg + armory[3]?.gain || 1;
+    setMobHp(mobCurrentHP - weaponDmg - lvl);
     mobAttackRef.current.style.top = `${Math.random() * 150 - 30}px`;
   }
 
@@ -109,14 +72,14 @@ function App() {
 
   function addToInventory() {
     let x = [...inventory];
-    let drop = monsters[0].droplist;
-    for (let i = 0; i < monsters[0].droplist.length; i++) {
+    let drop = mobList[0].dropList;
+    for (let i = 0; i < drop.length; i++) {
       if (Math.random() * 100 < drop[i].chance) {
         if (drop[i].stacking) {
           let flag = 0;
           // eslint-disable-next-line no-loop-func
           x.map((e, id) => {
-            if (e.type === drop[i].type) {
+            if (e.id === drop[i].id) {
               let eCopy = { ...e };
               eCopy.quantity += drop[i].quantity;
               x[id] = eCopy;
@@ -152,25 +115,24 @@ function App() {
       setIsAttack(false);
       mobRef.current.classList.remove("mob__attack-state");
       mobAttackRef.current.classList.remove("mob__attack");
-      setMobHp(mobMaxHP);
+      setMobHp(mobList[0].maxHP);
       dispatch(addExp(40));
       addToInventory();
     }
     return () => clearInterval(timer);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isAttack, mobCurrentHP, mobMaxHP]);
+  }, [isAttack, mobCurrentHP, mobList[0].maxHP]);
 
 
   return (
     <div className="App">
       {isActive ? <Inventory isActive={isActiveInventory} /> : null}
       <Header />
-      <button onClick={() => setIsActive(true)}>inventory</button>
       <div className="location">
         <div className='mobBox'>
           <div className="mobHpBar-container">
-            <div className="mobHpBar" style={{ width: `${(mobCurrentHP / mobMaxHP) * 100}%` }}>
+            <div className="mobHpBar" style={{ width: `${(mobCurrentHP / mobList[0].maxHP) * 100}%` }}>
             </div>
             <div className="mobHpBar-text">{mobCurrentHP}</div>
           </div>
@@ -186,6 +148,7 @@ function App() {
           </div>
 
         </div>
+        <button onClick={() => setIsActive(true)} className='inventory_open_btn'>inventory</button>
 
       </div>
       <BotPanel />
