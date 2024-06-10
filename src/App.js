@@ -22,7 +22,7 @@ function App() {
 
   const [mobCurrentHP, setMobHp] = useState(mobList[0].maxHP);
   const [isAttack, setIsAttack] = useState(false);
-  const [isActive, setIsActive] = useState(true);
+  const [isActive, setIsActive] = useState(false);
   const [textDropisActive, setTextDropIsActive] = useState(false);
   const mobRef = useRef();
   const mobAttackRef = useRef();
@@ -145,10 +145,10 @@ function App() {
 
             <div ref={mobAttackRef}></div>
 
-          </div>
+          </div> 
 
         </div>
-        <button onClick={() => setIsActive(true)} className='inventory_open_btn'>inventory</button>
+        <button onClick={() => setIsActive(true)} className='inventory_open_btn'>Инвентарь</button>
 
       </div>
       <BotPanel />

@@ -12,6 +12,7 @@ const Inventory = ({ isActive }) => {
     let inventoryCell = [];
     let inventory = useSelector(state => state.counter.inventory);
     let armory = useSelector(state => state.counter.armory);
+    let state = useSelector(state => state.counter);
     // let armory = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
     for (let i = 0; i < 24 + Math.round(inventory.length/6)*6; i++) {
         inventoryCell.push(1);
@@ -173,8 +174,8 @@ const Inventory = ({ isActive }) => {
             <div className="inventory_top_container">
                 <div className="char_specifications_container">
                     <p className="char_specifications_text">Имя: Meow</p>
-                    <p className="char_specifications_text">Уровень: 1</p>
-                    <p className="char_specifications_text">HP: 100</p>
+                    <p className="char_specifications_text">Уровень: {state.lvl}</p>
+                    <p className="char_specifications_text">HP: {state.hp}</p>
                     <p className="char_specifications_text">Сила: 11</p>
                     <p className="char_specifications_text">Ловкость: 11</p>
                     <p className="char_specifications_text">Интеллект: 11</p>

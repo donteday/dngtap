@@ -14,7 +14,7 @@ const BotPanel = () => {
         <div className='botpanel_container'>
             {/* <div className="botpanel-btn_container"></div> */}
             <div className='charinfo_container'>
-                <div className='charhp_container'>100/{maxHp}</div>
+                <div className='charhp_container'>{maxHp}/{maxHp}</div>
                 <div className='charmp_container'>100/100</div>
                 <div className='charlvl_container' >
                     <div className='charlvl' style={{ width: `${(currentExp / maxExp) * 100}%` }}>

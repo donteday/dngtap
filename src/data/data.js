@@ -22,7 +22,7 @@ export const itemList = [
       stacking: false,
       blessed: false,
       quantity: 1,
-      chance: 5,
+      chance: 15,
       gain: 0,
       isPutOn : true
     },
