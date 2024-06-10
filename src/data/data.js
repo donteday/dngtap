@@ -46,7 +46,7 @@ export const itemList = [
       stacking: false,
       blessed: false,
       quantity: 1,
-      chance: 15,
+      chance: 10,
       gain: 0,
       isPutOn : true
     },
@@ -58,9 +58,21 @@ export const itemList = [
       stacking: false,
       blessed: false,
       quantity: 1,
-      chance: 20,
+      chance: 15,
       gain: 0,
       isPutOn : true
+    },
+    {
+      name: 'Кольцо высокой силы',
+      id: 300,
+      type: 'armor',
+      subtype: 'ring',
+      stacking: false,
+      blessed: false,
+      quantity: 1,
+      chance: 1,
+      gain: null,
+      isPutOn : true,
     },
     {
       name: 'Свиток усиления оружия',

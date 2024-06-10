@@ -24,7 +24,7 @@ export const counterSlice = createSlice({
         blessed: false,
         quantity: 1,
         chance: 5,
-        gain: 0,
+        gain: 13,
         isPutOn: true
       }, 
       {

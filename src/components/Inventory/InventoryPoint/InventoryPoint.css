@@ -1,6 +1,6 @@
 .inventory_item_container {
-    width: calc(100vw / 6);
-    height: calc(100vw / 6);
+    width: calc(95vw / 5);
+    height: calc(95vw / 5);
     background-color: aliceblue;
     background: rgb(49, 46, 35);
     background: linear-gradient(0deg, rgba(49, 46, 35, 1) 5%, rgba(1, 1, 0, 1) 150%);

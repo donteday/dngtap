@@ -13,10 +13,9 @@ const Inventory = ({ isActive }) => {
     let inventory = useSelector(state => state.counter.inventory);
     let armory = useSelector(state => state.counter.armory);
     // let armory = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
-    for (let i = 0; i < 18; i++) {
+    for (let i = 0; i < 24 + Math.round(inventory.length/6)*6; i++) {
         inventoryCell.push(1);
     }
-
 
     const dispatch = useDispatch();
 
@@ -27,6 +26,9 @@ const Inventory = ({ isActive }) => {
     // const [armory, setArmory] = useState([undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined]);
     function goItem(e) {
         if (!inventory[e.target.id]) return;
+        let inventoryItemCopy = { ...inventory[e.target.id] };
+        let armoryCopy = [...armory];
+        let inventoryCopy = [...inventory];
 
         switch (inventory[e.target.id].type) {
             case 'gain':
@@ -36,14 +38,84 @@ const Inventory = ({ isActive }) => {
                 break;
             case 'weapon':
                 console.log('eto orujie');
-                let inventoryItemCopy = { ...inventory[e.target.id] };
-                let armoryCopy = [...armory];
-                let inventoryCopy = [...inventory];
-
                 if (armoryCopy[3] === undefined) {
-                    dispatch(setArmory({id:3,item:inventoryItemCopy}))
+                    dispatch(setArmory({ id: 3, item: inventoryItemCopy }))
                     inventoryCopy.splice(e.target.id, 1);
                     dispatch(updateInventory(inventoryCopy));
+                }
+                break;
+            case 'armor':
+                console.log(inventory[e.target.id]);
+                switch (inventory[e.target.id].subtype) {
+                    case 'legs':
+                        if (armoryCopy[10] === undefined) {
+                            dispatch(setArmory({ id: 10, item: inventoryItemCopy }))
+                            inventoryCopy.splice(e.target.id, 1);
+                            dispatch(updateInventory(inventoryCopy));
+                        }
+                        break;
+                    case 'head':
+                        if (armoryCopy[1] === undefined) {
+                            dispatch(setArmory({ id: 1, item: inventoryItemCopy }))
+                            inventoryCopy.splice(e.target.id, 1);
+                            dispatch(updateInventory(inventoryCopy));
+                        }
+                        break;
+                    case 'hands':
+                        if (armoryCopy[8] === undefined) {
+                            dispatch(setArmory({ id: 8, item: inventoryItemCopy }))
+                            inventoryCopy.splice(e.target.id, 1);
+                            dispatch(updateInventory(inventoryCopy));
+                        }
+                        break;
+                    case 'necklace':
+                        if (armoryCopy[0] === undefined) {
+                            dispatch(setArmory({ id: 0, item: inventoryItemCopy }))
+                            inventoryCopy.splice(e.target.id, 1);
+                            dispatch(updateInventory(inventoryCopy));
+                        }
+                        break;
+                    case 'cloak':
+                        if (armoryCopy[2] === undefined) {
+                            dispatch(setArmory({ id: 2, item: inventoryItemCopy }))
+                            inventoryCopy.splice(e.target.id, 1);
+                            dispatch(updateInventory(inventoryCopy));
+                        }
+                        break;
+                    case 'chest':
+                        if (armoryCopy[4] === undefined) {
+                            dispatch(setArmory({ id: 4, item: inventoryItemCopy }))
+                            inventoryCopy.splice(e.target.id, 1);
+                            dispatch(updateInventory(inventoryCopy));
+                        }
+                        break;
+                    case 'shield':
+                        if (armoryCopy[5] === undefined) {
+                            dispatch(setArmory({ id: 5, item: inventoryItemCopy }))
+                            inventoryCopy.splice(e.target.id, 1);
+                            dispatch(updateInventory(inventoryCopy));
+                        }
+                        break;
+                    case 'belt':
+                        if (armoryCopy[7] === undefined) {
+                            dispatch(setArmory({ id: 7, item: inventoryItemCopy }))
+                            inventoryCopy.splice(e.target.id, 1);
+                            dispatch(updateInventory(inventoryCopy));
+                        }
+                        break;
+                    case 'ring':
+                        if (armoryCopy[9] === undefined) {                            
+                            dispatch(setArmory({ id: 9, item: inventoryItemCopy }))
+                            inventoryCopy.splice(e.target.id, 1);
+                            dispatch(updateInventory(inventoryCopy));
+                        } else if (armoryCopy[11] === undefined) {
+                            dispatch(setArmory({ id: 11, item: inventoryItemCopy }))
+                            inventoryCopy.splice(e.target.id, 1);
+                            dispatch(updateInventory(inventoryCopy));
+                        }
+                        break;
+                    default:
+                        break;
                 }
                 break;
 
@@ -109,7 +181,7 @@ const Inventory = ({ isActive }) => {
                     <p className="char_specifications_text">Защита: 11</p>
                 </div>
                 <div className="inventory_armor">
-                    {armory.map((e, index) => <ArmoryPoint armorItem={e} index={index}/>)}
+                    {armory.map((e, index) => <ArmoryPoint armorItem={e} index={index} />)}
                 </div>
             </div>
             <div className="inventory_bottom_container">
