@@ -1,6 +1,6 @@
 .botpanel_container {
     width: 100%;
-    height: calc(5vh+40vw);
+    height: 20vh;
     background-color: rgb(31, 31, 31);
     display: flex;
     flex-wrap: wrap;
@@ -18,7 +18,7 @@
 
 .charinfo_container {
     width: 80vw;
-    height: 20vw;
+    height: 10vh;
     /* background-color: rgb(85, 85, 85);
     border: 2px solid rgb(205, 205, 205); */
     display: flex;
@@ -76,7 +76,7 @@
 
 .charskill_container {
     width: 20vw;
-    height: 20vw;
+    height: 10vh;
     background: rgb(49,46,35);
     background: linear-gradient(0deg, rgba(49,46,35,1) 5%, rgba(1,1,0,1) 150%);
     border: 5px groove #3a3a3a;
