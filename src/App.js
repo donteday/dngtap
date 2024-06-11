@@ -16,13 +16,14 @@ import { mobList } from '../src/data/data'
 
 function App() {
   const dispatch = useDispatch();
-  const lvl = useSelector(state => state.counter.lvl);
+  // const lvl = useSelector(state => state.counter.lvl);
   const inventory = useSelector(state => state.counter.inventory);
   const armory = useSelector(state => state.counter.armory);
+  const strength = useSelector(state => state.counter.strength);
 
   const [mobCurrentHP, setMobHp] = useState(mobList[0].maxHP);
   const [isAttack, setIsAttack] = useState(false);
-  const [isActive, setIsActive] = useState(false);
+  const [isActive, setIsActive] = useState(true);
   const [textDropisActive, setTextDropIsActive] = useState(false);
   const mobRef = useRef();
   const mobAttackRef = useRef();
@@ -31,6 +32,24 @@ function App() {
   const [messages, setMessages] = useState([]);
   const [currentMessage, setCurrentMessage] = useState('');
 
+  function howDamage() {
+    let dmg = armory[3]?.baseDmg + armory[3]?.gain || 1;
+    let critChance = 1;
+    let strengthTemp = strength;
+    for (let i = 0; i < armory.length; i++) {
+      if (armory[i]) {
+        dmg += armory[i].additionalCharacteristics?.additionalDamage || 0;
+        critChance += armory[i].additionalCharacteristics?.critChance || 0;
+        strengthTemp += armory[i].additionalCharacteristics?.strength || 0;
+      }
+    }
+    dmg += strengthTemp / 3;
+    console.log(dmg);
+    return {
+      dmg : dmg,
+      critChance : critChance
+    }
+  }
 
   useEffect(() => {
     if (messages.length === 0) {
@@ -55,14 +74,17 @@ function App() {
     return () => clearInterval(intervalId);
   }, [messages]);
 
-
   function dropText(item, id) {
     dropTextArray = [...dropTextArray, item];
   }
 
   function attack() {
-    let weaponDmg = armory[3]?.baseDmg + armory[3]?.gain || 1;
-    setMobHp(mobCurrentHP - weaponDmg - lvl);
+    if (Math.random() * 100 < howDamage().critChance) {
+      setMobHp(mobCurrentHP - howDamage().dmg * 2);
+    } else {
+      setMobHp(mobCurrentHP - howDamage().dmg);
+    }
+
     mobAttackRef.current.style.top = `${Math.random() * 150 - 30}px`;
   }
 
@@ -121,7 +143,7 @@ function App() {
     }
     return () => clearInterval(timer);
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAttack, mobCurrentHP, mobList[0].maxHP]);
 
 
@@ -145,7 +167,7 @@ function App() {
 
             <div ref={mobAttackRef}></div>
 
-          </div> 
+          </div>
 
         </div>
         <button onClick={() => setIsActive(true)} className='inventory_open_btn'>Инвентарь</button>

@@ -14,7 +14,7 @@ const Inventory = ({ isActive }) => {
     let armory = useSelector(state => state.counter.armory);
     let state = useSelector(state => state.counter);
     // let armory = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
-    for (let i = 0; i < 24 + Math.round(inventory.length/6)*6; i++) {
+    for (let i = 0; i < 24 + Math.round(inventory.length / 6) * 6; i++) {
         inventoryCell.push(1);
     }
 
@@ -105,7 +105,7 @@ const Inventory = ({ isActive }) => {
                         }
                         break;
                     case 'ring':
-                        if (armoryCopy[9] === undefined) {                            
+                        if (armoryCopy[9] === undefined) {
                             dispatch(setArmory({ id: 9, item: inventoryItemCopy }))
                             inventoryCopy.splice(e.target.id, 1);
                             dispatch(updateInventory(inventoryCopy));
@@ -135,7 +135,7 @@ const Inventory = ({ isActive }) => {
             let inventoryItemCopy = { ...inventory[e.target.id] };
             let scrollCopy = { ...inventory[scrollId] };
             if (inventory[e.target.id].gain !== undefined && inventory[e.target.id].gain !== null && inventory[e.target.id].type === gainType) {
-                if (inventory[e.target.id].gain < 3 || Math.random() * 100 < 50 - inventory[e.target.id].gain * 2) {
+                if (inventory[e.target.id].gain < 3 || Math.random() * 100 < 1 - inventory[e.target.id].gain * 2) {
                     inventoryItemCopy.gain += 1;
                     dispatch(updateItemInventory({ id: e.target.id, item: inventoryItemCopy }));
                     if (scrollCopy.quantity > 0) {
@@ -147,18 +147,16 @@ const Inventory = ({ isActive }) => {
                 else {
                     let inventoryCopy = [...inventory];
                     inventoryCopy.splice(e.target.id, 1);
+
                     dispatch(updateInventory(inventoryCopy));
                     if (scrollCopy.quantity > 0) {
                         scrollCopy.quantity -= 1;
-                        e.target.id > scrollId ?
+                        +e.target.id > +scrollId ?
                             dispatch(updateItemInventory({ id: scrollId, item: scrollCopy }))
                             : dispatch(updateItemInventory({ id: scrollId - 1, item: scrollCopy }));
 
                     }
                 }
-                // refsById[scrollId].current.style.border = 'none';
-                // setScrollId(null);
-
             }
             setScrollId(null);
             setisGain(false);

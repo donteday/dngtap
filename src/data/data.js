@@ -11,7 +11,8 @@ export const itemList = [
       chance: 100,
       gain: null,
       writable: true,
-      isPutOn : false
+      isPutOn : false,
+      selling: false
     },
     {
       name: 'Железная Алебарда',
@@ -24,7 +25,20 @@ export const itemList = [
       quantity: 1,
       chance: 15,
       gain: 0,
-      isPutOn : true
+      isPutOn : true,
+      selling: true,
+      sellingPrice: 100000,
+      additionalCharacteristics : {
+        strength : 0,
+        agility : 0,
+        intelligency : 0,
+        defence: 0,
+        critChance : 12,
+        critForce : 1,
+        skillDamage : 0,
+        additionalDamage : 0,
+        speedAttack : 1
+      }
     },
     {
       name: 'Стальной шлем',
@@ -34,9 +48,11 @@ export const itemList = [
       stacking: false,
       blessed: false,
       quantity: 1,
-      chance: 10,
+      chance: 5,
       gain: 0,
-      isPutOn : true
+      isPutOn : true,
+      selling: true,
+      sellingPrice: 20000,
     },
     {
       name: 'Стальные сапоги',
@@ -46,9 +62,11 @@ export const itemList = [
       stacking: false,
       blessed: false,
       quantity: 1,
-      chance: 10,
+      chance: 5,
       gain: 0,
-      isPutOn : true
+      isPutOn : true,
+      selling: true,
+      sellingPrice: 20000,
     },
     {
       name: 'Стальные перчатки',
@@ -58,9 +76,11 @@ export const itemList = [
       stacking: false,
       blessed: false,
       quantity: 1,
-      chance: 15,
+      chance: 5,
       gain: 0,
-      isPutOn : true
+      isPutOn : true,
+      selling: true,
+      sellingPrice: 20000,
     },
     {
       name: 'Кольцо высокой силы',
@@ -70,9 +90,22 @@ export const itemList = [
       stacking: false,
       blessed: false,
       quantity: 1,
-      chance: 1,
+      chance: 2,
       gain: null,
       isPutOn : true,
+      selling: true,
+      sellingPrice: 1000000,
+      additionalCharacteristics : {
+        strength : 3,
+        agility : 0,
+        intelligency : 0,
+        defence: 0,
+        critChance : 3,
+        critForce : 1,
+        skillDamage : 0,
+        additionalDamage : 2,
+        speedAttack : 1
+      }      
     },
     {
       name: 'Свиток усиления оружия',
@@ -86,7 +119,8 @@ export const itemList = [
       chance: 50,
       gain: null,
       writable: true,
-      isPutOn : false
+      isPutOn : false,
+      selling: false
     },
     {
       name: 'Свиток усиления доспехов',
@@ -100,7 +134,8 @@ export const itemList = [
       chance: 50,
       gain: null,
       writable: true,
-      isPutOn : false
+      isPutOn : false,
+      selling: false
     },
   ]
 
