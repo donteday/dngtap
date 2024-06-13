@@ -1,7 +1,7 @@
 import './Inventory.css';
 import InventoryPoint from './InventoryPoint/InventoryPoint';
 import { useSelector, useDispatch } from 'react-redux'
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { updateInventory, updateItemInventory, setArmory } from '../../redux/store/store'
 import ArmoryPoint from './ArmoryPoint/ArmoryPoint';
@@ -14,9 +14,26 @@ const Inventory = ({ isActive }) => {
     let armory = useSelector(state => state.counter.armory);
     let state = useSelector(state => state.counter);
     // let armory = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
-    for (let i = 0; i < 24 + Math.round(inventory.length / 6) * 6; i++) {
+    for (let i = 0; i < 25; i++) {
         inventoryCell.push(1);
     }
+    function inventoryLength() {
+let lenght = 0;
+
+    }
+    // if (inventory.length >= inventoryCell.length) {
+    //     for (let i = 0; i < 5; i++) {
+    //         inventoryCell.push(1);
+    //     }
+    // }
+    // useEffect(() => {
+    //     console.log(123);
+    //     for (let i = 0; i < 6; i++) {
+    //         inventoryCell.push(1);
+    //     }
+
+    //   }, []);
+
 
     const dispatch = useDispatch();
 

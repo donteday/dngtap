@@ -41,6 +41,7 @@ export const counterSlice = createSlice({
           speedAttack : 1
         }
       },
+      
     ],
     armory: [undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined],
     writable: true

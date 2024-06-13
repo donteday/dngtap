@@ -33,6 +33,7 @@ function App() {
   const [currentMessage, setCurrentMessage] = useState('');
 
   function howDamage() {
+    console.log();
     let dmg = armory[3]?.baseDmg + armory[3]?.gain || 1;
     let critChance = 1;
     let strengthTemp = strength;
