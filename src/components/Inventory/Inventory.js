@@ -152,7 +152,7 @@ let lenght = 0;
             let inventoryItemCopy = { ...inventory[e.target.id] };
             let scrollCopy = { ...inventory[scrollId] };
             if (inventory[e.target.id].gain !== undefined && inventory[e.target.id].gain !== null && inventory[e.target.id].type === gainType) {
-                if (inventory[e.target.id].gain < 3 || Math.random() * 100 < 40 - inventory[e.target.id].gain * 2) {
+                if (inventory[e.target.id].gain < 3 || Math.random() * 100 < 50 - inventory[e.target.id].gain * 2) {
                     inventoryItemCopy.gain += 1;
                     dispatch(updateItemInventory({ id: e.target.id, item: inventoryItemCopy }));
                     if (scrollCopy.quantity > 0) {
