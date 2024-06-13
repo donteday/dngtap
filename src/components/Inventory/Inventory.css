@@ -3,8 +3,23 @@
     position: absolute;
     width: 100%;
     height: 100vh;
-  z-index: 1;
-  
+    z-index: 1;
+
+}
+
+.inventory_name {
+    width: 100%;
+    height: 35px;
+    border: 3px groove #3a3a3a;
+    background: rgb(235, 11, 11);
+    background: radial-gradient(circle, rgba(235, 11, 11, 1) 0%, rgba(64, 8, 10, 1) 70%);
+    display: flex;
+    align-items: center;
+
+}
+
+.inventory_name_text {
+    flex-grow: 1;
 }
 
 .inventory_top_container {
@@ -15,12 +30,12 @@
     display: flex;
     flex-direction: row;
     justify-content: space-around;
-    background: rgb(49,46,35); 
-    background: linear-gradient(0deg, rgba(49,46,35,1) 0%, rgba(1,1,0,1) 50%);
+    background: rgb(49, 46, 35);
+    background: linear-gradient(0deg, rgba(49, 46, 35, 1) 0%, rgba(1, 1, 0, 1) 50%);
     /* border: 3px groove #3a3a3a; */
     border: 1px solid transparent;
-    
-    border-image: url('../../img/ui/frame.png') 150 / 100 round round; 
+
+    border-image: url('../../img/ui/frame.png') 150 / 100 round round;
 }
 
 .char_specifications_container {
@@ -29,6 +44,7 @@
     align-items: start;
     padding-top: 20px;
 }
+
 .char_specifications_text {
     color: white;
 }
@@ -43,7 +59,7 @@
     align-items: center;
     align-content: center;
     gap: 5px;
-    
+
 }
 
 
@@ -51,7 +67,7 @@
 .inventory_bottom_container {
     width: 100%;
     height: 60vh;
-    background: rgb(49,46,35);
+    background: rgb(49, 46, 35);
     overflow-y: scroll;
     display: flex;
     flex-wrap: wrap;
@@ -60,7 +76,7 @@
     flex-direction: row;
     align-content: flex-start;
     scrollbar-color: rgba(49, 46, 35, 1) rgba(1, 1, 0, 1);
-        
+
 }
 
 .inventory_bottom_container::-webkit-scrollbar {
@@ -69,13 +85,12 @@
 
 .inventory_close {
     position: absolute;
-    right: 10px;
-    top: 10px;
-    padding: 3px;
-    background: rgb(49,46,35);
-    background: linear-gradient(0deg, rgba(49,46,35,1) 5%, rgba(1,1,0,1) 150%);
+    padding: 1px;
+    right: 0;
+    background: rgb(49, 46, 35);
+    background: linear-gradient(0deg, rgba(49, 46, 35, 1) 5%, rgba(1, 1, 0, 1) 150%);
     width: 30px;
     height: 30px;
-    border-radius: 50%;
-    
+    border-radius: 5%;
+
 }

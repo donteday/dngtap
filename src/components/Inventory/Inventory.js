@@ -1,7 +1,7 @@
 import './Inventory.css';
 import InventoryPoint from './InventoryPoint/InventoryPoint';
 import { useSelector, useDispatch } from 'react-redux'
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 import { updateInventory, updateItemInventory, setArmory } from '../../redux/store/store'
 import ArmoryPoint from './ArmoryPoint/ArmoryPoint';
@@ -17,10 +17,7 @@ const Inventory = ({ isActive }) => {
     for (let i = 0; i < 25; i++) {
         inventoryCell.push(1);
     }
-    function inventoryLength() {
-let lenght = 0;
 
-    }
     // if (inventory.length >= inventoryCell.length) {
     //     for (let i = 0; i < 5; i++) {
     //         inventoryCell.push(1);
@@ -184,8 +181,12 @@ let lenght = 0;
     return (
         <div className="inventory_container">
 
-            <button className="inventory_close" onClick={() => isActive(false)}>X</button>
+            <div className="inventory_name">
+                <div className='inventory_name_text'>Инвентарь</div>
+                <button className="inventory_close" onClick={() => isActive(false)}>X</button>
 
+
+            </div>
             <div className="inventory_top_container">
                 <div className="char_specifications_container">
                     <p className="char_specifications_text">Имя: Meow</p>
