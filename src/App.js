@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 // import { useDispatch, useSelector } from 'react-redux'
 // import { incrementMoney, addExp, startGame } from './redux/store/store'
-import { addExp, updateInventory } from './redux/store/store'
+import { addExp, updateInventory, healthHandler } from './redux/store/store'
 import './App.css';
 
 import Header from './components/Header/Header';
@@ -45,7 +45,6 @@ function App() {
       }
     }
     dmg += strengthTemp / 3;
-    console.log(dmg);
     return {
       dmg : dmg,
       critChance : critChance
@@ -79,13 +78,26 @@ function App() {
     dropTextArray = [...dropTextArray, item];
   }
 
+  const calculateProtection = () => {
+    let totalProtection = 0;
+    armory.forEach(item => {
+        if (item && item.defence) {
+      totalProtection += item.defence;
+      totalProtection += item.gain;
+            
+        }
+    });
+    return totalProtection;
+  }
+
   function attack() {
     if (Math.random() * 100 < howDamage().critChance) {
       setMobHp(mobCurrentHP - howDamage().dmg * 2);
     } else {
       setMobHp(mobCurrentHP - howDamage().dmg);
     }
-
+    dispatch(healthHandler(-Math.round((mobList[0].attack - mobList[0].attack*calculateProtection()/100))));
+    console.log(Math.round((mobList[0].attack - mobList[0].attack*calculateProtection()/100)));
     mobAttackRef.current.style.top = `${Math.random() * 150 - 30}px`;
   }
 

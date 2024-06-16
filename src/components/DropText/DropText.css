@@ -3,6 +3,7 @@
     bottom: 40px;
     display: flex;
     animation: .9s ease-out textAnimated infinite;
+    z-index: 2;
 
 }
 

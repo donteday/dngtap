@@ -12,7 +12,8 @@ export const counterSlice = createSlice({
     lvl: 1,
     currentExp: 0,
     maxExp: 10,
-    hp: maxHp,
+    health: maxHp,
+    currentHealth: maxHp,
     strength: 3,
     inventory: [
       {
@@ -56,6 +57,12 @@ export const counterSlice = createSlice({
     increment: (state, action) => {
       state[action.payload.name] += action.payload.src;
     },
+    healthHandler: (state, action) => {
+      if ((state.currentHealth += action.payload) >= state.health) {
+        state.currentHealth = state.health;
+        return;
+      } else state.currentHealth += action.payload;
+    },
     zeroingExp: (state, action) => {
       state.currentExp = action.payload;
     },
@@ -67,7 +74,8 @@ export const counterSlice = createSlice({
         state.currentExp = delta;
         state.maxExp = state.lvl * state.lvl * state.lvl * 5;
 
-        state.hp = state.hp + 25;
+        state.health = state.health + state.lvl*10;
+        state.currentHealth = state.health;
       }
     },
     addItem: (state, action) => {
@@ -90,6 +98,6 @@ export const counterSlice = createSlice({
 })
 // state.improve[action.payload.index].amount
 
-export const { addItem, addExp, updateInventory, updateItemInventory, setArmory } = counterSlice.actions
+export const { addItem, addExp, updateInventory, updateItemInventory, setArmory, healthHandler } = counterSlice.actions
 
 export default counterSlice.reducer

@@ -48,6 +48,7 @@ export const itemList = [
       stacking: false,
       blessed: false,
       quantity: 1,
+      defence: 7,
       chance: 5,
       gain: 0,
       isPutOn : true,
@@ -62,6 +63,7 @@ export const itemList = [
       stacking: false,
       blessed: false,
       quantity: 1,
+      defence: 4,
       chance: 5,
       gain: 0,
       isPutOn : true,
@@ -76,6 +78,7 @@ export const itemList = [
       stacking: false,
       blessed: false,
       quantity: 1,
+      defence: 4,
       chance: 5,
       gain: 0,
       isPutOn : true,
@@ -115,7 +118,7 @@ export const itemList = [
       gainType: 'weapon',
       blessed: false,
       stacking: true,
-      quantity: 1,
+      quantity: 2,
       chance: 50,
       gain: null,
       writable: true,
@@ -130,7 +133,7 @@ export const itemList = [
       gainType: 'armor',
       blessed: false,
       stacking: true,
-      quantity: 1,
+      quantity: 2,
       chance: 50,
       gain: null,
       writable: true,
@@ -142,7 +145,8 @@ export const itemList = [
 export const mobList = [
     {
         name: 'Гремлин',
-        maxHP : 50, 
+        maxHP : 50,
+        attack : 5, 
         dropList: itemList
     }
 ];

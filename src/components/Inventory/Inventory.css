@@ -68,7 +68,7 @@
     width: 100%;
     height: 60vh;
     background: rgb(49, 46, 35);
-    overflow-y: scroll;
+    overflow-y: hidden;
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;

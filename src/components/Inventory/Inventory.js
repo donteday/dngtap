@@ -18,14 +18,22 @@ const Inventory = ({ isActive }) => {
         inventoryCell.push(1);
     }
 
-    // if (inventory.length >= inventoryCell.length) {
-    //     for (let i = 0; i < 5; i++) {
-    //         inventoryCell.push(1);
-    //     }
-    // }
+    const calculateProtection = () => {
+        let totalProtection = 0;
+        armory.forEach(item => {
+            if (item && item.defence) {
+          totalProtection += item.defence;
+          totalProtection += item.gain;
+                
+            }
+        });
+        return totalProtection;
+      }
+      console.log(calculateProtection());
+
     // useEffect(() => {
     //     console.log(123);
-    //     for (let i = 0; i < 6; i++) {
+    //     for (let i = 0; i < armory.length; i++) {
     //         inventoryCell.push(1);
     //     }
 
@@ -195,7 +203,7 @@ const Inventory = ({ isActive }) => {
                     <p className="char_specifications_text">Сила: 11</p>
                     <p className="char_specifications_text">Ловкость: 11</p>
                     <p className="char_specifications_text">Интеллект: 11</p>
-                    <p className="char_specifications_text">Защита: 11</p>
+                    <p className="char_specifications_text">Защита: {calculateProtection()}</p>
                 </div>
                 <div className="inventory_armor">
                     {armory.map((e, index) => <ArmoryPoint armorItem={e} index={index} />)}
