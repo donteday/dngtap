@@ -17,9 +17,10 @@ import { mobList } from '../src/data/data'
 function App() {
   const dispatch = useDispatch();
   // const lvl = useSelector(state => state.counter.lvl);
-  const inventory = useSelector(state => state.counter.inventory);
-  const armory = useSelector(state => state.counter.armory);
-  const strength = useSelector(state => state.counter.strength);
+  let currentCharacter = useSelector(state => state.counter.currentCharacter);
+  let inventory = useSelector(state => state.counter.characters[currentCharacter].inventory);
+  let armory = useSelector(state => state.counter.characters[currentCharacter].armory);
+  const strength = useSelector(state => state.counter.characters[currentCharacter].strength);
 
   const [mobCurrentHP, setMobHp] = useState(mobList[0].maxHP);
   const [isAttack, setIsAttack] = useState(false);
@@ -33,7 +34,6 @@ function App() {
   const [currentMessage, setCurrentMessage] = useState('');
 
   function howDamage() {
-    console.log();
     let dmg = armory[3]?.baseDmg + armory[3]?.gain || 1;
     let critChance = 1;
     let strengthTemp = strength;

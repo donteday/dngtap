@@ -9,7 +9,8 @@ import { useSelector, useDispatch } from 'react-redux'
 const ArmoryPoint = ({ armorItem, index }) => {
     const dispatch = useDispatch();
     const itemRef = useRef();
-    let inventory = useSelector(state => state.counter.inventory);
+    let currentCharacter = useSelector(state => state.counter.currentCharacter);
+    let inventory = useSelector(state => state.counter.characters[currentCharacter].inventory);
 
     useEffect(() => {
         if (armorItem !== undefined) {

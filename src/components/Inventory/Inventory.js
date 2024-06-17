@@ -9,11 +9,16 @@ import ArmoryPoint from './ArmoryPoint/ArmoryPoint';
 
 const Inventory = ({ isActive }) => {
 
+    const dispatch = useDispatch();
     let inventoryCell = [];
-    let inventory = useSelector(state => state.counter.inventory);
-    let armory = useSelector(state => state.counter.armory);
-    let state = useSelector(state => state.counter);
-    // let armory = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+    let currentCharacter = useSelector(state => state.counter.currentCharacter);
+    let inventory = useSelector(state => state.counter.characters[currentCharacter].inventory);
+    let armory = useSelector(state => state.counter.characters[currentCharacter].armory);
+    let state = useSelector(state => state.counter.characters[currentCharacter]);
+    const [isGain, setisGain] = useState(false);
+    const [gainType, setGainType] = useState('');
+    const [scrollId, setScrollId] = useState(null);
+
     for (let i = 0; i < 25; i++) {
         inventoryCell.push(1);
     }
@@ -22,14 +27,13 @@ const Inventory = ({ isActive }) => {
         let totalProtection = 0;
         armory.forEach(item => {
             if (item && item.defence) {
-          totalProtection += item.defence;
-          totalProtection += item.gain;
-                
+                totalProtection += item.defence;
+                totalProtection += item.gain;
+
             }
         });
         return totalProtection;
-      }
-      console.log(calculateProtection());
+    }
 
     // useEffect(() => {
     //     console.log(123);
@@ -39,14 +43,6 @@ const Inventory = ({ isActive }) => {
 
     //   }, []);
 
-
-    const dispatch = useDispatch();
-
-    const [isGain, setisGain] = useState(false);
-    const [gainType, setGainType] = useState('');
-    const [scrollId, setScrollId] = useState(null);
-
-    // const [armory, setArmory] = useState([undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined]);
     function goItem(e) {
         if (!inventory[e.target.id]) return;
         let inventoryItemCopy = { ...inventory[e.target.id] };
@@ -199,7 +195,7 @@ const Inventory = ({ isActive }) => {
                 <div className="char_specifications_container">
                     <p className="char_specifications_text">Имя: Meow</p>
                     <p className="char_specifications_text">Уровень: {state.lvl}</p>
-                    <p className="char_specifications_text">HP: {state.hp}</p>
+                    <p className="char_specifications_text">HP: {state.health}</p>
                     <p className="char_specifications_text">Сила: 11</p>
                     <p className="char_specifications_text">Ловкость: 11</p>
                     <p className="char_specifications_text">Интеллект: 11</p>
@@ -210,17 +206,9 @@ const Inventory = ({ isActive }) => {
                 </div>
             </div>
             <div className="inventory_bottom_container">
-
-
                 {inventoryCell.map((e, index) => index < inventory.length ?
-                    <div onDoubleClick={(e) => goItem(e)} onClick={(e) => gainUp(e)}
-
-                    ><InventoryPoint id={index} item={inventory[index]} key={index} selected={scrollId} /> </div>
+                    <div onDoubleClick={(e) => goItem(e)} onClick={(e) => gainUp(e)}><InventoryPoint id={index} item={inventory[index]} key={index} selected={scrollId} /> </div>
                     : <div className="inventory_item_container"></div>)}
-
-                {/* {  inventory.map((item, index) => <InventoryPoint item={item} key={index}/>)} */}
-
-
             </div>
 
         </div>

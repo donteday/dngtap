@@ -9,44 +9,51 @@ const maxHp = 75;
 export const counterSlice = createSlice({
   name: 'game',
   initialState: {
-    lvl: 1,
-    currentExp: 0,
-    maxExp: 10,
-    health: maxHp,
-    currentHealth: maxHp,
-    strength: 3,
-    inventory: [
+    currentCharacter: 0,
+    characters: [
       {
-        name: 'Железная Алебарда',
-        id: 1,
-        type: 'weapon',
-        subtype: 'halberd',
-        baseDmg: 7,
-        stacking: false,
-        blessed: false,
-        quantity: 1,
-        chance: 15,
-        gain: 3,
-        isPutOn : true,
-        selling: true,
-        sellingPrice: 100000,
-        additionalCharacteristics : {
-          strength : 0,
-          agility : 0,
-          intelligency : 0,
-          defence: 0,
-          critChance : 12,
-          critForce : 1,
-          skillDamage : 0,
-          additionalDamage : 0,
-          speedAttack : 1
-        }
-      },
-      
+        characterType: 'warrior',
+        lvl: 1,
+        currentExp: 0,
+        maxExp: 10,
+        health: maxHp,
+        currentHealth: maxHp,
+        strength: 3,
+        armory: [undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined],
+        inventory: [
+          {
+            name: 'Железная Алебарда',
+            id: 1,
+            type: 'weapon',
+            subtype: 'halberd',
+            baseDmg: 7,
+            stacking: false,
+            blessed: false,
+            quantity: 1,
+            chance: 15,
+            gain: 3,
+            isPutOn: true,
+            selling: true,
+            sellingPrice: 100000,
+            additionalCharacteristics: {
+              strength: 0,
+              agility: 0,
+              intelligency: 0,
+              defence: 0,
+              critChance: 12,
+              critForce: 1,
+              skillDamage: 0,
+              additionalDamage: 0,
+              speedAttack: 1
+            }
+          },
+        ],
+      }
     ],
-    armory: [undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined],
+
     writable: true
-  },
+  }
+  ,
   reducers: {
     startGame: (state) => {
       state.game = true;
@@ -58,46 +65,52 @@ export const counterSlice = createSlice({
       state[action.payload.name] += action.payload.src;
     },
     healthHandler: (state, action) => {
-      if ((state.currentHealth += action.payload) >= state.health) {
-        state.currentHealth = state.health;
-        return;
-      } else state.currentHealth += action.payload;
+      // if ((state.characters[state.currentCharacter].currentHealth += action.payload) >= state.characters[state.currentCharacter].health) {
+      //   state.characters[state.currentCharacter].currentHealth = state.characters[state.currentCharacter].health;
+      //   return;
+      // } else 
+      state.characters[state.currentCharacter].currentHealth += action.payload;
     },
     zeroingExp: (state, action) => {
       state.currentExp = action.payload;
     },
     addExp: (state, action) => {
-      state.currentExp += action.payload;
-      if (state.currentExp >= state.maxExp) {
-        let delta = state.currentExp - state.maxExp;
-        state.lvl = state.lvl + 1;
-        state.currentExp = delta;
-        state.maxExp = state.lvl * state.lvl * state.lvl * 5;
+      state.characters[state.currentCharacter].currentExp += action.payload;
+      if (state.characters[state.currentCharacter].currentExp >= state.characters[state.currentCharacter].maxExp) {
+        let delta = state.characters[state.currentCharacter].currentExp - state.characters[state.currentCharacter].maxExp;
+        state.characters[state.currentCharacter].lvl = state.characters[state.currentCharacter].lvl + 1;
+        state.characters[state.currentCharacter].currentExp = delta;
+        state.characters[state.currentCharacter].maxExp = state.characters[state.currentCharacter].lvl * state.characters[state.currentCharacter].lvl * state.characters[state.currentCharacter].lvl * 5;
 
-        state.health = state.health + state.lvl*10;
-        state.currentHealth = state.health;
+        state.characters[state.currentCharacter].health = state.characters[state.currentCharacter].health + state.characters[state.currentCharacter].lvl * 10;
+        state.characters[state.currentCharacter].currentHealth = state.characters[state.currentCharacter].health;
       }
     },
     addItem: (state, action) => {
       state.inventory[0].quantity = state.inventory[0].quantity + Math.round(Math.random() * 10);
     },
     updateInventory: (state, action) => {
-      state.inventory = action.payload;
+      state.characters[state.currentCharacter].inventory = action.payload;
     },
     setArmory: (state, action) => {
-      state.armory[action.payload.id] = action.payload.item;
+      state.characters[state.currentCharacter].armory[action.payload.id] = action.payload.item;
     },
     updateItemInventory: (state, action) => {
       if (action.payload.item.quantity <= 0) {
-        console.log('payaload', action.payload.item.id);
-        state.inventory.splice(action.payload.id, 1);
-      } else state.inventory[action.payload.id] = action.payload.item;
+        // console.log('payaload', action.payload.item.id);
+        state.characters[state.currentCharacter].inventory.splice(action.payload.id, 1);
+      } else state.characters[state.currentCharacter].inventory[action.payload.id] = action.payload.item;
 
     },
   }
 })
 // state.improve[action.payload.index].amount
 
-export const { addItem, addExp, updateInventory, updateItemInventory, setArmory, healthHandler } = counterSlice.actions
+export const { addItem,
+  addExp,
+  updateInventory,
+  updateItemInventory,
+  setArmory,
+  healthHandler } = counterSlice.actions
 
 export default counterSlice.reducer
