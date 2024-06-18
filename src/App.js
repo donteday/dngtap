@@ -46,8 +46,8 @@ function App() {
     }
     dmg += strengthTemp / 3;
     return {
-      dmg : dmg,
-      critChance : critChance
+      dmg: dmg,
+      critChance: critChance
     }
   }
 
@@ -81,11 +81,11 @@ function App() {
   const calculateProtection = () => {
     let totalProtection = 0;
     armory.forEach(item => {
-        if (item && item.defence) {
-      totalProtection += item.defence;
-      totalProtection += item.gain;
-            
-        }
+      if (item && item.defence) {
+        totalProtection += item.defence;
+        totalProtection += item.gain;
+
+      }
     });
     return totalProtection;
   }
@@ -96,8 +96,8 @@ function App() {
     } else {
       setMobHp(mobCurrentHP - howDamage().dmg);
     }
-    dispatch(healthHandler(-Math.round((mobList[0].attack - mobList[0].attack*calculateProtection()/100))));
-    console.log(Math.round((mobList[0].attack - mobList[0].attack*calculateProtection()/100)));
+    dispatch(healthHandler(-Math.round((mobList[0].attack - mobList[0].attack * calculateProtection() / 100))));
+    console.log(Math.round((mobList[0].attack - mobList[0].attack * calculateProtection() / 100)));
     mobAttackRef.current.style.top = `${Math.random() * 150 - 30}px`;
   }
 
@@ -169,13 +169,12 @@ function App() {
           <div className="mobHpBar-container">
             <div className="mobHpBar" style={{ width: `${(mobCurrentHP / mobList[0].maxHP) * 100}%` }}>
             </div>
-            {/* <div className="mobHpBar-text">{mobCurrentHP}</div> */}
           </div>
 
           {textDropisActive ? <DropText drop={currentMessage} /> : ''}
+          <div className='success'></div>
 
 
-          {/* <div>{currentMessage.name}</div> */}
           <div className='mob' ref={mobRef} onClick={() => setIsAttack(true)}>
 
             <div ref={mobAttackRef}></div>
