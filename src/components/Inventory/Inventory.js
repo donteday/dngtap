@@ -6,6 +6,8 @@ import React, { useState } from 'react';
 import { updateInventory, updateItemInventory, setArmory } from '../../redux/store/store'
 import ArmoryPoint from './ArmoryPoint/ArmoryPoint';
 
+import Lottie from 'lottie-react';
+import animationData from '../../img/animation/succes.json';
 
 const Inventory = ({ isActive }) => {
 
@@ -16,6 +18,7 @@ const Inventory = ({ isActive }) => {
     let armory = useSelector(state => state.counter.characters[currentCharacter].armory);
     let state = useSelector(state => state.counter.characters[currentCharacter]);
     const [isGain, setisGain] = useState(false);
+    const [success, setSuccess] = useState(false);
     const [gainType, setGainType] = useState('');
     const [scrollId, setScrollId] = useState(null);
 
@@ -29,7 +32,6 @@ const Inventory = ({ isActive }) => {
             if (item && item.defence) {
                 totalProtection += item.defence;
                 totalProtection += item.gain;
-
             }
         });
         return totalProtection;
@@ -42,7 +44,6 @@ const Inventory = ({ isActive }) => {
     //     }
 
     //   }, []);
-
     function goItem(e) {
         if (!inventory[e.target.id]) return;
         let inventoryItemCopy = { ...inventory[e.target.id] };
@@ -154,6 +155,7 @@ const Inventory = ({ isActive }) => {
             let scrollCopy = { ...inventory[scrollId] };
             if (inventory[e.target.id].gain !== undefined && inventory[e.target.id].gain !== null && inventory[e.target.id].type === gainType) {
                 if (inventory[e.target.id].gain < 3 || Math.random() * 100 < 50 - inventory[e.target.id].gain * 2) {
+                    setSuccess(true);
                     inventoryItemCopy.gain += 1;
                     dispatch(updateItemInventory({ id: e.target.id, item: inventoryItemCopy }));
                     if (scrollCopy.quantity > 0) {
@@ -179,11 +181,24 @@ const Inventory = ({ isActive }) => {
             setScrollId(null);
             setisGain(false);
             setGainType('');
+            setTimeout(() => {
+                setSuccess(false);
+
+            }, 4000);
+
+
         }
     }
 
     return (
         <div className="inventory_container">
+
+            {success ?
+                <Lottie className="success" animationData={animationData} play loop={false} />
+                : ''
+            }
+
+
 
             <div className="inventory_name">
                 <div className='inventory_name_text'>Инвентарь</div>
