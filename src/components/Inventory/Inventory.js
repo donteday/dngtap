@@ -1,7 +1,7 @@
 import './Inventory.css';
 import InventoryPoint from './InventoryPoint/InventoryPoint';
 import { useSelector, useDispatch } from 'react-redux'
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 
 import { updateInventory, updateItemInventory, setArmory } from '../../redux/store/store'
 import ArmoryPoint from './ArmoryPoint/ArmoryPoint';
@@ -22,7 +22,6 @@ const Inventory = ({ isActive }) => {
     const [success, setSuccess] = useState(false);
     const [gainType, setGainType] = useState('');
     const [scrollId, setScrollId] = useState(null);
-    const animationTimer = useRef();
 
     for (let i = 0; i < 25; i++) {
         inventoryCell.push(1);
@@ -46,6 +45,29 @@ const Inventory = ({ isActive }) => {
     //     }
 
     //   }, []);
+    let successAnimationTimer = useRef(null);
+    useEffect(() => {
+        if (successAnimationTimer) {
+            console.log(successAnimationTimer.current);
+            clearTimeout(successAnimationTimer.current);
+        }
+        if (success) {
+            successAnimationTimer.current = setTimeout(() => {
+                setSuccess(false);
+            }, 2000);
+        }
+
+        return () => clearTimeout(successAnimationTimer.current);
+
+    }, [success]);
+
+    function startAnimation() {
+        setSuccess(false);
+        setTimeout(() => {
+            setSuccess(true);
+        }, 0);
+    }
+
     function goItem(e) {
         if (!inventory[e.target.id]) return;
         let inventoryItemCopy = { ...inventory[e.target.id] };
@@ -153,19 +175,11 @@ const Inventory = ({ isActive }) => {
         if (!inventory[e.target.id]) return;
 
         if (isGain) {
-
             let inventoryItemCopy = { ...inventory[e.target.id] };
             let scrollCopy = { ...inventory[scrollId] };
-            // setSuccess(false);
-
             if (inventory[e.target.id].gain !== undefined && inventory[e.target.id].gain !== null && inventory[e.target.id].type === gainType) {
                 if (inventory[e.target.id].gain < 3 || Math.random() * 100 < 50 - inventory[e.target.id].gain * 2) {
-                    if (animationTimer.current) {
-                        clearTimeout(animationTimer.current);
-                        setSuccess(false);
-
-                    }
-                    setSuccess(true);
+                    startAnimation();
                     inventoryItemCopy.gain += 1;
                     dispatch(updateItemInventory({ id: e.target.id, item: inventoryItemCopy }));
                     if (scrollCopy.quantity > 0) {
@@ -173,14 +187,10 @@ const Inventory = ({ isActive }) => {
                         console.log(scrollId);
                         dispatch(updateItemInventory({ id: scrollId, item: scrollCopy }));
                     }
-                    animationTimer.current = setTimeout(() => {
-                        setSuccess(false);
-                    }, 2000);
                 }
                 else {
                     let inventoryCopy = [...inventory];
                     inventoryCopy.splice(e.target.id, 1);
-
                     dispatch(updateInventory(inventoryCopy));
                     if (scrollCopy.quantity > 0) {
                         scrollCopy.quantity -= 1;
@@ -200,14 +210,11 @@ const Inventory = ({ isActive }) => {
     return (
         <div className="inventory_container">
 
-            {success ?
+            {success &&
                 <div className="success">
                     <DotLottieReact src={require("../../img/animation/success.lottie")} autoplay loop={false} speed={1.5} />
                 </div>
-                : ''
             }
-
-
 
             <div className="inventory_name">
                 <div className='inventory_name_text'>Инвентарь</div>

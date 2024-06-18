@@ -31,7 +31,7 @@ export const counterSlice = createSlice({
             blessed: false,
             quantity: 1,
             chance: 15,
-            gain: 3,
+            gain: 0,
             isPutOn: true,
             selling: true,
             sellingPrice: 100000,
