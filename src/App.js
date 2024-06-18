@@ -14,6 +14,7 @@ import DropText from './components/DropText/DropText';
 import { mobList } from '../src/data/data'
 
 
+
 function App() {
   const dispatch = useDispatch();
   // const lvl = useSelector(state => state.counter.lvl);
@@ -159,6 +160,16 @@ function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAttack, mobCurrentHP, mobList[0].maxHP]);
 
+  // let sundukDrop = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+  // function sunduk() {
+  //   for (let i = 0; i < sundukDrop.length; i++) {
+  //     if (Math.random() < 0.5-i/100) {
+  //       console.log(sundukDrop[i]);
+  //       return;
+  //     }
+  //   }
+  // }
 
   return (
     <div className="App">
