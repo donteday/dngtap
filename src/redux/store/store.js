@@ -47,6 +47,21 @@ export const counterSlice = createSlice({
               speedAttack: 1
             }
           },
+          {
+            name: 'Свиток усиления оружия',
+            id: 2,
+            type: 'gain',
+            subtype: 'ordinary',
+            gainType: 'weapon',
+            blessed: false,
+            stacking: true,
+            quantity: 2,
+            chance: 50,
+            gain: null,
+            writable: true,
+            isPutOn : false,
+            selling: false
+          },
         ],
       }
     ],

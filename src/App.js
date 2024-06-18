@@ -183,7 +183,6 @@ function App() {
           </div>
 
           {textDropisActive ? <DropText drop={currentMessage} /> : ''}
-          <div className='success'></div>
 
 
           <div className='mob' ref={mobRef} onClick={() => setIsAttack(true)}>

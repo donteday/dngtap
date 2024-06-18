@@ -1,13 +1,14 @@
 import './Inventory.css';
 import InventoryPoint from './InventoryPoint/InventoryPoint';
 import { useSelector, useDispatch } from 'react-redux'
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 
 import { updateInventory, updateItemInventory, setArmory } from '../../redux/store/store'
 import ArmoryPoint from './ArmoryPoint/ArmoryPoint';
 
-import Lottie from 'lottie-react';
-import animationData from '../../img/animation/succes.json';
+
+import { DotLottieReact } from '@lottiefiles/dotlottie-react';
+// import Lottie from 'lottie-react';
 
 const Inventory = ({ isActive }) => {
 
@@ -21,6 +22,7 @@ const Inventory = ({ isActive }) => {
     const [success, setSuccess] = useState(false);
     const [gainType, setGainType] = useState('');
     const [scrollId, setScrollId] = useState(null);
+    const animationTimer = useRef();
 
     for (let i = 0; i < 25; i++) {
         inventoryCell.push(1);
@@ -153,8 +155,12 @@ const Inventory = ({ isActive }) => {
         if (isGain) {
             let inventoryItemCopy = { ...inventory[e.target.id] };
             let scrollCopy = { ...inventory[scrollId] };
+            // setSuccess(false);
+
             if (inventory[e.target.id].gain !== undefined && inventory[e.target.id].gain !== null && inventory[e.target.id].type === gainType) {
                 if (inventory[e.target.id].gain < 3 || Math.random() * 100 < 50 - inventory[e.target.id].gain * 2) {
+                    clearTimeout(animationTimer.current);
+                    setSuccess(!success);
                     setSuccess(true);
                     inventoryItemCopy.gain += 1;
                     dispatch(updateItemInventory({ id: e.target.id, item: inventoryItemCopy }));
@@ -163,6 +169,9 @@ const Inventory = ({ isActive }) => {
                         console.log(scrollId);
                         dispatch(updateItemInventory({ id: scrollId, item: scrollCopy }));
                     }
+                    animationTimer.current = setTimeout(() => {
+                        setSuccess(false);
+                    }, 4000);
                 }
                 else {
                     let inventoryCopy = [...inventory];
@@ -181,12 +190,6 @@ const Inventory = ({ isActive }) => {
             setScrollId(null);
             setisGain(false);
             setGainType('');
-            setTimeout(() => {
-                setSuccess(false);
-
-            }, 4000);
-
-
         }
     }
 
@@ -194,7 +197,9 @@ const Inventory = ({ isActive }) => {
         <div className="inventory_container">
 
             {success ?
-                <Lottie className="success" animationData={animationData} play loop={false} />
+                <div className="success">
+                    <DotLottieReact src={require("../../img/animation/success.lottie")} autoplay loop={false} />
+                </div>
                 : ''
             }
 

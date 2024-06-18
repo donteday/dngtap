@@ -112,23 +112,13 @@
   border-image: url('./img/ui/frame.png') 70 / 15 round round; 
 }
 
-.success {
-  position: absolute;
-  width: 120px;
-  height: 120px;
-  /* position: relative; */
-  /* top: 50px; */
-  /* background-color: #474747; */
-  background-image: url('./img/animation/succes.png');
 
-  animation: succes_animation 1s steps(20) infinite;
-}
 
-@keyframes succes_animation {
+/* @keyframes succes_animation {
   100% {
     background-position: -2398px;
   }
-}
+} */
 @keyframes attack_animation {
   100% {
     background-position: -1152px;
