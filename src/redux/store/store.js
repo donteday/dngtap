@@ -55,7 +55,7 @@ export const counterSlice = createSlice({
             gainType: 'weapon',
             blessed: false,
             stacking: true,
-            quantity: 2,
+            quantity: 4,
             chance: 50,
             gain: null,
             writable: true,

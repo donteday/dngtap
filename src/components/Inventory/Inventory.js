@@ -153,14 +153,18 @@ const Inventory = ({ isActive }) => {
         if (!inventory[e.target.id]) return;
 
         if (isGain) {
+
             let inventoryItemCopy = { ...inventory[e.target.id] };
             let scrollCopy = { ...inventory[scrollId] };
             // setSuccess(false);
 
             if (inventory[e.target.id].gain !== undefined && inventory[e.target.id].gain !== null && inventory[e.target.id].type === gainType) {
                 if (inventory[e.target.id].gain < 3 || Math.random() * 100 < 50 - inventory[e.target.id].gain * 2) {
-                    clearTimeout(animationTimer.current);
-                    setSuccess(!success);
+                    if (animationTimer.current) {
+                        clearTimeout(animationTimer.current);
+                        setSuccess(false);
+
+                    }
                     setSuccess(true);
                     inventoryItemCopy.gain += 1;
                     dispatch(updateItemInventory({ id: e.target.id, item: inventoryItemCopy }));
@@ -171,7 +175,7 @@ const Inventory = ({ isActive }) => {
                     }
                     animationTimer.current = setTimeout(() => {
                         setSuccess(false);
-                    }, 4000);
+                    }, 2000);
                 }
                 else {
                     let inventoryCopy = [...inventory];
@@ -198,7 +202,7 @@ const Inventory = ({ isActive }) => {
 
             {success ?
                 <div className="success">
-                    <DotLottieReact src={require("../../img/animation/success.lottie")} autoplay loop={false} />
+                    <DotLottieReact src={require("../../img/animation/success.lottie")} autoplay loop={false} speed={1.5} />
                 </div>
                 : ''
             }
