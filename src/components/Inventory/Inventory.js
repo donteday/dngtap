@@ -6,8 +6,9 @@ import React, { useState } from 'react';
 import { updateInventory, updateItemInventory, setArmory } from '../../redux/store/store'
 import ArmoryPoint from './ArmoryPoint/ArmoryPoint';
 
-import Lottie from 'lottie-react';
-import animationData from '../../img/animation/succes.json';
+// import Lottie from 'lottie-react';
+// import animationData from '../../img/animation/succes.json';
+import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 
 const Inventory = ({ isActive }) => {
 
@@ -18,7 +19,7 @@ const Inventory = ({ isActive }) => {
     let armory = useSelector(state => state.counter.characters[currentCharacter].armory);
     let state = useSelector(state => state.counter.characters[currentCharacter]);
     const [isGain, setisGain] = useState(false);
-    const [success, setSuccess] = useState(false);
+    // const [success, setSuccess] = useState(false);
     const [gainType, setGainType] = useState('');
     const [scrollId, setScrollId] = useState(null);
 
@@ -155,7 +156,7 @@ const Inventory = ({ isActive }) => {
             let scrollCopy = { ...inventory[scrollId] };
             if (inventory[e.target.id].gain !== undefined && inventory[e.target.id].gain !== null && inventory[e.target.id].type === gainType) {
                 if (inventory[e.target.id].gain < 3 || Math.random() * 100 < 50 - inventory[e.target.id].gain * 2) {
-                    setSuccess(true);
+                    // setSuccess(true);
                     inventoryItemCopy.gain += 1;
                     dispatch(updateItemInventory({ id: e.target.id, item: inventoryItemCopy }));
                     if (scrollCopy.quantity > 0) {
@@ -181,10 +182,10 @@ const Inventory = ({ isActive }) => {
             setScrollId(null);
             setisGain(false);
             setGainType('');
-            setTimeout(() => {
-                setSuccess(false);
+            // setTimeout(() => {
+            //     setSuccess(false);
 
-            }, 4000);
+            // }, 4000);
 
 
         }
@@ -193,10 +194,13 @@ const Inventory = ({ isActive }) => {
     return (
         <div className="inventory_container">
 
-            {success ?
+            {/* {success ?
                 <Lottie className="success" animationData={animationData} play loop={false} />
                 : ''
-            }
+            } */}
+
+        <DotLottieReact src={require("../../img/animation/success.lottie")} autoplay loop />
+
 
 
 
