@@ -31,7 +31,7 @@ export const counterSlice = createSlice({
             blessed: false,
             quantity: 1,
             chance: 15,
-            gain: 3,
+            gain: 0,
             isPutOn: true,
             selling: true,
             sellingPrice: 100000,
@@ -46,6 +46,21 @@ export const counterSlice = createSlice({
               additionalDamage: 0,
               speedAttack: 1
             }
+          },
+          {
+            name: 'Свиток усиления оружия',
+            id: 2,
+            type: 'gain',
+            subtype: 'ordinary',
+            gainType: 'weapon',
+            blessed: false,
+            stacking: true,
+            quantity: 4,
+            chance: 50,
+            gain: null,
+            writable: true,
+            isPutOn : false,
+            selling: false
           },
         ],
       }

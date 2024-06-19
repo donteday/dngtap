@@ -180,13 +180,11 @@ function App() {
           <div className="mobHpBar-container">
             <div className="mobHpBar" style={{ width: `${(mobCurrentHP / mobList[0].maxHP) * 100}%` }}>
             </div>
-            {/* <div className="mobHpBar-text">{mobCurrentHP}</div> */}
           </div>
 
           {textDropisActive ? <DropText drop={currentMessage} /> : ''}
 
 
-          {/* <div>{currentMessage.name}</div> */}
           <div className='mob' ref={mobRef} onClick={() => setIsAttack(true)}>
 
             <div ref={mobAttackRef}></div>

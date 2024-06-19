@@ -1,14 +1,13 @@
 import './Inventory.css';
 import InventoryPoint from './InventoryPoint/InventoryPoint';
 import { useSelector, useDispatch } from 'react-redux'
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 
 import { updateInventory, updateItemInventory, setArmory } from '../../redux/store/store'
 import ArmoryPoint from './ArmoryPoint/ArmoryPoint';
 
-// import Lottie from 'lottie-react';
-// import animationData from '../../img/animation/succes.json';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
+
 
 const Inventory = ({ isActive }) => {
 
@@ -19,9 +18,10 @@ const Inventory = ({ isActive }) => {
     let armory = useSelector(state => state.counter.characters[currentCharacter].armory);
     let state = useSelector(state => state.counter.characters[currentCharacter]);
     const [isGain, setisGain] = useState(false);
-    // const [success, setSuccess] = useState(false);
+    const [success, setSuccess] = useState(false);
     const [gainType, setGainType] = useState('');
     const [scrollId, setScrollId] = useState(null);
+    const successAnimationData = require("../../img/animation/success.lottie");
 
     for (let i = 0; i < 25; i++) {
         inventoryCell.push(1);
@@ -45,6 +45,29 @@ const Inventory = ({ isActive }) => {
     //     }
 
     //   }, []);
+    let successAnimationTimer = useRef(null);
+    useEffect(() => {
+        if (successAnimationTimer) {
+            console.log(successAnimationTimer.current);
+            clearTimeout(successAnimationTimer.current);
+        }
+        if (success) {
+            successAnimationTimer.current = setTimeout(() => {
+                setSuccess(false);
+            }, 3000);
+        }
+
+        return () => clearTimeout(successAnimationTimer.current);
+
+    }, [success]);
+
+    function startAnimation() {
+        setSuccess(false);
+        setTimeout(() => {
+            setSuccess(true);
+        }, 0);
+    }
+
     function goItem(e) {
         if (!inventory[e.target.id]) return;
         let inventoryItemCopy = { ...inventory[e.target.id] };
@@ -156,7 +179,8 @@ const Inventory = ({ isActive }) => {
             let scrollCopy = { ...inventory[scrollId] };
             if (inventory[e.target.id].gain !== undefined && inventory[e.target.id].gain !== null && inventory[e.target.id].type === gainType) {
                 if (inventory[e.target.id].gain < 3 || Math.random() * 100 < 50 - inventory[e.target.id].gain * 2) {
-                    // setSuccess(true);
+
+                    startAnimation();
                     inventoryItemCopy.gain += 1;
                     dispatch(updateItemInventory({ id: e.target.id, item: inventoryItemCopy }));
                     if (scrollCopy.quantity > 0) {
@@ -168,7 +192,6 @@ const Inventory = ({ isActive }) => {
                 else {
                     let inventoryCopy = [...inventory];
                     inventoryCopy.splice(e.target.id, 1);
-
                     dispatch(updateInventory(inventoryCopy));
                     if (scrollCopy.quantity > 0) {
                         scrollCopy.quantity -= 1;
@@ -182,26 +205,18 @@ const Inventory = ({ isActive }) => {
             setScrollId(null);
             setisGain(false);
             setGainType('');
-            // setTimeout(() => {
-            //     setSuccess(false);
-
-            // }, 4000);
-
-
         }
     }
 
     return (
         <div className="inventory_container">
 
-            {/* {success ?
-                <Lottie className="success" animationData={animationData} play loop={false} />
-                : ''
-            } */}
 
-        <DotLottieReact src={require("../../img/animation/success.lottie")} autoplay loop />
-
-
+            {success &&
+                <div className="success">
+                    <DotLottieReact src={successAnimationData} autoplay loop={false} speed={1} />
+                </div>
+            }
 
 
             <div className="inventory_name">

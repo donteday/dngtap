@@ -112,6 +112,13 @@
   border-image: url('./img/ui/frame.png') 70 / 15 round round; 
 }
 
+
+
+/* @keyframes succes_animation {
+  100% {
+    background-position: -2398px;
+  }
+} */
 @keyframes attack_animation {
   100% {
     background-position: -1152px;
