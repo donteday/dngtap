@@ -4,11 +4,13 @@ import './index.css';
 import App from './App';
 import { Provider } from 'react-redux';
 import { store } from './redux/root';
+import ChooseCharacter from './components/FirstWindow/ChooseCharacter';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Provider store={store}>
-    <App />
+    <ChooseCharacter/>
+    {/* <App /> */}
   </Provider>
 );
 

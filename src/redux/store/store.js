@@ -12,6 +12,7 @@ export const counterSlice = createSlice({
     currentCharacter: 0,
     characters: [
       {
+        name: 'GreckiOreh',
         characterType: 'warrior',
         lvl: 1,
         currentExp: 0,
@@ -63,7 +64,7 @@ export const counterSlice = createSlice({
             selling: false
           },
         ],
-      }
+      }, undefined, undefined
     ],
 
     writable: true

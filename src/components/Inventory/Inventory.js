@@ -23,7 +23,7 @@ const Inventory = ({ isActive }) => {
     const [scrollId, setScrollId] = useState(null);
     const successAnimationData = require("../../img/animation/success.lottie");
 
-    for (let i = 0; i < 25; i++) {
+    for (let i = 0; i < 50; i++) {
         inventoryCell.push(1);
     }
 

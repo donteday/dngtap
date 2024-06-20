@@ -68,7 +68,7 @@
     width: 100%;
     height: 60vh;
     background: rgb(49, 46, 35);
-    overflow-y: hidden;
+    overflow-y: auto;
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;
@@ -76,7 +76,13 @@
     flex-direction: row;
     align-content: flex-start;
     scrollbar-color: rgba(49, 46, 35, 1) rgba(1, 1, 0, 1);
+    -ms-overflow-style: none;
+    /* IE и Edge */
+    scrollbar-width: none;
+}
 
+.inventory_bottom_container::-webkit-scrollbar {
+    display: none;
 }
 
 .inventory_bottom_container::-webkit-scrollbar {

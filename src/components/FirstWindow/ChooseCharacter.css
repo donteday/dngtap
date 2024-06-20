@@ -1,0 +1,43 @@
+.cc__container {
+    width: 100%;
+    height: 100vh;
+    background: rgb(49, 46, 35);
+    background: linear-gradient(0deg, rgba(49, 46, 35, 1) 5%, rgba(1, 1, 0, 1) 150%);
+}
+
+.cc__tittle {
+    width: 100%;
+    height: 35px;
+    border: 3px groove #3a3a3a;
+    background: rgb(235, 11, 11);
+    background: radial-gradient(circle, rgba(235, 11, 11, 1) 0%, rgba(64, 8, 10, 1) 70%);
+    text-align: center;
+}
+
+.cc__characters {
+    width: 100%;
+    height: 20%;
+    border: 3px groove #3a3a3a;
+    background: rgb(49, 46, 35);
+    background: linear-gradient(0deg, rgba(49, 46, 35, 1) 5%, rgba(1, 1, 0, 1) 150%);
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cc__characters-point {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.cc_btn {
+    background: rgb(235, 11, 11);
+    background: radial-gradient(circle, rgba(235, 11, 11, 1) 0%, rgba(64, 8, 10, 1) 70%);
+    text-align: center;
+    padding: 5px;
+    border: 3px groove #3a3a3a;
+
+}
