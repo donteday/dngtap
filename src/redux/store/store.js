@@ -9,7 +9,7 @@ const maxHp = 75;
 export const counterSlice = createSlice({
   name: 'game',
   initialState: {
-    currentCharacter: 0,
+    currentCharacter: null,
     characters: [
       {
         name: 'GreckiOreh',
@@ -111,6 +111,9 @@ export const counterSlice = createSlice({
     setArmory: (state, action) => {
       state.characters[state.currentCharacter].armory[action.payload.id] = action.payload.item;
     },
+    setCharacter: (state, action) => {
+      state.currentCharacter = action.payload;
+    },
     updateItemInventory: (state, action) => {
       if (action.payload.item.quantity <= 0) {
         // console.log('payaload', action.payload.item.id);
@@ -127,6 +130,7 @@ export const { addItem,
   updateInventory,
   updateItemInventory,
   setArmory,
-  healthHandler } = counterSlice.actions
+  healthHandler,
+  setCharacter } = counterSlice.actions
 
 export default counterSlice.reducer

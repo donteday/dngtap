@@ -1,10 +1,13 @@
 import './ChooseCharacter.css';
 import { useSelector, useDispatch } from 'react-redux'
+import { setCharacter } from '../../redux/store/store';
 
 const ChooseCharacter = () => {
     let characters = useSelector(state => state.counter.characters);
-    function chooseCharacter() {
-        
+    const dispatch = useDispatch();
+
+    function chooseCharacter(index) {
+        dispatch(setCharacter(index));
     }
     return (
         <div className='cc__container'>
@@ -22,7 +25,7 @@ const ChooseCharacter = () => {
                             <div>
                                 Уровень: {characters[index].lvl}
                             </div>
-                            <button className='cc_btn'>Выбрать</button>
+                            <button className='cc_btn' onClick={() => chooseCharacter(index)}>Выбрать</button>
 
                         </div>
                         :
