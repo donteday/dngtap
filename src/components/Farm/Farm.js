@@ -145,7 +145,7 @@ const Farm = () => {
         if (isAttack && mobCurrentHP > 0) {
             mobRef.current.classList.add("mob__attack-state");
             mobAttackRef.current.classList.add("mob__attack");
-            timer = setInterval(() => attack(), 1000);
+            timer = setInterval(() => attack(), 600);
         }
         if (mobCurrentHP <= 0) {
             setIsAttack(false);

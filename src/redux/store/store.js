@@ -60,7 +60,7 @@ export const counterSlice = createSlice({
             chance: 50,
             gain: null,
             writable: true,
-            isPutOn : false,
+            isPutOn: false,
             selling: false
           },
         ],
@@ -121,6 +121,22 @@ export const counterSlice = createSlice({
       } else state.characters[state.currentCharacter].inventory[action.payload.id] = action.payload.item;
 
     },
+    createCharacter: (state, action, id) => {
+      let nullCharacter = {
+        name: action.payload.name,
+        characterType: action.payload.type,
+        lvl: 1,
+        currentExp: 0,
+        maxExp: 10,
+        health: maxHp,
+        currentHealth: maxHp,
+        strength: 3,
+        armory: [undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined],
+        inventory: [],
+      };
+      console.log(nullCharacter);
+      state.characters[action.payload.id] = nullCharacter;
+    },
   }
 })
 // state.improve[action.payload.index].amount
@@ -131,6 +147,7 @@ export const { addItem,
   updateItemInventory,
   setArmory,
   healthHandler,
-  setCharacter } = counterSlice.actions
+  setCharacter,
+  createCharacter } = counterSlice.actions
 
 export default counterSlice.reducer

@@ -84,7 +84,7 @@
   top: 50px;
   /* background-color: #474747; */
   background-image: url('./img/animation/attack.png');
-  animation: attack_animation 1s steps(6) infinite;
+  animation: attack_animation .6s steps(6) infinite;
 }
 
 .inventory_open_btn {

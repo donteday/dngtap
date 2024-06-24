@@ -200,7 +200,7 @@ export const itemList = [
 export const mobList = [
     {
         name: 'Гремлин',
-        maxHP : 50,
+        maxHP : 100,
         attack : 5, 
         dropList: itemList
     }
