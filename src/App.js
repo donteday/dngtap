@@ -1,14 +1,11 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React from 'react';
 import './App.css';
 import { useDispatch, useSelector } from 'react-redux'
 import Farm from './components/Farm/Farm';
 import ChooseCharacter from './components/FirstWindow/ChooseCharacter';
 
 function App() {
-  const dispatch = useDispatch();
-
   let currentCharacter = useSelector(state => state.counter.currentCharacter);
-
   return (
     <div className="App">
       {currentCharacter === null ?
