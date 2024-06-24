@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import Farm from './components/Farm/Farm';
 import ChooseCharacter from './components/FirstWindow/ChooseCharacter';
 
