@@ -10,6 +10,8 @@ const ChooseCharacter = () => {
     const [createCharacterPopup, setСreateCharacterPopup] = useState(false);
 
 
+
+
     function chooseCharacter(index) {
         dispatch(setCharacter(index));
     }
