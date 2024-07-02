@@ -16,7 +16,9 @@
     width: 30vw;
     height: 30vw;
     border: 3px groove #3a3a3a;
-
+    background-size: 80%;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 .createcharacter__type {

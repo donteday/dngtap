@@ -52,9 +52,9 @@ const CreateCharacter = ({setPopup}) => {
 
         <div className="createcharacter__about">{aboutCharacterText(selectedClass)}</div>
         <div className='createcharacter__type'>
-            <div className='createcharacter__type-icon' onClick={() => handleClassSelect('warrior')} >Воин</div>
-            <div className='createcharacter__type-icon' onClick={() => handleClassSelect('mage')} >Маг</div>
-            <div className='createcharacter__type-icon' onClick={() => handleClassSelect('archer')} >Лучник</div>
+            <div className='createcharacter__type-icon' style={{backgroundImage: `url(${require(`../../../img/cc/warrior_icon.png`)}`}} onClick={() => handleClassSelect('warrior')} >Воин</div>
+            <div className='createcharacter__type-icon' style={{backgroundImage: `url(${require(`../../../img/cc/mage_icon.png`)}`}} onClick={() => handleClassSelect('mage')} >Маг</div>
+            <div className='createcharacter__type-icon' style={{backgroundImage: `url(${require(`../../../img/cc/archer_icon.png`)}`}} onClick={() => handleClassSelect('archer')} >Лучник</div>
         </div>
         <div className='createcharacter__input-container'>
             <input className='createcharacter__input' type="text" value={name} onChange={handleNameChange} placeholder="Введите имя персонажа" />

@@ -1,8 +1,9 @@
 .App {
   text-align: center;
   background-color: #282c34;
-  height: 100%;
-  /* width: 500px; */
+  height: 100vh;
+  /* Fallback for browsers that do not support Custom Properties */
+  height: calc(var(--vh, 1vh) * 100);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -92,11 +93,11 @@
   right: 0;
   bottom: 0;
   padding: 10px;
-  background: rgb(49,46,35);
-  background: linear-gradient(0deg, rgba(49,46,35,1) 5%, rgba(1,1,0,1) 150%);
+  background: rgb(49, 46, 35);
+  background: linear-gradient(0deg, rgba(49, 46, 35, 1) 5%, rgba(1, 1, 0, 1) 150%);
   border-radius: 10%;
   border: 1px solid transparent;
-  border-image: url('./img/ui/frame.png') 70 / 15 round round; 
+  border-image: url('./img/ui/frame.png') 70 / 15 round round;
 }
 
 
