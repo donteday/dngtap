@@ -161,7 +161,7 @@ const Farm = () => {
     }, [isAttack, mobCurrentHP, mobList[0].maxHP]);
 
 
-    return (<div>
+    return (<>
         {isActive ? <Inventory isActive={isActiveInventory} /> : null}
         <Header />
         <div className="location">
@@ -170,23 +170,15 @@ const Farm = () => {
                     <div className="mobHpBar" style={{ width: `${(mobCurrentHP / mobList[0].maxHP) * 100}%` }}>
                     </div>
                 </div>
-
                 {textDropisActive ? <DropText drop={currentMessage} /> : ''}
-
-
                 <div className='mob' ref={mobRef} onClick={() => setIsAttack(true)}>
-
                     <div ref={mobAttackRef}></div>
-
                 </div>
-
             </div>
             <button onClick={() => setIsActive(true)} className='inventory_open_btn'>Инвентарь</button>
-
         </div>
         <BotPanel />
-        {/* <Farm /> */}
-    </div>);
+    </>);
 }
 
 export default Farm;
