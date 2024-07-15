@@ -200,8 +200,16 @@ export const itemList = [
 export const mobList = [
     {
         name: 'Гремлин',
+        id: 0,
         maxHP : 100,
         attack : 5, 
         dropList: itemList
+    }
+];
+
+export const locations = [
+    {
+        name: 'Лес Гремлинов',
+        mobs: mobList[0],
     }
 ];

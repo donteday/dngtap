@@ -1,6 +1,6 @@
 import './ChooseCharacter.css';
 import { useSelector, useDispatch } from 'react-redux'
-import { setCharacter } from '../../redux/store/store';
+import { setCharacter, setRoute } from '../../redux/store/store';
 import CreateCharacter from './CreateCharacter/CreateCharacter';
 import { useState } from 'react'
 
@@ -9,11 +9,9 @@ const ChooseCharacter = () => {
     const dispatch = useDispatch();
     const [createCharacterPopup, setСreateCharacterPopup] = useState(false);
 
-
-
-
     function chooseCharacter(index) {
         dispatch(setCharacter(index));
+        dispatch(setRoute('farm'));
     }
 
 
@@ -30,16 +28,20 @@ const ChooseCharacter = () => {
                             return <div className="cc__characters">
                                 {e !== undefined ?
                                     <div className='cc__characters-point'>
+                                        <div className='cc__characters-img' style={{ backgroundImage: `url(${require(`../../img/cc/${characters[index].characterType}.png`)}` }}></div>
                                         <div>
-                                            {characters[index].characterType}
+                                            <div>
+                                                {characters[index].characterType}
+                                            </div>
+                                            <div>
+                                                Имя: {characters[index].name}
+                                            </div>
+                                            <div>
+                                                Уровень: {characters[index].lvl}
+                                            </div>
+                                            <button className='cc_btn' onClick={() => chooseCharacter(index)}>Выбрать</button>
                                         </div>
-                                        <div>
-                                            Имя: {characters[index].name}
-                                        </div>
-                                        <div>
-                                            Уровень: {characters[index].lvl}
-                                        </div>
-                                        <button className='cc_btn' onClick={() => chooseCharacter(index)}>Выбрать</button>
+
 
                                     </div>
                                     :

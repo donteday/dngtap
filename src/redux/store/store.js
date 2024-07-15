@@ -10,6 +10,7 @@ export const counterSlice = createSlice({
   name: 'game',
   initialState: {
     currentCharacter: null,
+    route: 'chooseCharacter',
     characters: [
       {
         name: 'GreckiOreh',
@@ -114,6 +115,9 @@ export const counterSlice = createSlice({
     setCharacter: (state, action) => {
       state.currentCharacter = action.payload;
     },
+    setRoute: (state, action) => {
+      state.route = action.payload;
+    },
     updateItemInventory: (state, action) => {
       if (action.payload.item.quantity <= 0) {
         // console.log('payaload', action.payload.item.id);
@@ -148,6 +152,7 @@ export const { addItem,
   setArmory,
   healthHandler,
   setCharacter,
-  createCharacter } = counterSlice.actions
+  createCharacter,
+  setRoute } = counterSlice.actions
 
 export default counterSlice.reducer

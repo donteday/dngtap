@@ -10,7 +10,6 @@ import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 
 
 const Inventory = ({ isActive }) => {
-
     const dispatch = useDispatch();
     let inventoryCell = [];
     let currentCharacter = useSelector(state => state.counter.currentCharacter);
@@ -38,14 +37,8 @@ const Inventory = ({ isActive }) => {
         return totalProtection;
     }
 
-    // useEffect(() => {
-    //     console.log(123);
-    //     for (let i = 0; i < armory.length; i++) {
-    //         inventoryCell.push(1);
-    //     }
-
-    //   }, []);
     let successAnimationTimer = useRef(null);
+
     useEffect(() => {
         if (successAnimationTimer) {
             console.log(successAnimationTimer.current);
@@ -210,20 +203,14 @@ const Inventory = ({ isActive }) => {
 
     return (
         <div className="inventory_container">
-
-
             {success &&
                 <div className="success">
                     <DotLottieReact src={successAnimationData} autoplay loop={false} speed={1} />
                 </div>
             }
-
-
             <div className="inventory_name">
                 <div className='inventory_name_text'>Инвентарь</div>
                 <button className="inventory_close" onClick={() => isActive(false)}>X</button>
-
-
             </div>
             <div className="inventory_top_container">
                 <div className="char_specifications_container">

@@ -1,22 +1,15 @@
 import './Farm.css';
-
 import React, { useEffect, useRef, useState } from 'react';
-// import { useDispatch, useSelector } from 'react-redux'
-// import { incrementMoney, addExp, startGame } from './redux/store/store'
 import { addExp, updateInventory, healthHandler } from '../../redux/store/store'
-
 import Header from '../../components/Header/Header';
 import BotPanel from '../../components/Botpanel/Botpanel';
-
 import { useDispatch, useSelector } from 'react-redux'
 import Inventory from '../../components/Inventory/Inventory';
 import DropText from '../../components/DropText/DropText';
-
 import { mobList } from '../../data/data'
 
 const Farm = () => {
     const dispatch = useDispatch();
-    // const lvl = useSelector(state => state.counter.lvl);
     let currentCharacter = useSelector(state => state.counter.currentCharacter);
     let inventory = useSelector(state => state.counter.characters[currentCharacter].inventory);
     let armory = useSelector(state => state.counter.characters[currentCharacter].armory);
@@ -33,7 +26,6 @@ const Farm = () => {
     const [messages, setMessages] = useState([]);
     const [currentMessage, setCurrentMessage] = useState('');
 
-
     function howDamage() {
         let dmg = armory[3]?.baseDmg + armory[3]?.gain || 1;
         let critChance = 1;
@@ -46,6 +38,7 @@ const Farm = () => {
             }
         }
         dmg += strengthTemp / 3;
+        dmg +=50;
         return {
             dmg: dmg,
             critChance: critChance
