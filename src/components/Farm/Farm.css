@@ -1,0 +1,15 @@
+.location__buttons {
+    display: flex;
+    position: absolute;
+    align-items: flex-end;
+    right: 0;
+}
+
+.btn__second {
+    padding: 10px;
+    background: rgb(49, 46, 35);
+    background: linear-gradient(0deg, rgba(49, 46, 35, 1) 5%, rgba(1, 1, 0, 1) 150%);
+    border-radius: 10%;
+    border: 1px solid transparent;
+    border-image: url('../../img/ui/frame.png') 70 / 15 round round;
+  }

@@ -3,6 +3,7 @@ import './App.css';
 import { useSelector } from 'react-redux'
 import Farm from './components/Farm/Farm';
 import ChooseCharacter from './components/FirstWindow/ChooseCharacter';
+import Home from './components/Home/Home';
 
 function App() {
   let route = useSelector(state => state.counter.route);
@@ -15,6 +16,8 @@ function App() {
         return <ChooseCharacter />
       case 'farm':
         return <Farm />
+      case 'home':
+        return <Home/>
       default:
         break;
     }

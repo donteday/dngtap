@@ -1,6 +1,6 @@
 import './Farm.css';
 import React, { useEffect, useRef, useState } from 'react';
-import { addExp, updateInventory, healthHandler } from '../../redux/store/store'
+import { addExp, updateInventory, healthHandler, setRoute } from '../../redux/store/store'
 import Header from '../../components/Header/Header';
 import BotPanel from '../../components/Botpanel/Botpanel';
 import { useDispatch, useSelector } from 'react-redux'
@@ -14,14 +14,14 @@ const Farm = () => {
     let inventory = useSelector(state => state.counter.characters[currentCharacter].inventory);
     let armory = useSelector(state => state.counter.characters[currentCharacter].armory);
     const strength = useSelector(state => state.counter.characters[currentCharacter].strength);
-  
+
     const [mobCurrentHP, setMobHp] = useState(mobList[0].maxHP);
     const [isAttack, setIsAttack] = useState(false);
     const [isActive, setIsActive] = useState(true);
     const [textDropisActive, setTextDropIsActive] = useState(false);
     const mobRef = useRef();
     const mobAttackRef = useRef();
-  
+
     let dropTextArray = [];
     const [messages, setMessages] = useState([]);
     const [currentMessage, setCurrentMessage] = useState('');
@@ -38,7 +38,7 @@ const Farm = () => {
             }
         }
         dmg += strengthTemp / 3;
-        dmg +=50;
+        dmg += 50;
         return {
             dmg: dmg,
             critChance: critChance
@@ -168,7 +168,11 @@ const Farm = () => {
                     <div ref={mobAttackRef}></div>
                 </div>
             </div>
-            <button onClick={() => setIsActive(true)} className='inventory_open_btn'>Инвентарь</button>
+            <div className="location__buttons">
+                <button onClick={() => setIsActive(true)} className='btn__second'>Инвентарь</button>
+                <button onClick={() => dispatch(setRoute('home'))} className='btn__second'>Меню</button>
+            </div>
+
         </div>
         <BotPanel />
     </>);

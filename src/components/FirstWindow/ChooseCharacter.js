@@ -11,7 +11,7 @@ const ChooseCharacter = () => {
 
     function chooseCharacter(index) {
         dispatch(setCharacter(index));
-        dispatch(setRoute('farm'));
+        dispatch(setRoute('home'));
     }
 
 

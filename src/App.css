@@ -88,17 +88,7 @@
   animation: attack_animation .6s steps(6) infinite;
 }
 
-.inventory_open_btn {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  padding: 10px;
-  background: rgb(49, 46, 35);
-  background: linear-gradient(0deg, rgba(49, 46, 35, 1) 5%, rgba(1, 1, 0, 1) 150%);
-  border-radius: 10%;
-  border: 1px solid transparent;
-  border-image: url('./img/ui/frame.png') 70 / 15 round round;
-}
+
 
 
 
