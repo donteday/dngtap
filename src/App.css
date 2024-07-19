@@ -10,56 +10,6 @@
   /* padding-top: 200px; */
 }
 
-.mobBox {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.mob {
-  width: 200px;
-  height: 400px;
-  background-image: url("img/149.png");
-  background-position: center;
-  background-size: 200%;
-  /* border: 2px solid red; */
-  margin-top: -40px;
-
-}
-
-.mobHpBar-container {
-  width: 100px;
-  height: 10px;
-  /* display: flex; */
-  /* flex-direction: column; */
-  border: 3px groove rgb(0, 0, 0);
-  background-color: #471010;
-  margin-top: 40px;
-}
-
-.mobHpBar-text {
-  position: relative;
-  left: 0;
-  right: 0;
-  bottom: 20px;
-  align-items: center;
-  color: white;
-}
-
-.mobHpBar {
-  width: 100px;
-  height: 100%;
-
-  background-color: #b80404;
-  transition: .3s ease-in-out;
-}
-
-.btnAttack {
-  background-color: aqua;
-  width: 50px;
-  height: 50px;
-}
-
 
 
 .mob__attack-state {

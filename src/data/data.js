@@ -201,15 +201,17 @@ export const mobList = [
     {
         name: 'Гремлин',
         id: 0,
-        maxHP : 100,
-        attack : 5, 
+        hp : 100,
+        attack : 5,
+        exp: 15, 
         dropList: itemList
     },
     {
         name: 'Гоблин',
         id: 1,
-        maxHP : 150,
+        hp : 150,
         attack : 5, 
+        exp: 25, 
         dropList: itemList
     },
 ];

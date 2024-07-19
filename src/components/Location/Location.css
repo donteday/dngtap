@@ -1,13 +1,58 @@
 .location {
-    /* display: block; */
-    position: relative;
-    background-image: url("../../img/location/location_0.jpg");
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    z-index: 0;
-  }
+  /* display: block; */
+  position: relative;
+  background-image: url("../../img/location/location_0.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  z-index: 0;
+}
+
+.mob {
+  min-width: 300px;
+  min-height: 450px;
+  background-position: center;
+  background-size: cover;
+  margin-top: -50px;
+  display: flex;
+  justify-content: center;
+}
+
+.mobBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+
+.mobHpBar-container {
+  width: 100px;
+  height: 10px;
+  /* display: flex; */
+  /* flex-direction: column; */
+  border: 3px groove rgb(0, 0, 0);
+  background-color: #471010;
+  margin-top: 40px;
+}
+
+.mobHpBar-text {
+  position: relative;
+  left: 0;
+  right: 0;
+  bottom: 20px;
+  align-items: center;
+  color: white;
+}
+
+.mobHpBar {
+  width: 100px;
+  height: 100%;
+
+  background-color: #b80404;
+  transition: .3s ease-in-out;
+}
