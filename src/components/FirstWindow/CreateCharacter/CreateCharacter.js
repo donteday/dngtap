@@ -1,10 +1,11 @@
 import './CreateCharacter.css';
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { createCharacter } from '../../../redux/store/store';
 import { useState } from 'react';
 
 
 const CreateCharacter = ({setPopup}) => {
+    const characters = useSelector(state => state.counter.characters);
     const [selectedClass, setSelectedClass] = useState('warrior');
     const [name, setName] = useState('');
     const dispatch = useDispatch();
@@ -23,7 +24,7 @@ const CreateCharacter = ({setPopup}) => {
             alert('Вы не указали имя персонажа');
             return;
         }
-        dispatch(createCharacter({name: name, type: selectedClass, id:1}));
+        dispatch(createCharacter({name: name, type: selectedClass, id:characters.indexOf(undefined)}));
         setPopup(false);
     };
 
@@ -60,8 +61,6 @@ const CreateCharacter = ({setPopup}) => {
             <input className='createcharacter__input' type="text" value={name} onChange={handleNameChange} placeholder="Введите имя персонажа" />
             <button className='cc_btn' onClick={handleSubmit}>Создать</button>
         </div>
-
-
     </div>);
 }
 

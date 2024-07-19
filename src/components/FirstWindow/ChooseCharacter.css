@@ -43,6 +43,14 @@
     background-repeat: no-repeat;
 }
 
+.cc__about-character {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 40%;
+    justify-content: space-around;
+}
+
 .cc_btn {
     background: rgb(235, 11, 11);
     background: radial-gradient(circle, rgba(235, 11, 11, 1) 0%, rgba(64, 8, 10, 1) 70%);

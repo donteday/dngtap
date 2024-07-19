@@ -1,0 +1,20 @@
+.locationlist__item {
+    /* background-image: url('../../../img/location/location_1.jpg'); */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100px;
+    padding: 10px;
+    border: 3px groove #3a3a3a;
+    position: relative;
+}
+
+.locationlist__img {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 50%;
+    height: 100%;
+    background-position: top;
+    background-size: 100%;
+}

@@ -60,18 +60,7 @@
   height: 50px;
 }
 
-.location {
-  /* display: block; */
-  position: relative;
-  background-image: url("./img/location/1.jpg");
-  background-repeat: no-repeat;
-  background-size: cover;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  z-index: 0;
-}
+
 
 .mob__attack-state {
   animation: mob_state_attack 1s infinite;
@@ -87,10 +76,6 @@
   background-image: url('./img/animation/attack.png');
   animation: attack_animation .6s steps(6) infinite;
 }
-
-
-
-
 
 /* @keyframes succes_animation {
   100% {

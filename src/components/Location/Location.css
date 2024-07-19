@@ -1,0 +1,13 @@
+.location {
+    /* display: block; */
+    position: relative;
+    background-image: url("../../img/location/location_0.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    z-index: 0;
+  }

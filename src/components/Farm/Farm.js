@@ -7,6 +7,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import Inventory from '../../components/Inventory/Inventory';
 import DropText from '../../components/DropText/DropText';
 import { mobList } from '../../data/data'
+import Location from '../Location/Location';
+import LocationList from '../Location/LocationList/LocationList';
 
 const Farm = () => {
     const dispatch = useDispatch();
@@ -17,7 +19,7 @@ const Farm = () => {
 
     const [mobCurrentHP, setMobHp] = useState(mobList[0].maxHP);
     const [isAttack, setIsAttack] = useState(false);
-    const [isActive, setIsActive] = useState(true);
+    const [isActive, setIsActive] = useState(false);
     const [textDropisActive, setTextDropIsActive] = useState(false);
     const mobRef = useRef();
     const mobAttackRef = useRef();
@@ -25,6 +27,8 @@ const Farm = () => {
     let dropTextArray = [];
     const [messages, setMessages] = useState([]);
     const [currentMessage, setCurrentMessage] = useState('');
+
+    const [locationId, setLocationId] = useState('');
 
     function howDamage() {
         let dmg = armory[3]?.baseDmg + armory[3]?.gain || 1;
@@ -155,26 +159,17 @@ const Farm = () => {
 
 
     return (<>
-        {isActive ? <Inventory isActive={isActiveInventory} /> : null}
-        <Header />
-        <div className="location">
-            <div className='mobBox'>
-                <div className="mobHpBar-container">
-                    <div className="mobHpBar" style={{ width: `${(mobCurrentHP / mobList[0].maxHP) * 100}%` }}>
-                    </div>
-                </div>
-                {textDropisActive ? <DropText drop={currentMessage} /> : ''}
-                <div className='mob' ref={mobRef} onClick={() => setIsAttack(true)}>
-                    <div ref={mobAttackRef}></div>
-                </div>
-            </div>
-            <div className="location__buttons">
-                <button onClick={() => setIsActive(true)} className='btn__second'>Инвентарь</button>
-                <button onClick={() => dispatch(setRoute('home'))} className='btn__second'>Меню</button>
-            </div>
-
-        </div>
-        <BotPanel />
+        {locationId === '' ? <LocationList setLocation={setLocationId} /> :
+            <>
+                {isActive ? <Inventory isActive={isActiveInventory} /> : null}
+                <Header />
+                <Location id={locationId}/>
+                <BotPanel />
+            </>
+        }
+        {/* {isActive ? <Inventory isActive={isActiveInventory} /> : null}
+        <Location />
+        <BotPanel /> */}
     </>);
 }
 

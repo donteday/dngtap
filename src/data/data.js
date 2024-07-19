@@ -204,12 +204,25 @@ export const mobList = [
         maxHP : 100,
         attack : 5, 
         dropList: itemList
-    }
+    },
+    {
+        name: 'Гоблин',
+        id: 1,
+        maxHP : 150,
+        attack : 5, 
+        dropList: itemList
+    },
 ];
 
 export const locations = [
     {
         name: 'Лес Гремлинов',
+        id:0, 
         mobs: mobList[0],
-    }
+    },
+    {
+        name: 'Поляна гоблинов',
+        id:1, 
+        mobs: mobList[1],
+    },
 ];

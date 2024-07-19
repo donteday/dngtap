@@ -17,7 +17,6 @@ const ChooseCharacter = () => {
 
     return (
         <div className='cc__container'>
-
             {
                 createCharacterPopup ?
                     <CreateCharacter setPopup={setСreateCharacterPopup} />
@@ -29,20 +28,11 @@ const ChooseCharacter = () => {
                                 {e !== undefined ?
                                     <div className='cc__characters-point'>
                                         <div className='cc__characters-img' style={{ backgroundImage: `url(${require(`../../img/cc/${characters[index].characterType}.png`)}` }}></div>
-                                        <div>
-                                            <div>
-                                                {characters[index].characterType}
-                                            </div>
-                                            <div>
-                                                Имя: {characters[index].name}
-                                            </div>
-                                            <div>
-                                                Уровень: {characters[index].lvl}
-                                            </div>
+                                        <div className='cc__about-character'>
+                                            <div>{characters[index].name}</div>
+                                            <div>LVL: {characters[index].lvl}</div>
                                             <button className='cc_btn' onClick={() => chooseCharacter(index)}>Выбрать</button>
                                         </div>
-
-
                                     </div>
                                     :
                                     <button className='cc_btn' onClick={() => setСreateCharacterPopup(true)}>Создать персонажа</button>
@@ -51,12 +41,6 @@ const ChooseCharacter = () => {
                         })}
                     </>
             }
-
-
-
-
-
-
         </div>
     );
 }

@@ -1,3 +1,5 @@
+
+
 .location__buttons {
     display: flex;
     position: absolute;
@@ -12,4 +14,4 @@
     border-radius: 10%;
     border: 1px solid transparent;
     border-image: url('../../img/ui/frame.png') 70 / 15 round round;
-  }
+}
