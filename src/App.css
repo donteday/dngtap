@@ -12,10 +12,7 @@
 
 
 
-.mob__attack-state {
-  animation: mob_state_attack 1s infinite;
-  filter: drop-shadow(1px 1px 0 rgb(254, 0, 0)) drop-shadow(-1px 1px 0 rgb(254, 0, 0)) drop-shadow(1px -1px 0 rgb(254, 0, 0)) drop-shadow(-1px -1px 0 rgb(254, 0, 0));
-}
+
 
 .mob__attack {
   width: 192px;
@@ -38,12 +35,3 @@
   }
 }
 
-@keyframes mob_state_attack {
-  0% {
-    background-size: 200%;
-  }
-
-  100% {
-    background-size: 198%;
-  }
-}

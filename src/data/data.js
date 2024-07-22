@@ -223,7 +223,7 @@ export const locations = [
         mobs: mobList[0],
     },
     {
-        name: 'Поляна гоблинов',
+        name: 'Поляна Гоблинов',
         id:1, 
         mobs: mobList[1],
     },

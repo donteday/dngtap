@@ -17,15 +17,14 @@ const Farm = () => {
     let armory = useSelector(state => state.counter.characters[currentCharacter].armory);
     const strength = useSelector(state => state.counter.characters[currentCharacter].strength);
 
-    const [mobCurrentHP, setMobHp] = useState(mobList[0].maxHP);
-    const [isAttack, setIsAttack] = useState(false);
+
     const [isActive, setIsActive] = useState(false);
     const [textDropisActive, setTextDropIsActive] = useState(false);
-    const mobRef = useRef();
-    const mobAttackRef = useRef();
+
 
     let dropTextArray = [];
     const [messages, setMessages] = useState([]);
+    const [topMessages, setTopMessages] = useState([]);
     const [currentMessage, setCurrentMessage] = useState('');
 
     const [locationId, setLocationId] = useState('');
@@ -88,16 +87,6 @@ const Farm = () => {
         return totalProtection;
     }
 
-    function attack() {
-        if (Math.random() * 100 < howDamage().critChance) {
-            setMobHp(mobCurrentHP - howDamage().dmg * 2);
-        } else {
-            setMobHp(mobCurrentHP - howDamage().dmg);
-        }
-        dispatch(healthHandler(-Math.round((mobList[0].attack - mobList[0].attack * calculateProtection() / 100))));
-        console.log(Math.round((mobList[0].attack - mobList[0].attack * calculateProtection() / 100)));
-        mobAttackRef.current.style.top = `${Math.random() * 150 - 30}px`;
-    }
 
     function isActiveInventory() {
         setIsActive(false);
@@ -137,33 +126,12 @@ const Farm = () => {
         // return setInventory(x);
     }
 
-    useEffect(() => {
-        let timer = null;
-        if (isAttack && mobCurrentHP > 0) {
-            mobRef.current.classList.add("mob__attack-state");
-            mobAttackRef.current.classList.add("mob__attack");
-            timer = setInterval(() => attack(), 600);
-        }
-        if (mobCurrentHP <= 0) {
-            setIsAttack(false);
-            mobRef.current.classList.remove("mob__attack-state");
-            mobAttackRef.current.classList.remove("mob__attack");
-            setMobHp(mobList[0].maxHP);
-            dispatch(addExp(40));
-            addToInventory();
-        }
-        return () => clearInterval(timer);
-
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isAttack, mobCurrentHP, mobList[0].maxHP]);
-
-
     return (<>
         {locationId === '' ? <LocationList setLocation={setLocationId} /> :
             <>
                 {isActive ? <Inventory isActive={isActiveInventory} /> : null}
-                <Header />
-                <Location id={locationId}/>
+                <Header topMessages={topMessages}/>
+                <Location id={locationId} topMessages={topMessages} setTopMessages={setTopMessages}/>
                 <BotPanel />
             </>
         }
