@@ -2,10 +2,12 @@ import './Location.css';
 import { locations } from '../../data/data'
 import { useEffect, useState, dispatch, useRef } from 'react';
 import { addExp, updateInventory, healthHandler, setRoute } from '../../redux/store/store'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import Inventory from '../Inventory/Inventory';
+import DropText from '../DropText/DropText';
 
 
-const Location = ({ id, topMessages ,setTopMessages}) => {
+const Location = ({ id, topMessages, setTopMessages }) => {
     const mob = locations[id].mobs;
     const [mobCurrentHp, setMobCurrentHp] = useState(mob.hp);
     const [isAttack, setIsAttack] = useState(false);
@@ -13,6 +15,38 @@ const Location = ({ id, topMessages ,setTopMessages}) => {
     const KMOBATTACK = 70;
     const mobRef = useRef();
     const mobAttackRef = useRef();
+    const [inventoryIsActive, setInventoryIsActive] = useState(false);
+
+    let currentCharacter = useSelector(state => state.counter.currentCharacter);
+    let inventory = useSelector(state => state.counter.characters[currentCharacter].inventory);
+
+    const [textDropisActive, setTextDropIsActive] = useState(false);
+    const [currentMessage, setCurrentMessage] = useState('');
+    const [messages, setMessages] = useState([]);
+    let dropTextArray = [];
+
+    useEffect(() => {
+        if (messages.length === 0) {
+            setTextDropIsActive(false);
+            return;
+        }
+        let messageIndex = 1;
+        setCurrentMessage(messages[0]);
+        setTextDropIsActive(true);
+        const intervalId = setInterval(() => {
+            if (messageIndex < messages.length) {
+                setCurrentMessage(messages[messageIndex]);
+                setTextDropIsActive(true);
+                messageIndex++;
+            } else {
+                clearInterval(intervalId); 
+                setTextDropIsActive(false);
+                setMessages([]);
+                setCurrentMessage('');
+            }
+        }, 850);
+        return () => clearInterval(intervalId);
+    }, [messages]);
 
     useEffect(() => {
         let timer = null;
@@ -25,17 +59,49 @@ const Location = ({ id, topMessages ,setTopMessages}) => {
             mobIsKilled()
             mobRef.current.classList.remove("mob__attack-state");
             mobAttackRef.current.classList.remove("mob__attack");
-            // addToInventory();
         }
         return () => {
             clearInterval(timer);
         }
     }, [isAttack, mobCurrentHp]);
+
     function mobIsKilled() {
         setTopMessages([...topMessages, `Вами был убит противник [${mob.name}]`])
         setIsAttack(false);
         setMobCurrentHp(mob.hp);
         dispatch(addExp(mob.exp));
+        addToInventory();
+    }
+
+
+    function addToInventory() {
+        let inventoryCopy = [...inventory];
+        let dropList = mob.dropList;
+        let maxDropItem = 2;
+        const updatedInventory = dropList.reduce((acc, dropItem) => {
+            if ((Math.random() * 100 < dropItem.chance) && maxDropItem > 0) {
+                maxDropItem -= 1;
+                const drop = { id: dropItem.id, quantity: dropItem.quantity, gain: dropItem.gain };
+                const existingItem = inventoryCopy.find(item => item.id === drop.id);
+                setTopMessages([...topMessages, `Получен предмет [${dropItem.name}]`])
+                addDropToTextArr(dropItem);
+                if (existingItem && dropItem.stacking) {
+                    const updatedItem = { ...existingItem, quantity: existingItem.quantity + drop.quantity };
+                    inventoryCopy = inventoryCopy.map(item => (item.id === drop.id ? updatedItem : item));
+                } else {
+                    acc.push(drop);
+                }
+            }
+            return acc;
+        }, []);
+        inventoryCopy = [...inventoryCopy, ...updatedInventory];
+        setMessages(dropTextArray);
+        dispatch(updateInventory(inventoryCopy));
+    }
+ 
+
+    function addDropToTextArr(item) {
+        dropTextArray = [...dropTextArray, item];        
     }
 
     function mobAttack() {
@@ -47,14 +113,12 @@ const Location = ({ id, topMessages ,setTopMessages}) => {
         return { dmg: 120 }; // TODO 
     }
     function attack() {
-        console.log(Math.random() * 100);
         if (Math.random() * 100 > KMOBATTACK) mobAttack();
         if (Math.random() * 100 < howDamage().critChance) {
             setMobCurrentHp(mobCurrentHp - howDamage().dmg * 2);
         } else {
             setMobCurrentHp(mobCurrentHp - howDamage().dmg);
         }
-
         // dispatch(healthHandler(-Math.round((mobList[0].attack - mobList[0].attack * calculateProtection() / 100))));
         // console.log(Math.round((mobList[0].attack - mobList[0].attack * calculateProtection() / 100)));
         mobAttackRef.current.style.top = `${Math.random() * 150 - 30}px`;
@@ -68,18 +132,16 @@ const Location = ({ id, topMessages ,setTopMessages}) => {
                     <div className="mobHpBar" style={{ width: `${(mobCurrentHp / mob.hp) * 100}%` }}></div>
                 </div>
                 <div className='mob' ref={mobRef} onClick={() => setIsAttack(true)} style={{ backgroundImage: `url(${require(`../../img/mobs/${mob.id}.png`)})` }}>
-                <div ref={mobAttackRef}></div>
-                </div>
-
-                {/* {textDropisActive ? <DropText drop={currentMessage} /> : ''} */}
-                {/* <div className='mob' ref={mobRef} onClick={() => setIsAttack(true)}>
                     <div ref={mobAttackRef}></div>
-                </div> */}
+                </div>
+                {textDropisActive ? <DropText drop={currentMessage} /> : ''}
             </div>
-            {/* <div className="location__buttons">
-                <button onClick={() => setIsActive(true)} className='btn__second'>Инвентарь</button>
+            <div className="location__buttons">
+                <button onClick={() => setInventoryIsActive(true)} className='btn__second'>Инвентарь</button>
                 <button onClick={() => dispatch(setRoute('home'))} className='btn__second'>Меню</button>
-            </div> */}
+            </div>
+            {inventoryIsActive && <Inventory isActive={setInventoryIsActive} />}
+
 
         </div>
     );

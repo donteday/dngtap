@@ -8,7 +8,7 @@ const InventoryPoint = ({ item, id, selected }) => {
         if (item.id !== undefined) charRef.current.style.backgroundImage = `url(${url})`;
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [url])
-
+    console.log(item.gain);
     return (
         <div className="inventory_item_container" id={id}
         // eslint-disable-next-line eqeqeq

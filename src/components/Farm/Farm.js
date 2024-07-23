@@ -1,25 +1,15 @@
 import './Farm.css';
-import React, { useEffect, useRef, useState } from 'react';
-import { addExp, updateInventory, healthHandler, setRoute } from '../../redux/store/store'
+import React, { useEffect, useState } from 'react';
 import Header from '../../components/Header/Header';
 import BotPanel from '../../components/Botpanel/Botpanel';
 import { useDispatch, useSelector } from 'react-redux'
-import Inventory from '../../components/Inventory/Inventory';
-import DropText from '../../components/DropText/DropText';
-import { mobList } from '../../data/data'
 import Location from '../Location/Location';
 import LocationList from '../Location/LocationList/LocationList';
 
 const Farm = () => {
-    const dispatch = useDispatch();
     let currentCharacter = useSelector(state => state.counter.currentCharacter);
-    let inventory = useSelector(state => state.counter.characters[currentCharacter].inventory);
     let armory = useSelector(state => state.counter.characters[currentCharacter].armory);
     const strength = useSelector(state => state.counter.characters[currentCharacter].strength);
-
-
-    const [isActive, setIsActive] = useState(false);
-    const [textDropisActive, setTextDropIsActive] = useState(false);
 
 
     let dropTextArray = [];
@@ -48,33 +38,6 @@ const Farm = () => {
         }
     }
 
-    useEffect(() => {
-        if (messages.length === 0) {
-            setTextDropIsActive(false);
-            return;
-        }
-        let messageIndex = 1;
-        setCurrentMessage(messages[0]);
-        setTextDropIsActive(true);
-        const intervalId = setInterval(() => {
-            if (messageIndex < messages.length) {
-                setCurrentMessage(messages[messageIndex]);
-                setTextDropIsActive(true);
-                messageIndex++;
-            } else {
-                clearInterval(intervalId); // Очистка интервала, когда все сообщения были показаны
-                setTextDropIsActive(false);
-                setMessages([]);
-                setCurrentMessage('');
-            }
-        }, 900);
-        return () => clearInterval(intervalId);
-    }, [messages]);
-
-    function dropText(item, id) {
-        dropTextArray = [...dropTextArray, item];
-    }
-
     const calculateProtection = () => {
         let totalProtection = 0;
         armory.forEach(item => {
@@ -88,48 +51,9 @@ const Farm = () => {
     }
 
 
-    function isActiveInventory() {
-        setIsActive(false);
-    }
-
-    function addToInventory() {
-        let x = [...inventory];
-        let drop = mobList[0].dropList;
-        for (let i = 0; i < drop.length; i++) {
-            if (Math.random() * 100 < drop[i].chance) {
-                if (drop[i].stacking) {
-                    let flag = 0;
-                    // eslint-disable-next-line no-loop-func
-                    x.map((e, id) => {
-                        if (e.id === drop[i].id) {
-                            let eCopy = { ...e };
-                            eCopy.quantity += drop[i].quantity;
-                            x[id] = eCopy;
-                            flag = 1;
-                            dropText(drop[i], 1);
-                        }
-                        return null;
-                    })
-                    if (flag !== 1) {
-                        dropText(drop[i], 2);
-                        x = [...x, drop[i]];
-                    }
-                }
-                else {
-                    dropText(drop[i], 3);
-                    x = [...x, drop[i]];
-                };
-            }
-        }
-        setMessages(dropTextArray);
-        dispatch(updateInventory(x));
-        // return setInventory(x);
-    }
-
     return (<>
         {locationId === '' ? <LocationList setLocation={setLocationId} /> :
             <>
-                {isActive ? <Inventory isActive={isActiveInventory} /> : null}
                 <Header topMessages={topMessages}/>
                 <Location id={locationId} topMessages={topMessages} setTopMessages={setTopMessages}/>
                 <BotPanel />

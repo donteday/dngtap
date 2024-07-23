@@ -41,7 +41,6 @@ const Inventory = ({ isActive }) => {
 
     useEffect(() => {
         if (successAnimationTimer) {
-            console.log(successAnimationTimer.current);
             clearTimeout(successAnimationTimer.current);
         }
         if (success) {
@@ -49,9 +48,7 @@ const Inventory = ({ isActive }) => {
                 setSuccess(false);
             }, 3000);
         }
-
         return () => clearTimeout(successAnimationTimer.current);
-
     }, [success]);
 
     function startAnimation() {
