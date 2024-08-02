@@ -21,8 +21,36 @@ export const counterSlice = createSlice({
         health: maxHp,
         currentHealth: maxHp,
         strength: 3,
+        agility: 0,
+        intelligency: 0,
         armory: [undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined],
-        inventory: [],
+        inventory: [ {
+          name: 'Железная Алебарда',
+          id: 1,
+          type: 'weapon',
+          subtype: 'halberd',
+          baseDmg: 7,
+          stacking: false,
+          blessed: false,
+          quantity: 1,
+          chance: 15,
+          gain: 0,
+          isPutOn : true,
+          selling: true,
+          sellingPrice: 100000,
+          additionalCharacteristics : {
+            strength : 0,
+            agility : 0,
+            intelligency : 0,
+            defence: 0,
+            critChance : 12,
+            critForce : 1,
+            skillDamage : 0,
+            additionalDamage : 0,
+            speedAttack : 1
+          }
+        },
+      ],
       }, undefined, undefined
     ],
 

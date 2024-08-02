@@ -20,7 +20,8 @@ const Location = ({ id, topMessages, setTopMessages }) => {
     let currentCharacter = useSelector(state => state.counter.currentCharacter);
     let inventory = useSelector(state => state.counter.characters[currentCharacter].inventory);
     let armory = useSelector(state => state.counter.characters[currentCharacter].armory);
-
+    let strength = useSelector(state => state.counter.characters[currentCharacter].strength);
+    const characterClass = useSelector(state => state.counter.characters[currentCharacter].characterClass);
     const [textDropisActive, setTextDropIsActive] = useState(false);
     const [currentMessage, setCurrentMessage] = useState('');
     const [messages, setMessages] = useState([]);
@@ -65,7 +66,7 @@ const Location = ({ id, topMessages, setTopMessages }) => {
             clearInterval(timer);
         }
     }, [isAttack, mobCurrentHp]);
-    
+
     function mobIsKilled() {
         setTopMessages([...topMessages, `Вами был убит противник [${mob.name}]`])
         setIsAttack(false);
@@ -84,7 +85,7 @@ const Location = ({ id, topMessages, setTopMessages }) => {
             if ((Math.random() * 100 < dropItem.chance) && maxDropItem > 0) {
                 maxDropItem -= 1;
                 const existingItem = inventoryCopy.find(item => item.id === dropItem.id);
-                
+
                 newMessage.push(`Получен предмет [${dropItem.name}]`);
                 addDropToTextArr(dropItem);
                 if (existingItem && dropItem.stacking) {
@@ -114,8 +115,35 @@ const Location = ({ id, topMessages, setTopMessages }) => {
 
     }
     function howDamage() {
-        console.log(armory[3]);
-        return { dmg: 120 }; // TODO 
+        const weapon = armory[3]; // Получаем оружие из armory[3]
+        let dmg = (weapon?.baseDmg || 0) + (weapon?.gain || 0); // Базовый урон
+        let critChance = 1; // Начальный шанс крита
+        let totalAttribute = 0; // Инициализируем переменную для атрибута
+
+        for (let i = 0; i < armory.length; i++) {
+            const item = armory[i];
+            if (item && i !== 3) { // Пропускаем оружие
+                const additionalChars = item.additionalCharacteristics || {};
+
+                dmg += additionalChars.additionalDamage || 0;
+                critChance += additionalChars.critChance || 0;
+    
+                if (characterClass === 'warrior') {
+                    totalAttribute += additionalChars.strength || 0;
+                } else if (characterClass === 'mage') {
+                    totalAttribute += additionalChars.intelligence || 0;
+                } else if (characterClass === 'archer') {
+                    totalAttribute += additionalChars.agility || 0;
+                }
+            }
+        }
+    
+        dmg += totalAttribute / 3;
+
+        return {
+            dmg: dmg,
+            critChance: critChance
+        }
     }
     function attack() {
         if (Math.random() * 100 > KMOBATTACK) mobAttack();
