@@ -2,6 +2,7 @@ import './Inventory.css';
 import InventoryPoint from './InventoryPoint/InventoryPoint';
 import { useSelector, useDispatch } from 'react-redux'
 import React, { useState, useRef, useEffect } from 'react';
+import { itemList } from '../../data/data';
 
 import { updateInventory, updateItemInventory, setArmory } from '../../redux/store/store'
 import ArmoryPoint from './ArmoryPoint/ArmoryPoint';
@@ -14,6 +15,7 @@ const Inventory = ({ isActive }) => {
     let inventoryCell = [];
     let currentCharacter = useSelector(state => state.counter.currentCharacter);
     let inventory = useSelector(state => state.counter.characters[currentCharacter].inventory);
+
     let armory = useSelector(state => state.counter.characters[currentCharacter].armory);
     let state = useSelector(state => state.counter.characters[currentCharacter]);
     const [isGain, setisGain] = useState(false);
@@ -63,7 +65,7 @@ const Inventory = ({ isActive }) => {
         let inventoryItemCopy = { ...inventory[e.target.id] };
         let armoryCopy = [...armory];
         let inventoryCopy = [...inventory];
-
+        console.log(inventory[e.target.id]);
         switch (inventory[e.target.id].type) {
             case 'gain':
                 setGainType(inventory[e.target.id].gainType);

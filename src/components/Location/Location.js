@@ -1,5 +1,5 @@
 import './Location.css';
-import { locations } from '../../data/data'
+import { locations, itemList } from '../../data/data'
 import { useEffect, useState, dispatch, useRef } from 'react';
 import { addExp, updateInventory, healthHandler, setRoute } from '../../redux/store/store'
 import { useDispatch, useSelector } from 'react-redux';
@@ -19,6 +19,7 @@ const Location = ({ id, topMessages, setTopMessages }) => {
 
     let currentCharacter = useSelector(state => state.counter.currentCharacter);
     let inventory = useSelector(state => state.counter.characters[currentCharacter].inventory);
+    let armory = useSelector(state => state.counter.characters[currentCharacter].armory);
 
     const [textDropisActive, setTextDropIsActive] = useState(false);
     const [currentMessage, setCurrentMessage] = useState('');
@@ -39,7 +40,7 @@ const Location = ({ id, topMessages, setTopMessages }) => {
                 setTextDropIsActive(true);
                 messageIndex++;
             } else {
-                clearInterval(intervalId); 
+                clearInterval(intervalId);
                 setTextDropIsActive(false);
                 setMessages([]);
                 setCurrentMessage('');
@@ -64,7 +65,7 @@ const Location = ({ id, topMessages, setTopMessages }) => {
             clearInterval(timer);
         }
     }, [isAttack, mobCurrentHp]);
-
+    
     function mobIsKilled() {
         setTopMessages([...topMessages, `Вами был убит противник [${mob.name}]`])
         setIsAttack(false);
@@ -76,32 +77,35 @@ const Location = ({ id, topMessages, setTopMessages }) => {
 
     function addToInventory() {
         let inventoryCopy = [...inventory];
-        let dropList = mob.dropList;
+        let dropList = itemList.filter(item => mob.dropList.includes(item.id));
         let maxDropItem = 2;
+        let newMessage = [];
         const updatedInventory = dropList.reduce((acc, dropItem) => {
             if ((Math.random() * 100 < dropItem.chance) && maxDropItem > 0) {
                 maxDropItem -= 1;
-                const drop = { id: dropItem.id, quantity: dropItem.quantity, gain: dropItem.gain };
-                const existingItem = inventoryCopy.find(item => item.id === drop.id);
-                setTopMessages([...topMessages, `Получен предмет [${dropItem.name}]`])
+                const existingItem = inventoryCopy.find(item => item.id === dropItem.id);
+                
+                newMessage.push(`Получен предмет [${dropItem.name}]`);
                 addDropToTextArr(dropItem);
                 if (existingItem && dropItem.stacking) {
-                    const updatedItem = { ...existingItem, quantity: existingItem.quantity + drop.quantity };
-                    inventoryCopy = inventoryCopy.map(item => (item.id === drop.id ? updatedItem : item));
+                    const updatedItem = { ...existingItem, quantity: existingItem.quantity + dropItem.quantity };
+                    inventoryCopy = inventoryCopy.map(item => (item.id === dropItem.id ? updatedItem : item));
                 } else {
-                    acc.push(drop);
+                    acc.push(dropItem);
                 }
             }
             return acc;
         }, []);
+        setTopMessages([...topMessages, ...newMessage]);
+        console.log(newMessage);
         inventoryCopy = [...inventoryCopy, ...updatedInventory];
         setMessages(dropTextArray);
         dispatch(updateInventory(inventoryCopy));
     }
- 
+
 
     function addDropToTextArr(item) {
-        dropTextArray = [...dropTextArray, item];        
+        dropTextArray = [...dropTextArray, item];
     }
 
     function mobAttack() {
@@ -110,6 +114,7 @@ const Location = ({ id, topMessages, setTopMessages }) => {
 
     }
     function howDamage() {
+        console.log(armory[3]);
         return { dmg: 120 }; // TODO 
     }
     function attack() {

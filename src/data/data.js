@@ -204,7 +204,7 @@ export const mobList = [
         hp : 100,
         attack : 5,
         exp: 15, 
-        dropList: itemList
+        dropList: [0,1,2]
     },
     {
         name: 'Гоблин',
@@ -212,8 +212,16 @@ export const mobList = [
         hp : 150,
         attack : 5, 
         exp: 25, 
-        dropList: itemList
+        dropList: [0,200,3]
     },
+    {
+        name: 'Гнолл',
+        id: 2,
+        hp : 250,
+        attack : 10, 
+        exp: 50, 
+        dropList: [0]
+    }
 ];
 
 export const locations = [
@@ -227,4 +235,12 @@ export const locations = [
         id:1, 
         mobs: mobList[1],
     },
+    {
+        name: 'Оплот Гноллов',
+        id:2, 
+        mobs: mobList[2],
+    },
 ];
+
+// TODO
+// кванта серебра не меняется
