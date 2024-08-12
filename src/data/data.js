@@ -204,6 +204,7 @@ export const mobList = [
         hp : 100,
         attack : 5,
         exp: 15, 
+        gold: 10,
         dropList: [0,1,2]
     },
     {
@@ -211,11 +212,13 @@ export const mobList = [
         id: 1,
         hp : 150,
         attack : 5, 
-        exp: 25, 
-        dropList: [0,200,3]
+        exp: 25,
+        gold: 15,
+        dropList: [0, 200,3]
     },
     {
         name: 'Гнолл',
+        gold: 15,
         id: 2,
         hp : 250,
         attack : 10, 

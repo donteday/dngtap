@@ -86,6 +86,10 @@ const Location = ({ id, topMessages, setTopMessages }) => {
                 maxDropItem -= 1;
                 const existingItem = inventoryCopy.find(item => item.id === dropItem.id);
 
+                if (dropItem.id === 0) {
+                    dropItem = { ...dropItem, quantity: Math.round(Math.random() * mob.gold) };
+                }
+
                 newMessage.push(`Получен предмет [${dropItem.name}]`);
                 addDropToTextArr(dropItem);
                 if (existingItem && dropItem.stacking) {
@@ -109,11 +113,26 @@ const Location = ({ id, topMessages, setTopMessages }) => {
         dropTextArray = [...dropTextArray, item];
     }
 
-    function mobAttack() {
-        // dispatch(healthHandler(-Math.round((mobList[0].attack - mobList[0].attack * calculateProtection() / 100))));
-        dispatch(healthHandler(-mob.attack));
+    const calculateProtection = () => {
+        let totalProtection = 0;
+        armory.forEach(item => {
+            if (item && item.defence) {
+                totalProtection += item.defence;
+                totalProtection += item.gain;
 
+            }
+        });
+        return totalProtection;
     }
+
+    function mobAttack() {
+        const protection = calculateProtection();
+        const reducedDamage = mob.attack / (1 + protection / 100);
+        const finalDamage = Math.max(1, Math.round(reducedDamage));
+    
+        dispatch(healthHandler(-finalDamage));
+    }
+
     function howDamage() {
         const weapon = armory[3]; // Получаем оружие из armory[3]
         let dmg = (weapon?.baseDmg || 0) + (weapon?.gain || 0); // Базовый урон
@@ -122,12 +141,12 @@ const Location = ({ id, topMessages, setTopMessages }) => {
 
         for (let i = 0; i < armory.length; i++) {
             const item = armory[i];
-            if (item && i !== 3) { // Пропускаем оружие
+            if (item) { 
                 const additionalChars = item.additionalCharacteristics || {};
 
                 dmg += additionalChars.additionalDamage || 0;
                 critChance += additionalChars.critChance || 0;
-    
+
                 if (characterClass === 'warrior') {
                     totalAttribute += additionalChars.strength || 0;
                 } else if (characterClass === 'mage') {
@@ -137,21 +156,25 @@ const Location = ({ id, topMessages, setTopMessages }) => {
                 }
             }
         }
-    
+
         dmg += totalAttribute / 3;
+        console.log(critChance);        
 
         return {
             dmg: dmg,
             critChance: critChance
         }
     }
+
     function attack() {
         if (Math.random() * 100 > KMOBATTACK) mobAttack();
         if (Math.random() * 100 < howDamage().critChance) {
             setMobCurrentHp(mobCurrentHp - howDamage().dmg * 2);
+            console.log('CRIT');            
         } else {
             setMobCurrentHp(mobCurrentHp - howDamage().dmg);
         }
+        
         // dispatch(healthHandler(-Math.round((mobList[0].attack - mobList[0].attack * calculateProtection() / 100))));
         // console.log(Math.round((mobList[0].attack - mobList[0].attack * calculateProtection() / 100)));
         mobAttackRef.current.style.top = `${Math.random() * 150 - 30}px`;
