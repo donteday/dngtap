@@ -129,7 +129,7 @@ const Location = ({ id, topMessages, setTopMessages }) => {
         const protection = calculateProtection();
         const reducedDamage = mob.attack / (1 + protection / 100);
         const finalDamage = Math.max(1, Math.round(reducedDamage));
-    
+
         dispatch(healthHandler(-finalDamage));
     }
 
@@ -141,7 +141,7 @@ const Location = ({ id, topMessages, setTopMessages }) => {
 
         for (let i = 0; i < armory.length; i++) {
             const item = armory[i];
-            if (item) { 
+            if (item) {
                 const additionalChars = item.additionalCharacteristics || {};
 
                 dmg += additionalChars.additionalDamage || 0;
@@ -158,7 +158,6 @@ const Location = ({ id, topMessages, setTopMessages }) => {
         }
 
         dmg += totalAttribute / 3;
-        console.log(critChance);        
 
         return {
             dmg: dmg,
@@ -170,13 +169,10 @@ const Location = ({ id, topMessages, setTopMessages }) => {
         if (Math.random() * 100 > KMOBATTACK) mobAttack();
         if (Math.random() * 100 < howDamage().critChance) {
             setMobCurrentHp(mobCurrentHp - howDamage().dmg * 2);
-            console.log('CRIT');            
         } else {
             setMobCurrentHp(mobCurrentHp - howDamage().dmg);
         }
-        
-        // dispatch(healthHandler(-Math.round((mobList[0].attack - mobList[0].attack * calculateProtection() / 100))));
-        // console.log(Math.round((mobList[0].attack - mobList[0].attack * calculateProtection() / 100)));
+
         mobAttackRef.current.style.top = `${Math.random() * 150 - 30}px`;
     }
 
@@ -197,7 +193,6 @@ const Location = ({ id, topMessages, setTopMessages }) => {
                 <button onClick={() => dispatch(setRoute('home'))} className='btn__second'>Меню</button>
             </div>
             {inventoryIsActive && <Inventory isActive={setInventoryIsActive} />}
-
 
         </div>
     );

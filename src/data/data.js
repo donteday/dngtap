@@ -23,7 +23,7 @@ export const itemList = [
       stacking: false,
       blessed: false,
       quantity: 1,
-      chance: 15,
+      chance: 50,
       gain: 0,
       isPutOn : true,
       selling: true,
@@ -109,7 +109,7 @@ export const itemList = [
       blessed: false,
       quantity: 1,
       defence: 4,
-      chance: 5,
+      chance: 15,
       gain: 0,
       isPutOn : true,
       selling: true,
@@ -205,7 +205,7 @@ export const mobList = [
         attack : 5,
         exp: 15, 
         gold: 10,
-        dropList: [0,1,2]
+        dropList: [0,1,2,202]
     },
     {
         name: 'Гоблин',
