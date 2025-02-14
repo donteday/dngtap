@@ -1,26 +1,27 @@
 import './Location.css';
 import { locations, itemList } from '../../data/data'
-import { useEffect, useState, dispatch, useRef } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { addExp, updateInventory, healthHandler, setRoute } from '../../redux/store/store'
 import { useDispatch, useSelector } from 'react-redux';
 import Inventory from '../Inventory/Inventory';
 import DropText from '../DropText/DropText';
-
+import SpriteAnimation from '../SpriteAnimation/SpriteAnimation';
+import spriteSheetImage from '../../img/animation/sword.png';
 
 const Location = ({ id, topMessages, setTopMessages }) => {
     const mob = locations[id].mobs;
     const [mobCurrentHp, setMobCurrentHp] = useState(mob.hp);
+    const [showAttackAnimation, setShowAttackAnimation] = useState(false);
     const [isAttack, setIsAttack] = useState(false);
     const dispatch = useDispatch();
     const KMOBATTACK = 70;
     const mobRef = useRef();
-    const mobAttackRef = useRef();
     const [inventoryIsActive, setInventoryIsActive] = useState(false);
 
     let currentCharacter = useSelector(state => state.counter.currentCharacter);
     let inventory = useSelector(state => state.counter.characters[currentCharacter].inventory);
     let armory = useSelector(state => state.counter.characters[currentCharacter].armory);
-    let strength = useSelector(state => state.counter.characters[currentCharacter].strength);
+    // let strength = useSelector(state => state.counter.characters[currentCharacter].strength);
     const characterClass = useSelector(state => state.counter.characters[currentCharacter].characterClass);
     const [textDropisActive, setTextDropIsActive] = useState(false);
     const [currentMessage, setCurrentMessage] = useState('');
@@ -54,17 +55,19 @@ const Location = ({ id, topMessages, setTopMessages }) => {
         let timer = null;
         if (isAttack && mobCurrentHp > 0) {
             mobRef.current.classList.add("mob__attack-state");
-            mobAttackRef.current.classList.add("mob__attack");
+            // mobAttackRef.current.classList.add("mob__attack");
+            setShowAttackAnimation(true);
             timer = setInterval(() => attack(), 600);
         }
         if (mobCurrentHp <= 0) {
             mobIsKilled()
             mobRef.current.classList.remove("mob__attack-state");
-            mobAttackRef.current.classList.remove("mob__attack");
+            setShowAttackAnimation(false);            
         }
         return () => {
             clearInterval(timer);
         }
+        // eslint-disable-next-line
     }, [isAttack, mobCurrentHp]);
 
     function mobIsKilled() {
@@ -173,18 +176,32 @@ const Location = ({ id, topMessages, setTopMessages }) => {
             setMobCurrentHp(mobCurrentHp - howDamage().dmg);
         }
 
-        mobAttackRef.current.style.top = `${Math.random() * 150 - 30}px`;
+        // mobAttackRef.current.style.top = `${Math.random() * 150 - 30}px`;
     }
 
     return (
         <div className="location" style={{ backgroundImage: `url(${require(`../../img/location/location_${id}.jpg`)})` }} >
 
+
+
             <div className='mobBox'>
                 <div className="mobHpBar-container">
                     <div className="mobHpBar" style={{ width: `${(mobCurrentHp / mob.hp) * 100}%` }}></div>
                 </div>
+                {showAttackAnimation && <div className='attackAnimation'>
+                        <SpriteAnimation
+                            spriteSheet={spriteSheetImage}
+                            frameWidth={192} // Ширина одного кадра
+                            frameHeight={192} // Высота одного кадра
+                            totalFrames={15} // Общее количество кадров
+                            fps={15} // Количество кадров в секунду
+                            startFrame={0} // Начальный кадр
+                            endFrame={14} // Конечный кадр
+                        />
+                    </div>}
                 <div className='mob' ref={mobRef} onClick={() => setIsAttack(true)} style={{ backgroundImage: `url(${require(`../../img/mobs/${mob.id}.png`)})` }}>
-                    <div ref={mobAttackRef}></div>
+                    {/* <div ref={mobAttackRef}></div> */}
+
                 </div>
                 {textDropisActive ? <DropText drop={currentMessage} /> : ''}
             </div>

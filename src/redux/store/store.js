@@ -9,8 +9,8 @@ const maxHp = 75;
 export const counterSlice = createSlice({
   name: 'game',
   initialState: {
-    currentCharacter: null, //вернуть потом значение null, 0 стоит для теста
-    route: 'chooseCharacter',
+    currentCharacter: 0, //вернуть потом значение null, 0 стоит для теста
+    route: 'farm',
     characters: [
       {
         name: 'GreckiOreh',

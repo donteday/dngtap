@@ -61,6 +61,14 @@
   filter: drop-shadow(1px 1px 0 rgb(254, 0, 0)) drop-shadow(-1px 1px 0 rgb(254, 0, 0)) drop-shadow(1px -1px 0 rgb(254, 0, 0)) drop-shadow(-1px -1px 0 rgb(254, 0, 0));
 }
 
+.attackAnimation {
+  /* filter: drop-shadow(.1px .1px 0 rgba(254, 199, 0, 0.431)) drop-shadow(-.1px .1px 0 rgb(254, 0, 0)) drop-shadow(.1px -.1px 0 rgb(254, 0, 0)) drop-shadow(-.1px -.1px 0 rgb(254, 0, 0)); */
+  transform: scale(1.7);
+  position: absolute;
+  z-index: 10;
+  bottom: 100px;
+}
+
 @keyframes mob_state_attack {
   0% {
     background-size: 130%;
