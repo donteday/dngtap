@@ -1,0 +1,155 @@
+/* ── Overlay ── */
+.ea {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    z-index: 20;
+    animation: ea_fade 1.8s ease-out forwards;
+}
+
+@keyframes ea_fade {
+    0%   { opacity: 1; }
+    65%  { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+/* ── Flash ── */
+.ea_flash {
+    position: absolute;
+    inset: 0;
+    animation: ea_flash_anim 0.25s ease-out forwards;
+}
+
+.ea_success .ea_flash { background: radial-gradient(circle at center, rgba(255,240,150,0.55) 0%, transparent 70%); }
+.ea_fail    .ea_flash { background: radial-gradient(circle at center, rgba(255,80,60,0.45)  0%, transparent 70%); }
+
+@keyframes ea_flash_anim {
+    0%   { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+/* ── Central orb ── */
+.ea_orb {
+    position: absolute;
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    animation: ea_orb_anim 1.6s ease-out forwards;
+}
+
+.ea_success .ea_orb {
+    background: radial-gradient(circle, #fff 0%, #ffe566 35%, #ff9900 65%, transparent 100%);
+    box-shadow: 0 0 30px 12px #ffd700, 0 0 60px 24px rgba(255,200,0,0.4);
+}
+
+.ea_fail .ea_orb {
+    background: radial-gradient(circle, #fff 0%, #ff8866 35%, #cc1100 65%, transparent 100%);
+    box-shadow: 0 0 30px 12px #ff3300, 0 0 60px 24px rgba(200,0,0,0.4);
+}
+
+@keyframes ea_orb_anim {
+    0%   { transform: scale(0.1); opacity: 1; }
+    20%  { transform: scale(1.6); opacity: 1; }
+    60%  { transform: scale(1.0); opacity: 1; }
+    100% { transform: scale(0.6); opacity: 0; }
+}
+
+/* ── Ring ── */
+.ea_ring {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 3px solid;
+    animation: ea_ring_anim 1.2s ease-out forwards;
+}
+
+.ea_success .ea_ring { border-color: #ffd700; box-shadow: 0 0 8px #ffd700; }
+.ea_fail    .ea_ring { border-color: #ff4422; box-shadow: 0 0 8px #ff4422; }
+
+@keyframes ea_ring_anim {
+    0%   { transform: scale(0.3); opacity: 1; }
+    100% { transform: scale(5);   opacity: 0; }
+}
+
+/* ── Rays ── */
+.ea_ray_wrap {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 0;
+    height: 0;
+}
+
+.ea_ray {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 110px;
+    height: 3px;
+    margin-top: -1.5px;
+    border-radius: 0 3px 3px 0;
+    transform-origin: left center;
+    animation: ea_ray_anim 1.5s ease-out forwards;
+}
+
+.ea_success .ea_ray { background: linear-gradient(90deg, rgba(255,255,255,0.95), rgba(255,215,0,0.7), transparent); }
+.ea_fail    .ea_ray { background: linear-gradient(90deg, rgba(255,255,255,0.95), rgba(255,60,40,0.7),  transparent); }
+
+@keyframes ea_ray_anim {
+    0%   { transform: scaleX(0); opacity: 1; }
+    35%  { transform: scaleX(1); opacity: 1; }
+    100% { transform: scaleX(1.4); opacity: 0; }
+}
+
+/* ── Particles ── */
+.ea_particle {
+    position: absolute;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    animation: ea_particle_anim 1.1s ease-out forwards;
+    animation-delay: var(--ea-delay, 0s);
+}
+
+.ea_success .ea_particle {
+    background: #ffe566;
+    box-shadow: 0 0 5px #fff, 0 0 8px #ffd700;
+}
+
+.ea_fail .ea_particle {
+    background: #ff6644;
+    box-shadow: 0 0 5px #fff, 0 0 8px #ff2200;
+}
+
+@keyframes ea_particle_anim {
+    0%   { transform: translate(0, 0) scale(1.2); opacity: 1; }
+    100% { transform: translate(var(--ea-tx), var(--ea-ty)) scale(0); opacity: 0; }
+}
+
+/* ── Success text ── */
+.ea_text {
+    position: absolute;
+    top: calc(50% - 60px);
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1.1em;
+    font-weight: bold;
+    letter-spacing: 0.1em;
+    text-shadow: 0 0 8px currentColor, 1px 1px 3px #000;
+    white-space: nowrap;
+    animation: ea_text_anim 1.8s ease-out forwards;
+}
+
+.ea_success .ea_text { color: #ffe566; }
+.ea_fail    .ea_text { color: #ff6644; }
+
+@keyframes ea_text_anim {
+    0%   { transform: translateX(-50%) translateY(0);    opacity: 0; }
+    20%  { transform: translateX(-50%) translateY(-4px); opacity: 1; }
+    70%  { transform: translateX(-50%) translateY(-4px); opacity: 1; }
+    100% { transform: translateX(-50%) translateY(-16px); opacity: 0; }
+}

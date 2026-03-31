@@ -1,18 +1,35 @@
-import {locations} from '../../../data/data';
+import { locations } from '../../../data/data';
 import './LocationList.css';
 
-const LocationList = ({setLocation}) => {
-    // const bacgroundImgUrl = require(`../../../img/items/${item.id}.png`);
-    // useEffect(() => {
-    //     if (item.id !== undefined) charRef.current.style.backgroundImage = `url(${url})`;
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [url])
-    return ( <div>
-        {locations.map((location) => <div className='locationlist__item' onClick={() => setLocation(location.id)} style={{backgroundImage: `url(${require(`../../../img/location/location_${location.id}.jpg`)})`}}>
-            <div className="locationlist__img" style={{backgroundImage: `url(${require(`../../../img/mobs/${location.id}.png`)})`}}></div>
-            {location.name}
-        </div>)}
-    </div> );
+const LocationList = ({ setLocation }) => {
+    return (
+        <div>
+            {locations.map((location) => {
+                let bg = null;
+                try { bg = require(`../../../img/location/location_${location.id}.jpg`); } catch {}
+                const bgUrl = bg || location.imgUrl || '';
+
+                let mobImg = null;
+                try { mobImg = require(`../../../img/mobs/${location.mobs.id}.png`); } catch {}
+                const mobUrl = mobImg || location.mobs.imgUrl || '';
+
+                return (
+                    <div
+                        key={location.id}
+                        className='locationlist__item'
+                        onClick={() => setLocation(location.id)}
+                        style={{ backgroundImage: `url(${bgUrl})` }}
+                    >
+                        <div
+                            className="locationlist__img"
+                            style={{ backgroundImage: `url(${mobUrl})` }}
+                        />
+                        {location.name}
+                    </div>
+                );
+            })}
+        </div>
+    );
 }
- 
+
 export default LocationList;

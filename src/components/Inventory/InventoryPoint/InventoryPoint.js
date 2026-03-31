@@ -1,21 +1,37 @@
 import './InventoryPoint.css';
-import React, { useEffect, useRef} from 'react';
+import React from 'react';
 
-const InventoryPoint = ({ item, id, selected }) => {
-    const charRef = useRef();
-    const url = require(`../../../img/items/${item.id}.png`);
-    useEffect(() => {
-        if (item.id !== undefined) charRef.current.style.backgroundImage = `url(${url})`;
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [url])
-    console.log(item.gain);
+function getItemSrc(item) {
+    let local = null;
+    try { local = require(`../../../img/items/${item.id}.png`); } catch {}
+    return local || item.imgUrl || null;
+}
+
+const InventoryPoint = ({ item, id, selected, gainMode }) => {
+    const src = getItemSrc(item);
+
+    let border = '3px groove #3a3a3a';
+    // eslint-disable-next-line eqeqeq
+    if (selected == id) border = '3px ridge rgb(251, 255, 0)';
+    else if (gainMode) border = '3px ridge #00e5ff';
+
     return (
-        <div className="inventory_item_container" id={id}
-        // eslint-disable-next-line eqeqeq
-        style = {{ border:  selected == id ? '3px ridge rgb(251, 255, 0)' : '3px groove #3a3a3a'}}>
-            <div className='inventory_item' id={id} ref={charRef} >
-                {item.gain !== null ? <div>+{item.gain}</div> : <div></div>}
-                <div>{item.quantity}</div>
+        <div
+            className={`inventory_item_container${gainMode ? ' gain_mode_item' : ''}`}
+            id={id}
+            style={{ border }}
+        >
+            <div className='inventory_item' id={id}>
+                {src && (
+                    <img
+                        src={src}
+                        referrerPolicy="no-referrer"
+                        className="item_icon_img"
+                        alt=""
+                    />
+                )}
+                {item.gain != null && <div className="item_gain">+{item.gain}</div>}
+                <div className="item_qty">{item.quantity}</div>
             </div>
         </div>
     );

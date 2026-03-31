@@ -1,80 +1,339 @@
 .location {
-  /* display: block; */
-  position: relative;
-  background-image: url("../../img/location/location_0.jpg");
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  z-index: 0;
+    position: relative;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    z-index: 0;
+    overflow: hidden;
 }
 
 .mob {
-  min-width: 300px;
-  min-height: 400px;
-  background-position: center;
-  background-size: 130%;
-  background-repeat: no-repeat;
-  margin-top: -50px;
-  display: flex;
-  justify-content: center;
+    width: 260px;
+    height: 240px;
+    background-position: center top;
+    background-size: contain;
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: center;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
 }
 
 .mobBox {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* ── Mob info block ── */
+.mob_info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    margin-top: 8px;
+}
+
+.mob_name {
+    color: #fff;
+    font-size: 0.85em;
+    font-weight: bold;
+    text-shadow: 0 0 6px #000, 1px 1px 3px #000;
+    letter-spacing: 0.05em;
 }
 
 .mobHpBar-container {
-  width: 100px;
-  height: 10px;
-  /* display: flex; */
-  /* flex-direction: column; */
-  border: 3px groove rgb(0, 0, 0);
-  background-color: #471010;
-  margin-top: 40px;
+    position: relative;
+    width: 160px;
+    height: 12px;
+    background: #220000;
+    border: 1px solid #550000;
+    border-radius: 6px;
+    overflow: hidden;
 }
 
-.mobHpBar-text {
-  position: relative;
-  left: 0;
-  right: 0;
-  bottom: 20px;
-  align-items: center;
-  color: white;
+.mobHpBar_text {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.6em;
+    color: #ffaaaa;
+    font-weight: bold;
+    text-shadow: 1px 1px 2px #000;
+    pointer-events: none;
 }
 
 .mobHpBar {
-  width: 100px;
-  height: 100%;
-
-  background-color: #b80404;
-  transition: .3s ease-in-out;
+    height: 100%;
+    background: linear-gradient(90deg, #7a0000 0%, #cc0000 60%, #ff2020 100%);
+    border-radius: 6px;
+    transition: width 0.25s ease-out;
 }
 
+/* ── Idle pulse ── */
+.mob_idle {
+    animation: mob_idle_pulse 2.2s ease-in-out infinite;
+    cursor: pointer;
+}
+
+@keyframes mob_idle_pulse {
+    0%, 100% { filter: drop-shadow(0 0 4px rgba(255, 220, 80, 0.15)); }
+    50%       { filter: drop-shadow(0 0 14px rgba(255, 220, 80, 0.55)); }
+}
+
+/* ── Boss progress ── */
+.boss_progress_row {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-top: 4px;
+    height: 12px;
+}
+
+.boss_progress_label {
+    font-size: 8px;
+    color: rgba(255, 200, 80, 0.6);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.boss_active_label {
+    color: #ff4444;
+    font-size: 9px;
+    font-weight: bold;
+    text-shadow: 0 0 6px #ff0000;
+    animation: bossLabelPulse 0.8s ease-in-out infinite;
+}
+
+@keyframes bossLabelPulse {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0.5; }
+}
+
+.boss_progress_bar {
+    display: flex;
+    gap: 2px;
+}
+
+.boss_pip {
+    width: 8px;
+    height: 6px;
+    border-radius: 2px;
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,200,80,0.2);
+}
+
+.boss_pip_filled {
+    background: rgba(255, 180, 40, 0.75);
+    border-color: rgba(255, 200, 80, 0.6);
+}
+
+/* ── Attack state ── */
 .mob__attack-state {
-  animation: mob_state_attack 0.6s infinite;
-  filter: drop-shadow(1px 1px 0 rgb(254, 0, 0)) drop-shadow(-1px 1px 0 rgb(254, 0, 0)) drop-shadow(1px -1px 0 rgb(254, 0, 0)) drop-shadow(-1px -1px 0 rgb(254, 0, 0));
+    animation: mob_state_attack 0.6s infinite;
+    filter: drop-shadow(1px 1px 0 rgb(254, 0, 0)) drop-shadow(-1px 1px 0 rgb(254, 0, 0)) drop-shadow(1px -1px 0 rgb(254, 0, 0)) drop-shadow(-1px -1px 0 rgb(254, 0, 0));
 }
 
 .attackAnimation {
-  /* filter: drop-shadow(.1px .1px 0 rgba(254, 199, 0, 0.431)) drop-shadow(-.1px .1px 0 rgb(254, 0, 0)) drop-shadow(.1px -.1px 0 rgb(254, 0, 0)) drop-shadow(-.1px -.1px 0 rgb(254, 0, 0)); */
-  transform: scale(1.7);
-  position: absolute;
-  z-index: 10;
-  bottom: 100px;
+    transform: scale(1.7);
+    position: absolute;
+    z-index: 10;
+    bottom: 100px;
 }
 
 @keyframes mob_state_attack {
-  0% {
-    background-size: 130%;
-  }
+    0%   { transform: scale(1.0); }
+    50%  { transform: scale(0.97); }
+    100% { transform: scale(1.0); }
+}
 
-  100% {
-    background-size: 128%;
-  }
+/* ── Icon buttons (floating) ── */
+.location__buttons {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    z-index: 10;
+}
+
+.icon_btn {
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    background: rgba(0, 0, 0, 0.58);
+    border: 1.5px solid rgba(240, 192, 80, 0.4);
+    color: #f0c070;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    gap: 2px;
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+    transition: background 0.15s, transform 0.1s;
+    padding: 0;
+    outline: none;
+}
+
+.icon_btn:active {
+    background: rgba(240, 150, 40, 0.3);
+    transform: scale(0.9);
+}
+
+.icon_btn svg {
+    width: 22px;
+    height: 22px;
+}
+
+.icon_btn_label {
+    font-size: 8px;
+    color: rgba(240, 192, 80, 0.75);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.location__back_btn {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 10;
+}
+
+/* ── Drop info modal ── */
+.drop_info_overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.65);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 200;
+}
+
+.drop_info_panel {
+    background: linear-gradient(180deg, #1e1709 0%, #110e05 100%);
+    border: 2px solid #6b5200;
+    border-radius: 10px;
+    padding: 18px 16px;
+    min-width: 270px;
+    max-width: 90vw;
+    color: white;
+    box-shadow: 0 4px 32px rgba(0,0,0,0.8);
+}
+
+.drop_info_title {
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #e8c97a;
+    margin-bottom: 10px;
+    text-align: center;
+    text-shadow: 1px 1px 3px #000;
+}
+
+.drop_info_stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 12px;
+    font-size: 0.82em;
+    color: #bbb;
+    justify-content: center;
+}
+
+.drop_info_stats span {
+    background: rgba(255,255,255,0.06);
+    border-radius: 4px;
+    padding: 2px 8px;
+}
+
+.drop_info_list {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-bottom: 14px;
+}
+
+.drop_info_item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 5px;
+    padding: 5px 10px;
+    font-size: 0.88em;
+}
+
+.drop_item_name {
+    color: #ddd;
+}
+
+.drop_item_chance {
+    color: #f0c040;
+    font-weight: bold;
+    font-size: 0.95em;
+}
+
+/* ── Damage numbers ── */
+.damage_numbers_container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: visible;
+}
+
+.damage_number {
+    position: absolute;
+    left: 50%;
+    top: 45%;
+    transform: translateX(-50%);
+    color: #ffffff;
+    font-size: 6vw;
+    font-weight: bold;
+    text-shadow: 0 0 4px #000, 1px 1px 3px #000;
+    animation: dmgFloatUp 0.9s ease-out forwards;
+    white-space: nowrap;
+    z-index: 20;
+}
+
+.damage_crit {
+    color: #ffdd00;
+    font-size: 8vw;
+    text-shadow: 0 0 8px #ff8800, 1px 1px 3px #000;
+}
+
+@keyframes dmgFloatUp {
+    0%   { opacity: 1; transform: translateX(-50%) translateY(0);     }
+    70%  { opacity: 1; transform: translateX(-50%) translateY(-50px); }
+    100% { opacity: 0; transform: translateX(-50%) translateY(-70px); }
+}
+
+/* ── Boss styles ── */
+.mob_name_boss {
+    color: #ff4444;
+    text-shadow: 0 0 8px #ff0000, 1px 1px 3px #000;
+}
+
+.mobHpBar_boss {
+    background: linear-gradient(90deg, #7a4400 0%, #cc6600 60%, #ff9900 100%);
+}
+
+.mob_boss {
+    filter: drop-shadow(0 0 10px #ff3300) drop-shadow(0 0 4px #ff6600);
 }

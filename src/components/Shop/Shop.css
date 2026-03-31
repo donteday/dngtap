@@ -1,0 +1,180 @@
+.shop_container {
+    width: 100%;
+    height: calc(var(--vh, 1vh) * 100);
+    background: linear-gradient(180deg, #1a1209 0%, #0d0a05 100%);
+    display: flex;
+    flex-direction: column;
+    color: white;
+}
+
+.shop_header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    background: linear-gradient(0deg, #2a1f00 0%, #3d2e00 100%);
+    border-bottom: 2px solid #6b5200;
+}
+
+.shop_title {
+    font-size: 1.3em;
+    font-weight: bold;
+    color: #e8c97a;
+    text-shadow: 1px 1px 3px #000;
+}
+
+.shop_gold {
+    font-size: 1em;
+    color: #ffd700;
+    text-shadow: 1px 1px 2px #000;
+}
+
+.shop_back {
+    padding: 6px 12px;
+}
+
+.shop_tabs {
+    display: flex;
+    border-bottom: 2px solid #6b5200;
+}
+
+.shop_tab {
+    flex: 1;
+    padding: 10px;
+    background: #1a1209;
+    border: none;
+    color: #aaa;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+}
+
+.shop_tab--active {
+    background: #2d2610;
+    color: #e8c97a;
+    font-weight: bold;
+    border-bottom: 2px solid #e8c97a;
+}
+
+.shop_empty {
+    color: #666;
+    text-align: center;
+    padding: 24px;
+    grid-column: 1 / -1;
+}
+
+/* Unified grid for buy and sell */
+.shop_grid {
+    flex: 1;
+    overflow-y: auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px;
+    padding: 10px;
+    align-content: flex-start;
+}
+
+/* Unified cell */
+.shop_cell {
+    position: relative;
+    aspect-ratio: 1;
+    background: linear-gradient(180deg, #1e1a0a 0%, #0d0a05 100%);
+    border: 2px groove #5a4800;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 3px;
+    cursor: pointer;
+    overflow: hidden;
+    -webkit-tap-highlight-color: transparent;
+    transition: filter 0.12s;
+}
+
+.shop_cell:active {
+    filter: brightness(1.5);
+}
+
+.shop_cell_img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+}
+
+/* buy: item name below icon */
+.shop_cell_name_small {
+    position: relative;
+    z-index: 1;
+    font-size: 8px;
+    color: #ddd;
+    text-align: center;
+    line-height: 1.2;
+    word-break: break-word;
+    background: rgba(0,0,0,0.55);
+    border-radius: 2px;
+    padding: 1px 2px;
+    width: 100%;
+}
+
+.shop_cell_price {
+    position: relative;
+    z-index: 1;
+    font-size: 8px;
+    font-weight: bold;
+    color: #ffd700;
+    text-align: center;
+    line-height: 1.2;
+    background: rgba(0,0,0,0.55);
+    border-radius: 2px;
+    padding: 1px 2px;
+    width: 100%;
+}
+
+/* owned count badge (top-right) */
+.shop_cell_owned {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    z-index: 2;
+    font-size: 9px;
+    font-weight: bold;
+    color: #7dffb3;
+    background: rgba(0,0,0,0.6);
+    border-radius: 3px;
+    padding: 0 3px;
+    line-height: 1.4;
+}
+
+/* gain badge */
+.shop_cell_gain {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    z-index: 2;
+    font-size: 9px;
+    font-weight: bold;
+    color: #7dffb3;
+    background: rgba(0,0,0,0.6);
+    border-radius: 3px;
+    padding: 0 3px;
+    line-height: 1.4;
+}
+
+/* qty badge (sell: item qty) */
+.shop_cell_qty {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    z-index: 2;
+    font-size: 9px;
+    font-weight: bold;
+    color: #aaa;
+    background: rgba(0,0,0,0.6);
+    border-radius: 3px;
+    padding: 0 3px;
+    line-height: 1.4;
+}

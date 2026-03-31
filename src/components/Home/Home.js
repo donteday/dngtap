@@ -33,6 +33,9 @@ const Home = () => {
             case 'chooseCharacter':
                 dispatch(setRoute('chooseCharacter'));
                 break;
+            case 'shop':
+                dispatch(setRoute('shop'));
+                break;
             default:
                 alert('Скоро добавим');
         }

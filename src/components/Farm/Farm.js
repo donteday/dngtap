@@ -8,18 +8,16 @@ const Farm = () => {
     const [topMessages, setTopMessages] = useState([]);
     const [locationId, setLocationId] = useState('');
 
-    return (<>
-        {locationId === '' ? <LocationList setLocation={setLocationId} /> :
-            <>
-                {/* <Header topMessages={topMessages}/> */}
-                <Location id={locationId} topMessages={topMessages} setTopMessages={setTopMessages}/>
-                <BotPanel />
-            </>
-        }
-        {/* {isActive ? <Inventory isActive={isActiveInventory} /> : null}
-        <Location />
-        <BotPanel /> */}
-    </>);
+    return (
+        <div className="farm_wrapper">
+            {locationId === '' ? <LocationList setLocation={setLocationId} /> :
+                <>
+                    <Location id={locationId} topMessages={topMessages} setTopMessages={setTopMessages} onBack={() => setLocationId('')} />
+                    <BotPanel />
+                </>
+            }
+        </div>
+    );
 }
 
 export default Farm;

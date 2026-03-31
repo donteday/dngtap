@@ -1,41 +1,40 @@
 import './ArmoryPoint.css';
-import React, { useEffect, useRef } from 'react';
-import { setArmory, updateInventory } from '../../../redux/store/store'
-import { useSelector, useDispatch } from 'react-redux'
+import React from 'react';
+import { setArmory, updateInventory } from '../../../redux/store/store';
+import { useSelector, useDispatch } from 'react-redux';
 
+function getItemSrc(item) {
+    let local = null;
+    try { local = require(`../../../img/items/${item.id}.png`); } catch {}
+    return local || item.imgUrl || null;
+}
 
-
-
-const ArmoryPoint = ({ armorItem, index }) => {
+const ArmoryPoint = ({ armorItem, index, isGainMode, onEnhance }) => {
     const dispatch = useDispatch();
-    const itemRef = useRef();
-    let currentCharacter = useSelector(state => state.counter.currentCharacter);
-    let inventory = useSelector(state => state.counter.characters[currentCharacter].inventory);
-
-    useEffect(() => {
-        if (armorItem !== undefined) {
-            const url = require(`../../../img/items/${armorItem.id}.png`);
-            itemRef.current.style.backgroundImage = `url(${url})`;
-            console.log(123);
-        }
-    }, [armorItem])
+    const currentCharacter = useSelector(state => state.counter.currentCharacter);
+    const inventory = useSelector(state => state.counter.characters[currentCharacter].inventory);
 
     function takeOff() {
-        dispatch(setArmory({ id: index, item: undefined }))
+        dispatch(setArmory({ id: index, item: null }));
         dispatch(updateInventory([...inventory, armorItem]));
-
     }
 
-    return (
-        <div className='inventory_armor_point' >
+    const src = armorItem ? getItemSrc(armorItem) : null;
 
-            {/* {armorItem} */}
-            {armorItem !== undefined ?
-                <div className='inventory_armor_item' ref={itemRef} onDoubleClick={() => takeOff()}>
-                    {armorItem.gain !== null ? <div>+{armorItem.gain}</div> : <div></div>}
-                    {/* <div>{armorItem.quantity}</div> */}
-                </div>
-                : ''}
+    return (
+        <div className={`inventory_armor_point${isGainMode ? ' armory_gain_mode' : ''}`}>
+            <div
+                className='inventory_armor_item'
+                onDoubleClick={isGainMode ? undefined : (armorItem ? takeOff : undefined)}
+                onClick={isGainMode ? onEnhance : undefined}
+            >
+                {src && (
+                    <img src={src} referrerPolicy="no-referrer" className="item_icon_img" alt="" />
+                )}
+                {armorItem?.gain != null && (
+                    <div className="item_gain" style={{ position: 'relative', zIndex: 1 }}>+{armorItem.gain}</div>
+                )}
+            </div>
         </div>
     );
 }
