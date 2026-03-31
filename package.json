@@ -2,6 +2,9 @@
   "name": "farmility",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": ">=22"
+  },
   "dependencies": {
     "@lottiefiles/dotlottie-react": "^0.6.4",
     "@reduxjs/toolkit": "^2.2.5",
